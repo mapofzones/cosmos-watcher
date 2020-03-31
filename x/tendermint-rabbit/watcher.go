@@ -1,14 +1,15 @@
-package listener
+package watcher
 
 import (
+	"bytes"
 	"flag"
 	"log"
 	"net/url"
 	"sync"
 	"time"
 
-	rabbitmq "github.com/attractor-spectrum/cosmos-watcher/listener/x/tendermint-rabbit/RabbitMQ"
-	txparser "github.com/attractor-spectrum/cosmos-watcher/listener/x/tendermint-rabbit/tx"
+	rabbitmq "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/RabbitMQ"
+	txparser "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/tx"
 	"github.com/gorilla/websocket"
 )
 
@@ -18,10 +19,10 @@ var txsQuery = []byte("{\"jsonrpc\":\"2.0\",\"id\":0,\"method\":\"subscribe\",\"
 // Tx is just an alias for txparser.Tx type
 type Tx = txparser.Tx
 
-// Listener implenets the listener interface described at the project root
+// Watcher implenets the watcher interface described at the project root
 // this particular implementation is used to listen on tendermint websocket and
 // send resutls to RabbitMQ
-type Listener struct {
+type Watcher struct {
 	tendermintAddr url.URL
 	rabbitMQAddr   url.URL
 	logger         *log.Logger
@@ -31,8 +32,8 @@ type Listener struct {
 	txs       []Tx
 }
 
-// NewListener returns instanciated Listener
-func NewListener(l *log.Logger) (*Listener, error) {
+// NewWatcher returns instanciated Watcher
+func NewWatcher(l *log.Logger) (*Watcher, error) {
 	// figure out config
 	// error out if there is no config
 	flag.Parse()
@@ -52,13 +53,13 @@ func NewListener(l *log.Logger) (*Listener, error) {
 	}
 	// create tx slice with our config capacity
 	txs := make([]Tx, 0, config.BatchSize)
-	return &Listener{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL,
+	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL,
 		logger: l, network: name, txs: txs, batchSize: config.BatchSize}, nil
 }
 
 // listen creates goroutine which reads txs from a websocket and pushes them to Tx channel
 // we also need err channel to know if something happened to our websocket connection
-func (l *Listener) listen() (<-chan Tx, <-chan error) {
+func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 	// maybe want it buffered
 	txs := make(chan Tx)
 	errCh := make(chan error)
@@ -98,6 +99,10 @@ func (l *Listener) listen() (<-chan Tx, <-chan error) {
 			// make it a tx and send it to querier
 			go func() {
 				t := time.Now().UTC()
+				// we got normal json rpc greeting, do nothing
+				if bytes.Equal(data, rpcGreeting) {
+					return
+				}
 				tx, err := txparser.ParseTx(data)
 				if err != nil {
 					l.logger.Printf("expected tendermint tx, got: %s\n%v", string(data), err)
@@ -116,7 +121,7 @@ func (l *Listener) listen() (<-chan Tx, <-chan error) {
 
 // serve buffers and sends txs to rabbitmq, returns errors if something is wrong
 // Accepts input and output channels, also an error channel if something goes wrong
-func (l *Listener) serve(txsIn <-chan Tx, txsOut chan<- []Tx, errors <-chan error) error {
+func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- []Tx, errors <-chan error) error {
 	for {
 		select {
 		case tx := <-txsIn:
@@ -138,9 +143,9 @@ func (l *Listener) serve(txsIn <-chan Tx, txsOut chan<- []Tx, errors <-chan erro
 	}
 }
 
-// ListenAndServe implements listener interface
+// Watch implements watcher interface
 // Collects txs from tendermint websocket and sends them to rabbitMQ
-func (l *Listener) ListenAndServe() error {
+func (l *Watcher) Watch() error {
 	txsIn, errIn := l.listen()
 	txsOut, errOut, err := rabbitmq.TxQueue(l.rabbitMQAddr)
 	if err != nil {

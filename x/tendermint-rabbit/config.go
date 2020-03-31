@@ -1,20 +1,19 @@
-package listener
+package watcher
 
 import (
 	"encoding/json"
 	"errors"
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"net/url"
-	"os"
 )
 
 var configPath *string
-var defualtPath = "/tmp/tx-watcher.json"
+
+const examplePath = "/abs/path/to/config.json"
 
 func init() {
-	configPath = flag.String("config-path", defualtPath, "path to a config file")
+	configPath = flag.String("config", examplePath, "path to a config file, example config can be found in the project source code")
 }
 
 // Config has addresses to connect to and stores batch query size
@@ -27,14 +26,8 @@ type Config struct {
 
 // GetConfig returns config or error, signifying invalid config
 func GetConfig() (*Config, error) {
-	if _, err := os.Stat(*configPath); os.IsNotExist(err) {
-		err = writeDefaultConfig()
-		if err != nil {
-			return nil, fmt.Errorf(
-				"config file not found, could not write default default config to %s \n because %s",
-				defualtPath, err.Error())
-		}
-		return nil, fmt.Errorf("could not parse config file, writing default one at %s", defualtPath)
+	if *configPath == examplePath {
+		return nil, errors.New("no config file specified")
 	}
 	bytes, err := ioutil.ReadFile(*configPath)
 	if err != nil {
@@ -57,20 +50,4 @@ func GetConfig() (*Config, error) {
 		return nil, errors.New("BatchSize must be positive")
 	}
 	return C, nil
-}
-
-func writeDefaultConfig() error {
-	// create default config
-	tmNode := url.URL{Scheme: "ws", Host: "localhost:26657", Path: "websocket"}
-	rabbitNode := url.URL{Scheme: "amqp", User: url.User("guest"), Host: "localhost:5672"}
-	defaultConfig := Config{NodeAddr: tmNode.String(),
-		RabbitMQAddr: rabbitNode.String(),
-		BatchSize:    1}
-
-	bytes, err := json.MarshalIndent(defaultConfig, "", "\t")
-	if err != nil {
-		return err
-	}
-
-	return ioutil.WriteFile(defualtPath, bytes, 0644)
 }

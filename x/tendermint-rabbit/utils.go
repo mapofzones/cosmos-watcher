@@ -1,4 +1,4 @@
-package listener
+package watcher
 
 import (
 	"fmt"
@@ -8,6 +8,15 @@ import (
 
 	json "github.com/buger/jsonparser"
 )
+
+var rpcGreetingStr string = `{
+  "jsonrpc": "2.0",
+  "id": 0,
+  "result": {}
+}`
+
+// this is only used so we don't log greeting message as an error
+var rpcGreeting []byte = []byte(rpcGreetingStr)
 
 // return tendermint network name
 func getNetworkName(u url.URL) (string, error) {

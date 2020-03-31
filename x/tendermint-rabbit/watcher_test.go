@@ -1,4 +1,4 @@
-package listener
+package watcher
 
 import (
 	"fmt"
@@ -8,13 +8,13 @@ import (
 	"testing"
 )
 
-func TestListenAndServe(t *testing.T) {
+func TestWatch(t *testing.T) {
 	logger := log.New(os.Stdout, "", log.Flags())
-	l, err := NewListener(logger)
+	l, err := NewWatcher(logger)
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(l.ListenAndServe())
+	fmt.Println(l.Watch())
 }
 
 func TestNetworkName(t *testing.T) {

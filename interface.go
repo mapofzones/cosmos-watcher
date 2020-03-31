@@ -1,34 +1,34 @@
-package listener
+package watcher
 
 import (
 	"errors"
 	"log"
 	"os"
 
-	tm "github.com/attractor-spectrum/cosmos-watcher/listener/x/tendermint-rabbit"
+	tm "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit"
 )
 
-// LType is used to choose Listener implementation
-type LType = uint32
+// WType is used to choose Watcher implementation
+type WType = uint32
 
 const (
-	// TmRabbit is tendermint and rabbitMQ listener interface implementation
-	TmRabbit LType = iota
+	// TmRabbit is tendermint and rabbitMQ watcher interface implementation
+	TmRabbit WType = iota
 )
 
-// Listener interface listens on the listenAddr and sends data to the sendAddr
-type Listener interface {
-	ListenAndServe() error
+// Watcher interface listens on the listenAddr and sends data to the sendAddr
+type Watcher interface {
+	Watch() error
 }
 
-// NewListener returns Listener implementation based on implementation specified by t and logger l
-func NewListener(t LType, l *log.Logger) (Listener, error) {
+// NewWatcher returns Watcher implementation based on implementation specified by t and logger l
+func NewWatcher(t WType, l *log.Logger) (Watcher, error) {
 	if l == nil {
 		l = log.New(os.Stdout, "", log.LstdFlags)
 	}
 	switch t {
 	case TmRabbit:
-		return tm.NewListener(l)
+		return tm.NewWatcher(l)
 	default:
 		return nil, errors.New("invalid type argument")
 	}

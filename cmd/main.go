@@ -4,14 +4,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/attractor-spectrum/cosmos-watcher/listener"
+	watcher "github.com/attractor-spectrum/cosmos-watcher"
 )
 
 func main() {
-	logger := log.New(os.Stdout, "Listener", log.Ldate|log.Ltime)
-	listener, err := listener.NewListener(listener.TmRabbit, logger)
+	logger := log.New(os.Stdout, "Watcher", log.Ldate|log.Ltime)
+	watcher, err := watcher.NewWatcher(watcher.TmRabbit, logger)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Fatal(listener.ListenAndServe())
+	log.Fatal(watcher.Watch())
 }

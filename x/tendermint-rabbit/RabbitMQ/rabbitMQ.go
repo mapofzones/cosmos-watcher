@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/url"
 
-	"github.com/attractor-spectrum/cosmos-watcher/listener/x/tendermint-rabbit/tx"
+	"github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/tx"
 	"github.com/streadway/amqp"
 )
 
