@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/attractor-spectrum/cosmos-watcher/tx"
 	tm "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit"
 )
 
@@ -15,6 +16,9 @@ const (
 	// TmRabbit is tendermint and rabbitMQ watcher interface implementation
 	TmRabbit WType = iota
 )
+
+// Tx is non-blockchain-specific transaction representation
+type Tx = tx.Tx
 
 // Watcher interface listens on the listenAddr and sends data to the sendAddr
 type Watcher interface {

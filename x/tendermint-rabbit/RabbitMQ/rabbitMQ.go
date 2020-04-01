@@ -1,18 +1,17 @@
 package rabbitmq
 
 import (
-	"encoding/json"
 	"net/url"
 
-	"github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/tx"
+	"github.com/attractor-spectrum/cosmos-watcher/tx"
 	"github.com/streadway/amqp"
 )
 
 // TxQueue will call inside of itself another function which in an infinite loop recieves from channel
 // same as websocket but the other way around
 // send txs to first returned value and listen to errors from error channel
-func TxQueue(nodeAddr url.URL) (chan<- []tx.Tx, <-chan error, error) {
-	txs := make(chan []tx.Tx)
+func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
+	txs := make(chan tx.Txs)
 	errCh := make(chan error)
 	conn, err := amqp.Dial(nodeAddr.String())
 	if err != nil {
@@ -38,13 +37,6 @@ func TxQueue(nodeAddr url.URL) (chan<- []tx.Tx, <-chan error, error) {
 		for {
 			select {
 			case data := <-txs:
-				bytes, err := json.Marshal(data)
-				if err != nil {
-					errCh <- err
-					close(txs)
-					close(errCh)
-					return
-				}
 				err = ch.Publish(
 					"",
 					q.Name,
@@ -52,7 +44,7 @@ func TxQueue(nodeAddr url.URL) (chan<- []tx.Tx, <-chan error, error) {
 					false,
 					amqp.Publishing{
 						ContentType: "application/json",
-						Body:        bytes,
+						Body:        data.Marshal(),
 					},
 				)
 				if err != nil {

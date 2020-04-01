@@ -22,6 +22,7 @@ type Config struct {
 	NodeAddr     string
 	RabbitMQAddr string
 	BatchSize    int
+	Precision    int
 }
 
 // GetConfig returns config or error, signifying invalid config
@@ -47,7 +48,10 @@ func GetConfig() (*Config, error) {
 		return nil, err
 	}
 	if C.BatchSize < 0 {
-		return nil, errors.New("BatchSize must be positive")
+		return nil, errors.New("batch size must be positive")
+	}
+	if C.Precision < 0 {
+		return nil, errors.New("precision must be positive")
 	}
 	return C, nil
 }

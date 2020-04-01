@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/attractor-spectrum/cosmos-watcher/tx"
 	rabbitmq "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/RabbitMQ"
 	txparser "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/tx"
 	"github.com/gorilla/websocket"
@@ -17,7 +18,10 @@ import (
 var txsQuery = []byte("{\"jsonrpc\":\"2.0\",\"id\":0,\"method\":\"subscribe\",\"params\":{\"query\":\"tm.event = 'Tx'\"}}\n")
 
 // Tx is just an alias for txparser.Tx type
-type Tx = txparser.Tx
+type Tx = tx.Tx
+
+// Txs is an alias for our convience
+type Txs = tx.Txs
 
 // Watcher implenets the watcher interface described at the project root
 // this particular implementation is used to listen on tendermint websocket and
@@ -29,7 +33,8 @@ type Watcher struct {
 	// how many txs we accumulate before sending them for further processing
 	batchSize int
 	network   string
-	txs       []Tx
+	txs       Txs
+	precision int
 }
 
 // NewWatcher returns instanciated Watcher
@@ -54,7 +59,7 @@ func NewWatcher(l *log.Logger) (*Watcher, error) {
 	// create tx slice with our config capacity
 	txs := make([]Tx, 0, config.BatchSize)
 	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL,
-		logger: l, network: name, txs: txs, batchSize: config.BatchSize}, nil
+		logger: l, network: name, txs: txs, batchSize: config.BatchSize, precision: config.Precision}, nil
 }
 
 // listen creates goroutine which reads txs from a websocket and pushes them to Tx channel
@@ -103,15 +108,18 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 				if bytes.Equal(data, rpcGreeting) {
 					return
 				}
-				tx, err := txparser.ParseTx(data)
+				tmTx, err := txparser.ParseTx(data)
+				if !tmTx.Valid {
+					l.logger.Printf("recieved invalid tx: %v", tmTx)
+					return
+				}
 				if err != nil {
 					l.logger.Printf("expected tendermint tx, got: %s\n%v", string(data), err)
 					return
 				}
-				tx.T = t
-				txs <- tx
+
+				txs <- tmTx.Normalize(t, l.network, l.precision)
 			}()
-			// may want to implement heartbeat pattern
 		}
 
 	}()
@@ -121,20 +129,18 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 
 // serve buffers and sends txs to rabbitmq, returns errors if something is wrong
 // Accepts input and output channels, also an error channel if something goes wrong
-func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- []Tx, errors <-chan error) error {
+func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- Txs, errors <-chan error) error {
 	for {
 		select {
 		case tx := <-txsIn:
-			if tx.Valid {
-				l.logger.Printf("recieved valid %s tx", tx.Msg.Type)
-				l.txs = append(l.txs, tx)
-				if len(l.txs) == l.batchSize {
-					select {
-					case txsOut <- l.txs:
-						l.txs = make([]Tx, 0, l.batchSize)
-					case err := <-errors:
-						return err
-					}
+			l.logger.Printf("recieved valid cosmos-sdk %s tx", tx.Type)
+			l.txs = append(l.txs, tx)
+			if len(l.txs) == l.batchSize {
+				select {
+				case txsOut <- l.txs:
+					l.txs = make([]Tx, 0, l.batchSize)
+				case err := <-errors:
+					return err
 				}
 			}
 		case err := <-errors:
