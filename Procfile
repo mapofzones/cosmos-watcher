@@ -1,13 +1,13 @@
-worker: exec go run cmd/main.go --config ./configs/dokia.json
-worker: exec go run cmd/main.go --config ./configs/ibc-band-testnet1.json
-worker: exec go run cmd/main.go --config ./configs/irishub.json
-worker: exec go run cmd/main.go --config ./configs/kappa.json
-worker: exec go run cmd/main.go --config ./configs/kava-ibc.json
-worker: exec go run cmd/main.go --config ./configs/melea-11.json
-worker: exec go run cmd/main.go --config ./configs/morpheus-ibc-3000.json
-worker: exec go run cmd/main.go --config ./configs/ping-ibc.json
-worker: exec go run cmd/main.go --config ./configs/ptpchain.json
-worker: exec go run cmd/main.go --config ./configs/pylonchain.json
-worker: exec go run cmd/main.go --config ./configs/umbrellachain.json
-worker: exec go run cmd/main.go --config ./configs/vitwitchain-1.json
-worker: exec go run cmd/main.go --config ./configs/vitwitchain.json
+worker: bin/cmd --config ./configs/dokia.json
+worker: bin/cmd --config ./configs/ibc-band-testnet1.json
+worker: bin/cmd --config ./configs/irishub.json
+worker: bin/cmd --config ./configs/kappa.json
+worker: bin/cmd --config ./configs/kava-ibc.json
+worker: bin/cmd --config ./configs/melea-11.json
+worker: bin/cmd --config ./configs/morpheus-ibc-3000.json
+worker: bin/cmd --config ./configs/ping-ibc.json
+worker: bin/cmd --config ./configs/ptpchain.json
+worker: bin/cmd --config ./configs/pylonchain.json
+worker: bin/cmd --config ./configs/umbrellachain.json
+worker: bin/cmd --config ./configs/vitwitchain-1.json
+worker: bin/cmd --config ./configs/vitwitchain.json

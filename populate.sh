@@ -5,7 +5,7 @@ rm $DIR/configs/*
 AMQP=amqp://ggmjxdkq:HJQ4N7gABKrLDWoneYwr0M-qZZDconkO@clam.rmq.cloudamqp.com/ggmjxdkq
 
 TEMPLATE='{"NodeAddr":"ws://REPLACEME/websocket","RabbitMQAddr":"'$AMQP'","BatchSize":1,"Precision":0}'
-PROCFILETEMPLATE="worker: exec go run cmd/main.go --config ./configs/"
+PROCFILETEMPLATE="worker: bin/cmd --config ./configs/"
 
 cd /tmp
 
@@ -26,4 +26,4 @@ for filename in /tmp/relayer/testnets/relayer-alpha/*.json; do
     echo $PROCFILETEMPLATE$(basename $filename) >> $DIR/Procfile
 done
 
-#heroku ps:scale worker=$(cat $DIR/Procfile | wc -l)
+#aheroku ps:scale worker=$(cat $DIR/Procfile | wc -l)
