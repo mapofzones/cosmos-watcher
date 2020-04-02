@@ -4,15 +4,15 @@ rm $DIR/configs/*
 
 AMQP=amqp://ggmjxdkq:HJQ4N7gABKrLDWoneYwr0M-qZZDconkO@clam.rmq.cloudamqp.com/ggmjxdkq
 
-TEMPLATE='{"NodeAddr":"ws://REPLACEME/websocket","RabbitMQAddr":"$AMQP","BatchSize":1,"Precision":0}'
+TEMPLATE='{"NodeAddr":"ws://REPLACEME/websocket","RabbitMQAddr":"'$AMQP'","BatchSize":1,"Precision":0}'
 PROCFILETEMPLATE="worker: exec go run cmd/main.go --config ./configs/"
 
 cd /tmp
 
-# if [ -d "/tmp/relayer" ];then
-#     rm -rf "/tmp/relayer"
-# fi
-# git clone https://github.com/cosmos/relayer.git
+if [ -d "/tmp/relayer" ];then
+    rm -rf "/tmp/relayer"
+fi
+git clone https://github.com/cosmos/relayer.git
 
 if [ -f $DIR/Procfile ];then
 rm $DIR/Procfile
@@ -25,3 +25,5 @@ for filename in /tmp/relayer/testnets/relayer-alpha/*.json; do
     sed -i 's/REPLACEME/'$ADDR'/g' $DIR/configs/$(basename $filename)
     echo $PROCFILETEMPLATE$(basename $filename) >> $DIR/Procfile
 done
+
+#heroku ps:scale worker=$(cat $DIR/Procfile | wc -l)
