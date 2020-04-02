@@ -1,1 +1,1 @@
-worker: exec bin/cmd --config app/configs/example.json
+worker: exec bin/cmd --config ./configs/example.json
