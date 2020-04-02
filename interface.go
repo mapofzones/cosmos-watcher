@@ -2,8 +2,6 @@ package watcher
 
 import (
 	"errors"
-	"log"
-	"os"
 
 	"github.com/attractor-spectrum/cosmos-watcher/tx"
 	tm "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit"
@@ -26,13 +24,10 @@ type Watcher interface {
 }
 
 // NewWatcher returns Watcher implementation based on implementation specified by t and logger l
-func NewWatcher(t WType, l *log.Logger) (Watcher, error) {
-	if l == nil {
-		l = log.New(os.Stdout, "", log.LstdFlags)
-	}
+func NewWatcher(t WType) (Watcher, error) {
 	switch t {
 	case TmRabbit:
-		return tm.NewWatcher(l)
+		return tm.NewWatcher()
 	default:
 		return nil, errors.New("invalid type argument")
 	}

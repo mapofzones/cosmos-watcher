@@ -2,15 +2,12 @@ package watcher
 
 import (
 	"fmt"
-	"log"
 	"net/url"
-	"os"
 	"testing"
 )
 
 func TestWatch(t *testing.T) {
-	logger := log.New(os.Stdout, "", log.Flags())
-	l, err := NewWatcher(logger)
+	l, err := NewWatcher()
 	if err != nil {
 		t.Fatal(err)
 	}

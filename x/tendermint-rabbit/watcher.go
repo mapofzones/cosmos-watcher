@@ -3,7 +3,7 @@ package watcher
 import (
 	"bytes"
 	"flag"
-	"log"
+	"fmt"
 	"net/url"
 	"sync"
 	"time"
@@ -29,7 +29,6 @@ type Txs = tx.Txs
 type Watcher struct {
 	tendermintAddr url.URL
 	rabbitMQAddr   url.URL
-	logger         *log.Logger
 	// how many txs we accumulate before sending them for further processing
 	batchSize int
 	network   string
@@ -38,7 +37,7 @@ type Watcher struct {
 }
 
 // NewWatcher returns instanciated Watcher
-func NewWatcher(l *log.Logger) (*Watcher, error) {
+func NewWatcher() (*Watcher, error) {
 	// figure out config
 	// error out if there is no config
 	flag.Parse()
@@ -59,7 +58,7 @@ func NewWatcher(l *log.Logger) (*Watcher, error) {
 	// create tx slice with our config capacity
 	txs := make([]Tx, 0, config.BatchSize)
 	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL,
-		logger: l, network: name, txs: txs, batchSize: config.BatchSize, precision: config.Precision}, nil
+		network: name, txs: txs, batchSize: config.BatchSize, precision: config.Precision}, nil
 }
 
 // listen creates goroutine which reads txs from a websocket and pushes them to Tx channel
@@ -84,7 +83,7 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 			close(txs)
 			return
 		}
-		l.logger.Printf("established websocket connection with %s at %s\n", l.network, conn.RemoteAddr())
+		fmt.Printf("established websocket connection with %s at %s\n", l.network, conn.RemoteAddr())
 		// query that specifies what events we want from tendermint node
 		err = conn.WriteMessage(websocket.TextMessage, txsQuery)
 		if err != nil {
@@ -110,11 +109,11 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 				}
 				tmTx, err := txparser.ParseTx(data)
 				if !tmTx.Valid {
-					l.logger.Printf("recieved invalid tx: %v", tmTx)
+					fmt.Printf("recieved invalid tx: %v", tmTx)
 					return
 				}
 				if err != nil {
-					l.logger.Printf("expected tendermint tx, got: %s\n%v", string(data), err)
+					fmt.Printf("expected tendermint tx, got: %s\n%v", string(data), err)
 					return
 				}
 
@@ -133,7 +132,7 @@ func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- Txs, errors <-chan error)
 	for {
 		select {
 		case tx := <-txsIn:
-			l.logger.Printf("recieved valid cosmos-sdk %s tx", tx.Type)
+			fmt.Printf("recieved valid cosmos-sdk %s tx", tx.Type)
 			l.txs = append(l.txs, tx)
 			if len(l.txs) == l.batchSize {
 				select {

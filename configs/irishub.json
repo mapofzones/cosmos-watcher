@@ -1,0 +1,1 @@
+{"NodeAddr":"ws://goz.irisnet.org:26657/websocket","RabbitMQAddr":"$AMQP","BatchSize":1,"Precision":0}

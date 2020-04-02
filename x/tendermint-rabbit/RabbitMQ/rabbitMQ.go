@@ -17,6 +17,7 @@ func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
 	if err != nil {
 		return nil, nil, err
 	}
+
 	// channel handles API stuff for us
 	ch, err := conn.Channel()
 	// create query for our messages
