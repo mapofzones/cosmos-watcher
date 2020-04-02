@@ -1,1 +1,1 @@
-worker: exec bin/cmd --config ./configs/example.json
+worker: exec bin/cmd --config ./configs/kava-ibc.json
