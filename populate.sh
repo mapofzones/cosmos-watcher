@@ -5,7 +5,7 @@ rm $DIR/configs/*
 AMQP=amqp://ggmjxdkq:HJQ4N7gABKrLDWoneYwr0M-qZZDconkO@clam.rmq.cloudamqp.com/ggmjxdkq
 
 TEMPLATE='{"NodeAddr":"ws://REPLACEME/websocket","RabbitMQAddr":"'$AMQP'","BatchSize":1,"Precision":0}'
-PROCFILETEMPLATE="worker: bin/cmd --config ./configs/"
+PROCFILETEMPLATE=": bin/cmd --config ./configs/"
 
 cd /tmp
 
@@ -23,7 +23,7 @@ for filename in /tmp/relayer/testnets/relayer-alpha/*.json; do
     echo $TEMPLATE > $DIR/configs/$(basename $filename)
     ADDR=$(jq <$filename '.["rpc-addr"]' -r | sed 's|.*://\(.*\)|\1|')
     sed -i 's/REPLACEME/'$ADDR'/g' $DIR/configs/$(basename $filename)
-    echo $PROCFILETEMPLATE$(basename $filename) >> $DIR/Procfile
+    echo "$(basename $filename .json)$PROCFILETEMPLATE$(basename $filename)" >> $DIR/Procfile
 done
 
 #aheroku ps:scale worker=$(cat $DIR/Procfile | wc -l)
