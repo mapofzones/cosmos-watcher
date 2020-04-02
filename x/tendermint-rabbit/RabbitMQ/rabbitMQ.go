@@ -21,7 +21,7 @@ func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
 	ch, err := conn.Channel()
 	// create query for our messages
 	q, err := ch.QueueDeclare(
-		"main",
+		"txs",
 		true,  // Durable means that messages are not lost when rabbitMQ exits
 		false, // auto-delete
 		false, // exclusive
