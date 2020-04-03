@@ -11,4 +11,4 @@ pylonchain: bin/watcher --config ./configs/pylonchain.json
 umbrellachain: bin/watcher --config ./configs/umbrellachain.json
 vitwitchain-1: bin/watcher --config ./configs/vitwitchain-1.json
 vitwitchain: bin/watcher --config ./configs/vitwitchain.json
-all: bin/watchers --configs ./configs
+all: bin/watchers --configs configs/

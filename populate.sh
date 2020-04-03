@@ -26,4 +26,4 @@ for filename in /tmp/relayer/testnets/relayer-alpha/*.json; do
     echo "$(basename $filename .json)$PROCFILETEMPLATE$(basename $filename)" >> $DIR/Procfile
 done
 
-echo "all: bin/watchers --configs ./configs" >> $DIR/Procfile
+echo "all: bin/watchers --configs configs/" >> $DIR/Procfile
