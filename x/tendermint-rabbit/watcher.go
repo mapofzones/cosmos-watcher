@@ -2,13 +2,13 @@ package watcher
 
 import (
 	"bytes"
-	"flag"
 	"fmt"
 	"net/url"
 	"sync"
 	"time"
 
 	"github.com/attractor-spectrum/cosmos-watcher/tx"
+	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
 	rabbitmq "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/RabbitMQ"
 	txparser "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit/tx"
 	"github.com/gorilla/websocket"
@@ -34,18 +34,11 @@ type Watcher struct {
 	network   string
 	txs       Txs
 	precision int
+	config    *config.Config
 }
 
 // NewWatcher returns instanciated Watcher
-func NewWatcher() (*Watcher, error) {
-	// figure out config
-	// error out if there is no config
-	flag.Parse()
-	config, err := GetConfig()
-	if err != nil {
-		return nil, err
-	}
-
+func NewWatcher(config *config.Config) (*Watcher, error) {
 	//we checked if urls are valid in GetConfig already
 	nodeURL, _ := url.Parse(config.NodeAddr)
 	rabbitURL, _ := url.Parse(config.RabbitMQAddr)
@@ -58,7 +51,7 @@ func NewWatcher() (*Watcher, error) {
 	// create tx slice with our config capacity
 	txs := make([]Tx, 0, config.BatchSize)
 	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL,
-		network: name, txs: txs, batchSize: config.BatchSize, precision: config.Precision}, nil
+		network: name, txs: txs, batchSize: config.BatchSize, precision: config.Precision, config: config}, nil
 }
 
 // listen creates goroutine which reads txs from a websocket and pushes them to Tx channel

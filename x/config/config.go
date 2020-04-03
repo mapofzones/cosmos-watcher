@@ -26,7 +26,38 @@ type Config struct {
 }
 
 // GetConfig returns config or error, signifying invalid config
-func GetConfig() (*Config, error) {
+func GetConfig(path string) (*Config, error) {
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	C := new(Config)
+	err = json.Unmarshal(bytes, C)
+	if err != nil {
+		return nil, err
+	}
+
+	// some basic error checking
+	if _, err := url.Parse(C.NodeAddr); err != nil {
+		return nil, err
+	}
+	if _, err := url.Parse(C.RabbitMQAddr); err != nil {
+		return nil, err
+	}
+	if C.BatchSize < 0 {
+		return nil, errors.New("batch size must be positive")
+	}
+	if C.Precision < 0 {
+		return nil, errors.New("precision must be positive")
+	}
+	return C, nil
+}
+
+// GetDefaultConfig returns config or error, signifying invalid config
+func GetDefaultConfig() (*Config, error) {
+	// parse cmd flags
+	flag.Parse()
+
 	if *configPath == examplePath {
 		return nil, errors.New("no config file specified")
 	}

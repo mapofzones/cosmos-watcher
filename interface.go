@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/attractor-spectrum/cosmos-watcher/tx"
+	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
 	tm "github.com/attractor-spectrum/cosmos-watcher/x/tendermint-rabbit"
 )
 
@@ -24,10 +25,10 @@ type Watcher interface {
 }
 
 // NewWatcher returns Watcher implementation based on implementation specified by t and logger l
-func NewWatcher(t WType) (Watcher, error) {
+func NewWatcher(t WType, config *config.Config) (Watcher, error) {
 	switch t {
 	case TmRabbit:
-		return tm.NewWatcher()
+		return tm.NewWatcher(config)
 	default:
 		return nil, errors.New("invalid type argument")
 	}

@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"net/url"
 	"testing"
+
+	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
 )
 
 func TestWatch(t *testing.T) {
-	l, err := NewWatcher()
+	c, err := config.GetDefaultConfig()
+	l, err := NewWatcher(c)
 	if err != nil {
 		t.Fatal(err)
 	}
