@@ -48,7 +48,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(configs)
 	var wg sync.WaitGroup
 	for _, c := range configs {
 		wg.Add(1)
