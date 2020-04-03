@@ -170,7 +170,7 @@ func (t Tx) Normalize(txTime time.Time, network string, precision int) (stdTx tx
 		stdTx.Type = tx.IbcRecieve
 		stdTx.Hash = t.Msg.Events.GetAttribute("tx", "hash")
 		return
-	case "default":
+	default:
 		stdTx.Sender = t.Msg.Events.GetAttribute("message", "sender")
 		stdTx.Precision = precision
 		stdTx.Hash = t.Msg.Events.GetAttribute("tx", "hash")
@@ -181,8 +181,6 @@ func (t Tx) Normalize(txTime time.Time, network string, precision int) (stdTx tx
 		stdTx.Data = data
 		return
 	}
-
-	return
 }
 
 func parseIbcSend(t Tx) tx.Tx {
