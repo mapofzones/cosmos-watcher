@@ -125,7 +125,7 @@ func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- Txs, errors <-chan error)
 	for {
 		select {
 		case tx := <-txsIn:
-			fmt.Printf("recieved valid cosmos-sdk %s tx", tx.Type)
+			fmt.Printf("recieved valid cosmos-sdk %s tx\n", tx.Type)
 			l.txs = append(l.txs, tx)
 			if len(l.txs) == l.batchSize {
 				select {

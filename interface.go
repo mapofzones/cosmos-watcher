@@ -19,6 +19,18 @@ const (
 // Tx is non-blockchain-specific transaction representation
 type Tx = tx.Tx
 
+// Tx type aliases
+type Type = tx.Type
+
+const (
+	Transfer   = tx.Transfer
+	Stake      = tx.Stake
+	Unstake    = tx.Unstake
+	IbcSend    = tx.IbcSend
+	IbcRecieve = tx.IbcRecieve
+	Other      = tx.Other
+)
+
 // Watcher interface listens on the listenAddr and sends data to the sendAddr
 type Watcher interface {
 	Watch() error
