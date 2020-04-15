@@ -101,7 +101,8 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 					return
 				}
 				// send it for debbuging
-				DebugSend(l.rabbitMQAddr, DebugData{Data: data, Chain: l.network, Time: time.Now()})
+				go DebugSend(l.rabbitMQAddr, DebugData{Data: data, Chain: l.network, Time: time.Now()})
+
 				tmTx, err := txparser.ParseTx(data)
 				if !tmTx.Valid {
 					fmt.Printf("recieved invalid tx: %v", tmTx)
