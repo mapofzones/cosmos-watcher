@@ -162,7 +162,7 @@ func (t Tx) Normalize(txTime time.Time, network string, precision int) (stdTx tx
 		stdTx.T = txTime
 		stdTx.Type = tx.IbcSend
 		return
-	case "update_client", "ics20/transfer":
+	case "update_client", "ics20/transfer", "ics04/opaque":
 		stdTx = parseIbcReceive(t)
 		stdTx.Precision = precision
 		stdTx.Network = network
@@ -230,16 +230,12 @@ func parseIbcSend(t Tx) tx.Tx {
 }
 
 func parseIbcReceive(t Tx) tx.Tx {
-	count := make(map[string]struct{})
 	var sender string
 	// this is how we decide who is the sender
 	for _, v := range t.Msg.Events["message"] {
 		if v.Key == "sender" {
-			if _, ok := count[v.Key]; ok {
-				sender = v.Key
-				break
-			}
-			count[v.Key] = struct{}{}
+			sender = v.Value
+			break
 		}
 	}
 
