@@ -8,7 +8,6 @@ import (
 
 	"github.com/attractor-spectrum/cosmos-watcher/tx"
 	"github.com/buger/jsonparser"
-	fastJson "github.com/buger/jsonparser"
 )
 
 // Handle used by jsonparser
@@ -58,11 +57,11 @@ type Tx struct {
 
 // getEventsData parses binary json in order to find events that we need
 func getEventsData(data []byte) ([]byte, error) {
-	result, _, _, err := fastJson.Get(data, "result")
+	result, _, _, err := jsonparser.Get(data, "result")
 	if err != nil {
 		return nil, ErrInvalidTx
 	}
-	events, _, _, err := fastJson.Get(result, "events")
+	events, _, _, err := jsonparser.Get(result, "events")
 	if err != nil {
 		return nil, ErrInvalidTx
 	}
@@ -78,12 +77,12 @@ func createEventsMap(data []byte) Events {
 	// lambda inside lambda stuff, don't think about it much
 	populateMap := func(key []byte, value []byte, dataType jsonparser.ValueType, offset int) error {
 		EventAndKey := strings.Split(string(key), ".")
-		fastJson.ArrayEach(value, func(value []byte, dataType fastJson.ValueType, offset int, err error) {
+		jsonparser.ArrayEach(value, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 			m[EventAndKey[0]] = append(m[EventAndKey[0]], keyVal{Key: EventAndKey[1], Value: string(value)})
 		})
 		return nil
 	}
-	fastJson.ObjectEach(data, populateMap)
+	jsonparser.ObjectEach(data, populateMap)
 
 	return m
 }
@@ -194,31 +193,31 @@ func parseIbcSend(t Tx) tx.Tx {
 	var out tx.Tx
 	// so we can parse raw string
 	packetData = strings.Replace(packetData, "\\", "", -1)
-	b := fastJson.StringToBytes(packetData)
+	b := jsonparser.StringToBytes(packetData)
 	// get rid of amino encoding boilerplate
-	b, _, _, err := fastJson.Get(b, "value")
+	b, _, _, err := jsonparser.Get(b, "value")
 	if err != nil {
 		panic(err)
 	}
 
-	sender, err := fastJson.GetString(b, "sender")
+	sender, err := jsonparser.GetString(b, "sender")
 	if err != nil {
 		panic(err)
 	}
 	out.Sender = sender
-	reciever, err := fastJson.GetString(b, "receiver")
+	reciever, err := jsonparser.GetString(b, "receiver")
 	if err != nil {
 		panic(err)
 	}
 	out.Recipient = reciever
 	var amount, denom string
 	// binary reprsentation of amount, which is array of amount-denom pairs
-	amount, err = fastJson.GetString(b, "amount", "[0]", "amount")
+	amount, err = jsonparser.GetString(b, "amount", "[0]", "amount")
 	if err != nil {
 		panic(err)
 	}
 	out.Quantity = amount
-	denom, err = fastJson.GetString(b, "amount", "[0]", "denom")
+	denom, err = jsonparser.GetString(b, "amount", "[0]", "denom")
 	if err != nil {
 		panic(err)
 	}
@@ -270,4 +269,10 @@ func splitCoin(s string) (string, string) {
 		}
 	}
 	panic("invalid amount string")
+}
+
+// HasErrCode returns true if tx result object contains code field, which means tx is not changing state
+func HasErrCode(data []byte) bool {
+	_, err := jsonparser.GetInt(data, "result", "data", "value", "TxResult", "result", "code")
+	return !(err == jsonparser.KeyPathNotFoundError)
 }

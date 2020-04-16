@@ -43,6 +43,9 @@ func getConfigs(files []string) ([]*config.Config, error) {
 }
 
 func main() {
+	// just log raw data  without any prefixes
+	log.SetFlags(0)
+
 	flag.Parse()
 	configs, err := getConfigs(configFiles(*configsFlag))
 	if err != nil {
@@ -60,6 +63,5 @@ func main() {
 			fmt.Println(w.Watch())
 		}()
 	}
-
 	wg.Wait()
 }

@@ -2,7 +2,7 @@ package watcher
 
 import (
 	"bytes"
-	"fmt"
+	"log"
 	"net/url"
 	"sync"
 	"time"
@@ -76,7 +76,7 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 			close(txs)
 			return
 		}
-		fmt.Printf("established websocket connection with %s at %s\n", l.network, conn.RemoteAddr())
+		log.Printf("established websocket connection with %s at %s\n", l.network, conn.RemoteAddr())
 		// query that specifies what events we want from tendermint node
 		err = conn.WriteMessage(websocket.TextMessage, txsQuery)
 		if err != nil {
@@ -103,13 +103,19 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 				// send it for debbuging
 				go DebugSend(l.rabbitMQAddr, DebugData{Data: data, Chain: l.network, Time: time.Now()})
 
+				// don't parse and send tx if it has error code
+				if txparser.HasErrCode(data) {
+					log.Printf("recieved invalid tx: %s", data)
+					return
+				}
+
 				tmTx, err := txparser.ParseTx(data)
 				if !tmTx.Valid {
-					fmt.Printf("recieved invalid tx: %v", tmTx)
+					log.Printf("recieved invalid tx: %v", tmTx)
 					return
 				}
 				if err != nil {
-					fmt.Printf("expected tendermint tx, got: %s\n%v", string(data), err)
+					log.Printf("expected tendermint tx, got: %s\n%v", string(data), err)
 					return
 				}
 
@@ -128,7 +134,7 @@ func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- Txs, errors <-chan error)
 	for {
 		select {
 		case tx := <-txsIn:
-			fmt.Printf("recieved valid cosmos-sdk %s tx\n", tx.Type)
+			log.Printf("recieved valid cosmos-sdk %s tx\n", tx.Type)
 			l.txs = append(l.txs, tx)
 			if len(l.txs) == l.batchSize {
 				select {

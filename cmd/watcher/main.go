@@ -8,6 +8,9 @@ import (
 )
 
 func main() {
+	// log raw data without time and date prefixes
+	log.SetFlags(0)
+
 	config, err := config.GetDefaultConfig()
 	if err != nil {
 		log.Fatal(err)
