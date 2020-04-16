@@ -101,7 +101,7 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 					return
 				}
 				// send it for debbuging
-				go DebugSend(l.rabbitMQAddr, DebugData{Data: data, Chain: l.network, Time: time.Now()})
+				go DebugSend(l.rabbitMQAddr, DebugData{Data: data, Chain: l.network, Time: time.Now().UTC()})
 
 				// don't parse and send tx if it has error code
 				if txparser.HasErrCode(data) {
