@@ -57,6 +57,8 @@ func main() {
 		w, err := watcher.NewWatcher(watcher.TmRabbit, c)
 		if err != nil {
 			fmt.Println(err)
+			// don't watch because we got networking error
+			continue
 		}
 		go func() {
 			defer wg.Done()
