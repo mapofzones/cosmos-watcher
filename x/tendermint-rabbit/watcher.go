@@ -150,14 +150,30 @@ func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- Txs, errors <-chan error)
 	}
 }
 
+// ugly global variables so we don't exceed connection limit
+// needs larger refactor later
+var txsOut chan<- tx.Txs = nil
+var errOut <-chan error = nil
+
+// and we need this ugly mutex
+var lock sync.RWMutex
+
+// consider refactoring by creating aggregated watcher struct which hold one rabbitmq connection inside
+
 // Watch implements watcher interface
 // Collects txs from tendermint websocket and sends them to rabbitMQ
 func (l *Watcher) Watch() error {
 	txsIn, errIn := l.listen()
-	txsOut, errOut, err := rabbitmq.TxQueue(l.rabbitMQAddr)
-	if err != nil {
-		return err
+	lock.RLock()
+	if txsOut == nil {
+		// declare errror like that because we need ugly variable shadowing
+		var err error
+		txsOut, errOut, err = rabbitmq.TxQueue(l.rabbitMQAddr)
+		if err != nil {
+			return err
+		}
 	}
+	lock.RUnlock()
 	errors := fanInErrors(errIn, errOut)
 	return l.serve(txsIn, txsOut, errors)
 }
