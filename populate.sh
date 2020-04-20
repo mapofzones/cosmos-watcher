@@ -12,14 +12,14 @@ cd /tmp
 if [ -d "/tmp/relayer" ];then
     rm -rf "/tmp/relayer"
 fi
-git clone https://github.com/cosmos/relayer.git
+git clone https://github.com/iqlusioninc/relayer.git
 
 if [ -f $DIR/Procfile ];then
 rm $DIR/Procfile
 touch $DIR/Procfile
 fi
 
-for filename in /tmp/relayer/testnets/relayer-alpha/*.json; do
+for filename in /tmp/relayer/testnets/relayer-alpha-2/*.json; do
     echo $TEMPLATE > $DIR/configs/$(basename $filename)
     ADDR=$(jq <$filename '.["rpc-addr"]' -r | sed 's|.*://\(.*\)|\1|')
     sed -i 's/REPLACEME/'$ADDR'/g' $DIR/configs/$(basename $filename)
