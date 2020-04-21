@@ -133,15 +133,17 @@ func (l *Watcher) listen() (<-chan Tx, <-chan error) {
 func (l *Watcher) serve(txsIn <-chan Tx, txsOut chan<- Txs, errors <-chan error) error {
 	for {
 		select {
-		case tx := <-txsIn:
-			log.Printf("recieved valid cosmos-sdk %s tx\n", tx.Type)
-			l.txs = append(l.txs, tx)
-			if len(l.txs) == l.batchSize {
-				select {
-				case txsOut <- l.txs:
-					l.txs = make([]Tx, 0, l.batchSize)
-				case err := <-errors:
-					return err
+		case tx, ok := <-txsIn:
+			if ok {
+				log.Printf("recieved valid cosmos-sdk %s tx\n", tx.Type)
+				l.txs = append(l.txs, tx)
+				if len(l.txs) == l.batchSize {
+					select {
+					case txsOut <- l.txs:
+						l.txs = make([]Tx, 0, l.batchSize)
+					case err := <-errors:
+						return err
+					}
 				}
 			}
 		case err := <-errors:
