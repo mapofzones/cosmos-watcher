@@ -247,12 +247,25 @@ func parseIbcReceive(t Tx) tx.Tx {
 		}
 	}
 
-	// get coin
+	// get transfer amount
 	var coinStr string
-	for _, v := range t.Msg.Events["transfer"] {
-		if v.Key == "amount" {
-			coinStr = v.Value
-			break
+	//new testnets should emit this event
+	if t.Msg.Events["fungible_token_packet"] != nil {
+		for _, kv := range t.Msg.Events["fungible_token_packet"] {
+			if kv.Key == "value" {
+				coinStr = kv.Value
+				break
+			}
+		}
+	} else {
+		transfers := []string{}
+		for _, kv := range t.Msg.Events["transfer"] {
+			if kv.Key == "amount" {
+				transfers = append(transfers, kv.Value)
+			}
+		}
+		if len(transfers) != 0 {
+			coinStr = transfers[len(transfers)-1]
 		}
 	}
 
@@ -262,13 +275,23 @@ func parseIbcReceive(t Tx) tx.Tx {
 }
 
 // return amount, denom strings
-func splitCoin(s string) (string, string) {
+func splitCoin(s string) (amount string, denom string) {
+	// split amount with denom
 	for i, ch := range s {
 		if !unicode.IsDigit(ch) {
-			return s[:i], s[i:]
+			amount, denom = s[:i], s[i:]
+			break
 		}
 	}
-	panic("invalid amount string")
+	// change transfer/chain_id/coin to coin
+	for i := len(denom) - 1; i != 0; i-- {
+		if denom[i] == byte('/') {
+			denom = denom[i+1:]
+			break
+		}
+	}
+
+	return
 }
 
 // HasErrCode returns true if tx result object contains code field, which means tx is not changing state
