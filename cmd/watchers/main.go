@@ -7,6 +7,7 @@ import (
 	"log"
 	"path/filepath"
 	"sync"
+	"time"
 
 	watcher "github.com/attractor-spectrum/cosmos-watcher"
 	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
@@ -62,7 +63,12 @@ func main() {
 		}
 		go func() {
 			defer wg.Done()
-			fmt.Println(w.Watch())
+			t := time.Minute
+			for {
+				fmt.Println(w.Watch())
+				time.Sleep(t)
+				t += t
+			}
 		}()
 	}
 	wg.Wait()
