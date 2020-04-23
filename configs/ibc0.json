@@ -1,0 +1,6 @@
+{
+    "NodeAddr": "ws://194.158.200.29:26457/websocket",
+    "RabbitMQAddr": "amqp://ggmjxdkq:HJQ4N7gABKrLDWoneYwr0M-qZZDconkO@clam.rmq.cloudamqp.com/ggmjxdkq",
+    "BatchSize": 1,
+    "Precision": 0
+}
