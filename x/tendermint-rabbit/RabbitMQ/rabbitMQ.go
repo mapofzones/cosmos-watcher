@@ -1,17 +1,18 @@
 package rabbitmq
 
 import (
+	"context"
 	"net/url"
 
-	"github.com/attractor-spectrum/cosmos-watcher/tx"
+	types "github.com/mapofzones/cosmos-watcher/types"
 	"github.com/streadway/amqp"
 )
 
-// TxQueue will call inside of itself another function which in an infinite loop recieves from channel
+// BlockQueue will call inside of itself another function which in an infinite loop receives from channel
 // same as websocket but the other way around
-// send txs to first returned value and listen to errors from error channel
-func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
-	txs := make(chan tx.Txs)
+// send blocks to blocks channel value and listen to errors from error channel
+func BlockQueue(ctx context.Context, nodeAddr url.URL) (chan<- types.Block, <-chan error, error) {
+	blockStream := make(chan types.Block)
 	errCh := make(chan error)
 	conn, err := amqp.Dial(nodeAddr.String())
 	if err != nil {
@@ -22,7 +23,7 @@ func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
 	ch, err := conn.Channel()
 	// create query for our messages
 	q, err := ch.QueueDeclare(
-		"txs",
+		"blocks",
 		true,  // Durable means that messages are not lost when rabbitMQ exits
 		false, // auto-delete
 		false, // exclusive
@@ -37,7 +38,7 @@ func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
 		defer ch.Close()
 		for {
 			select {
-			case data := <-txs:
+			case block := <-blockStream:
 				err = ch.Publish(
 					"",
 					q.Name,
@@ -45,21 +46,22 @@ func TxQueue(nodeAddr url.URL) (chan<- tx.Txs, <-chan error, error) {
 					false,
 					amqp.Publishing{
 						ContentType: "application/json",
-						Body:        data.Marshal(),
+						Body:        block.JSON(),
 					},
 				)
 				if err != nil {
 					errCh <- err
-					close(txs)
+					close(blockStream)
 					close(errCh)
 					return
 				}
+			case <-ctx.Done():
+				close(blockStream)
+				close(errCh)
+				return
 			}
 		}
 	}()
 
-	if err != nil {
-		return nil, nil, err
-	}
-	return txs, errCh, nil
+	return blockStream, errCh, nil
 }

@@ -1,20 +1,18 @@
 package watcher
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 	"testing"
-
-	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
 )
 
 func TestWatch(t *testing.T) {
-	c, err := config.GetDefaultConfig()
-	l, err := NewWatcher(c)
+	w, err := NewWatcher("tcp://localhost:26657", "amqp://guest@localhost:5672/")
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(l.Watch())
+	fmt.Println(w.Watch(context.Background()))
 }
 
 func TestNetworkName(t *testing.T) {
@@ -24,23 +22,4 @@ func TestNetworkName(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Println(name)
-}
-
-func TestPrintTx(t *testing.T) {
-	w := Watcher{
-		batchSize:      1,
-		network:        "testnet",
-		tendermintAddr: url.URL{Host: "localhost:26657", Path: "websocket", Scheme: "ws"},
-		precision:      0,
-	}
-
-	txs, err := w.listen()
-	go func() {
-		for e := range err {
-			fmt.Println(e)
-		}
-	}()
-	for tx := range txs {
-		fmt.Println(tx)
-	}
 }

@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	watcher "github.com/attractor-spectrum/cosmos-watcher"
-	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
+	watcher "github.com/mapofzones/cosmos-watcher"
+	config "github.com/mapofzones/cosmos-watcher/x/config"
 )
 
 var configsFlag *string

@@ -2,9 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 rm $DIR/configs/*
 
-AMQP=amqp://ggmjxdkq:HJQ4N7gABKrLDWoneYwr0M-qZZDconkO@clam.rmq.cloudamqp.com/ggmjxdkq
-
-TEMPLATE='{"NodeAddr":"ws://REPLACEME/websocket","RabbitMQAddr":"'$AMQP'","BatchSize":1,"Precision":0}'
+TEMPLATE='{"NodeAddr":"ws://REPLACEME/websocket"}'
 PROCFILETEMPLATE=": bin/watcher --config ./configs/"
 
 cd /tmp
