@@ -9,17 +9,7 @@ import (
 )
 
 // Subscribe dials tendermint rpc and returns two streams, one for committed blocks, one for transactions that occurred
-func Subscribe(ctx context.Context, tendermintRPC string) (<-chan Block, <-chan TxStatus, error) {
-	client, err := http.New(tendermintRPC, "/websocket")
-	if err != nil {
-		return nil, nil, err
-	}
-
-	err = client.Start()
-	if err != nil {
-		return nil, nil, err
-	}
-
+func Subscribe(ctx context.Context, client *http.HTTP) (<-chan Block, <-chan TxStatus, error) {
 	blockChan, err := client.Subscribe(context.Background(), "", "tm.event = 'NewBlock'", 10000)
 	if err != nil {
 		return nil, nil, err

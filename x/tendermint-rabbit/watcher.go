@@ -7,6 +7,7 @@ import (
 	types "github.com/mapofzones/cosmos-watcher/types"
 	rabbitmq "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/RabbitMQ"
 	"github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block"
+	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
 // Watcher implements the watcher interface described at the project root
@@ -15,8 +16,8 @@ import (
 type Watcher struct {
 	tendermintAddr url.URL
 	rabbitMQAddr   url.URL
-
-	chainID string
+	client         *http.HTTP
+	chainID        string
 }
 
 // NewWatcher returns instanciated Watcher
@@ -25,13 +26,23 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
 	nodeURL, _ := url.Parse(tendermintRPCAddr)
 	rabbitURL, _ := url.Parse(rabbitmqAddr)
 
-	//figure out name of the blockchain to which we are connecting
-	name, err := getNetworkName(*nodeURL)
+	client, err := http.New(nodeURL.String(), "/websocket")
+	if err != nil {
+		return nil, err
+	}
+	err = client.Start()
+
 	if err != nil {
 		return nil, err
 	}
 
-	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL, chainID: name}, nil
+	//figure out name of the blockchain to which we are connecting
+	info, err := client.Status()
+	if err != nil {
+		return nil, err
+	}
+
+	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL, chainID: info.NodeInfo.Network, client: client}, nil
 }
 
 // serve buffers and sends txs to rabbitmq, returns errors if something is wrong
@@ -65,7 +76,7 @@ func (w *Watcher) Watch(ctx context.Context) error {
 		return err
 	}
 
-	blocks, err := block.GetBlockStream(ctx, w.tendermintAddr.String())
+	blocks, err := block.GetBlockStream(ctx, w.client)
 	if err != nil {
 		return err
 	}

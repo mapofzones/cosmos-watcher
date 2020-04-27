@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+
+	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
 func init() {
@@ -57,13 +59,13 @@ var fullBlockStream chan WithTxs
 var initializedStream chan WithTxs
 
 // GetBlockStream returns read-only channel of completed blocks
-func GetBlockStream(ctx context.Context, tendermintRPC string) (<-chan WithTxs, error) {
+func GetBlockStream(ctx context.Context, c *http.HTTP) (<-chan WithTxs, error) {
 	// we already have our block stream created, with workers pushing blocks and txs to it
 	if initializedStream != nil {
 		return initializedStream, nil
 	}
 
-	blocks, txs, err := Subscribe(ctx, tendermintRPC)
+	blocks, txs, err := Subscribe(ctx, c)
 	// couldn't connect to node
 	if err != nil {
 		return nil, err

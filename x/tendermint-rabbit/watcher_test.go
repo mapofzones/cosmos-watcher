@@ -3,8 +3,11 @@ package watcher
 import (
 	"context"
 	"fmt"
-	"net/url"
+	"log"
 	"testing"
+
+	watcher "github.com/mapofzones/cosmos-watcher/types"
+	"github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block"
 )
 
 func TestWatch(t *testing.T) {
@@ -15,11 +18,18 @@ func TestWatch(t *testing.T) {
 	fmt.Println(w.Watch(context.Background()))
 }
 
-func TestNetworkName(t *testing.T) {
-	url := url.URL{Scheme: "http", Host: "localhost:26657"}
-	name, err := getNetworkName(url)
+func TestBlockStream(t *testing.T) {
+	w, err := NewWatcher("tcp://localhost:26657", "amqp://guest@localhost:5672/")
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(name)
+
+	blocks, err := block.GetBlockStream(context.Background(), w.client)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for b := range blocks {
+		fmt.Println(string(watcher.Normalize(b).JSON()))
+	}
 }
