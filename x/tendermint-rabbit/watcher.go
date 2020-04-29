@@ -31,7 +31,8 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
 	if err != nil {
 		return nil, err
 	}
-	client, err := http.New(nodeURL.Host, "/websocket")
+
+	client, err := http.New("http"+"://"+nodeURL.Host, "/websocket")
 	if err != nil {
 		return nil, err
 	}
