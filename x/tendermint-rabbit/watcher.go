@@ -32,16 +32,14 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
 		return nil, err
 	}
 
-	client, err := http.New("http"+"://"+nodeURL.Host, "/websocket")
+	client, err := http.New("tcp"+"://"+nodeURL.Host, "/websocket")
 	if err != nil {
 		return nil, err
 	}
 	err = client.Start()
-
 	if err != nil {
 		return nil, err
 	}
-
 	//figure out name of the blockchain to which we are connecting
 	info, err := client.Status()
 	if err != nil {

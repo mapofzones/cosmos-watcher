@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"time"
 
 	watcher "github.com/mapofzones/cosmos-watcher"
 	types "github.com/mapofzones/cosmos-watcher/types"
@@ -21,10 +22,43 @@ func main() {
 	log.SetFlags(0)
 	// parse flags from stdin
 	flag.Parse()
+	run()
+}
 
-	watcher, err := watcher.NewWatcher(types.TmRabbit, *tendermintRPC, *rabbitmqAddr)
-	if err != nil {
-		log.Fatal(err)
+var t = time.Minute
+
+func run() {
+	for {
+		then := time.Now()
+		w, err := watcher.NewWatcher(types.TmRabbit, *tendermintRPC, *rabbitmqAddr)
+		if err != nil {
+			log.Println(err)
+			goto Sleepy
+		}
+		log.Println(w.Watch(context.Background()))
+	Sleepy:
+		if time.Since(then).Minutes() > 10 {
+			t = time.Minute
+		} else {
+			t = getDelay()
+		}
+		log.Println("could not connect to ", *tendermintRPC)
+		time.Sleep(t)
+		continue
 	}
-	log.Fatal(watcher.Watch(context.Background()))
+
+}
+
+func getDelay() time.Duration {
+	switch t {
+	case time.Minute:
+		return time.Minute * 10
+	case time.Minute * 10:
+		return time.Minute * 30
+	case time.Minute * 30:
+		return time.Hour
+	case time.Hour:
+		return t
+	}
+	return t
 }
