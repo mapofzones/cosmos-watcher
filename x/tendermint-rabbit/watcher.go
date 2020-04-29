@@ -25,8 +25,7 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
 	//we checked if urls are valid in GetConfig already
 	nodeURL, _ := url.Parse(tendermintRPCAddr)
 	rabbitURL, _ := url.Parse(rabbitmqAddr)
-
-	client, err := http.New(nodeURL.String(), "/websocket")
+	client, err := http.New(nodeURL.Host, "/websocket")
 	if err != nil {
 		return nil, err
 	}
