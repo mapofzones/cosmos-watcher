@@ -29,6 +29,6 @@ echo "all: ./run_all.sh" >> $DIR/Procfile
 #populate run_all.sh
 echo "#!/bin/bash" > $DIR/run_all.sh
 for filename in $DIR/configs/*.json; do
-    echo "watcher --tmRPC \"$(jq <$filename .NodeAddr -r)\" --rabbitMQ \"$RABBITMQ\" &" >> $DIR/run_all.sh
+    echo "watcher --tmRPC \"$(jq <$filename .NodeAddr -r)\" --rabbitMQ" '"$RABBITMQ"'" &" >> $DIR/run_all.sh
 done
 echo "wait" >> $DIR/run_all.sh
