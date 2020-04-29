@@ -23,8 +23,14 @@ type Watcher struct {
 // NewWatcher returns instanciated Watcher
 func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
 	//we checked if urls are valid in GetConfig already
-	nodeURL, _ := url.Parse(tendermintRPCAddr)
-	rabbitURL, _ := url.Parse(rabbitmqAddr)
+	nodeURL, err := url.Parse(tendermintRPCAddr)
+	if err != nil {
+		return nil, err
+	}
+	rabbitURL, err := url.Parse(rabbitmqAddr)
+	if err != nil {
+		return nil, err
+	}
 	client, err := http.New(nodeURL.Host, "/websocket")
 	if err != nil {
 		return nil, err

@@ -50,7 +50,6 @@ func pushBlock(b Block) {
 		lock.Unlock()
 		return
 	}
-	return
 }
 
 // pushTx puts transaction in our map and, if block if full, sends it to block channel
@@ -79,5 +78,4 @@ func pushTx(tx TxStatus) {
 		lock.Unlock()
 		return
 	}
-	return
 }
