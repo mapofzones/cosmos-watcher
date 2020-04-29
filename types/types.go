@@ -14,7 +14,7 @@ type Block struct {
 	Height    int64  `json:"height"`
 	types.Txs `json:"txs"`
 	Results   []block.TxStatus `json:"tx_results"`
-	time.Time `json:"block_time"`
+	T         time.Time        `json:"block_time"`
 }
 
 // Normalize takes block with transactions and transforms it Block structure that is being send over rabbitmq
@@ -24,7 +24,7 @@ func Normalize(w block.WithTxs) Block {
 		Height:  w.B.Height,
 		Txs:     w.B.Txs,
 		Results: w.Txs,
-		Time:    w.B.Time,
+		T:       w.B.Time,
 	}
 }
 
