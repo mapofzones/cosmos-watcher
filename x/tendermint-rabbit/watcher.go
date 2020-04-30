@@ -64,10 +64,14 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan block.WithTxs, bl
 			}
 
 		case err := <-errors:
+			w.client.Stop()
+			w.client.Wait()
 			return err
 
 		case <-ctx.Done():
-			return w.client.Stop()
+			err := w.client.Stop()
+			w.client.Wait()
+			return err
 		}
 	}
 }
