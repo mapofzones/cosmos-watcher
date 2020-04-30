@@ -67,7 +67,7 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan block.WithTxs, bl
 			return err
 
 		case <-ctx.Done():
-			return nil
+			return w.client.Stop()
 		}
 	}
 }

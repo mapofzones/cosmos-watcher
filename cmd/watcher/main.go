@@ -36,8 +36,11 @@ func run() {
 		if err != nil {
 			log.Println(err)
 			goto Sleepy
+		} else {
+			ctx, cancel := context.WithCancel(context.Background())
+			log.Println(w.Watch(ctx))
+			cancel()
 		}
-		log.Println(w.Watch(context.Background()))
 	Sleepy:
 		if time.Since(then).Minutes() > 10 {
 			t = time.Minute
