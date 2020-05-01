@@ -26,6 +26,8 @@ done
 
 echo "all: ./run_all.sh" >> $DIR/Procfile
 
+python3 $DIR/goz_configs.py
+
 #populate run_all.sh
 echo "#!/bin/bash" > $DIR/run_all.sh
 for filename in $DIR/configs/*.json; do
@@ -33,3 +35,5 @@ for filename in $DIR/configs/*.json; do
     echo "watcher --tmRPC \"$(jq <$filename .NodeAddr -r)\" --rabbitMQ" '"$RABBITMQ"'" --zone $name &" >> $DIR/run_all.sh
 done
 echo "wait" >> $DIR/run_all.sh
+
+python3 $DIR/split.py
