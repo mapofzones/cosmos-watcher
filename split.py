@@ -21,6 +21,6 @@ while len(content) > 0:
     f.close()
 
 
-f = open(os.path.dirname(os.path.realpath(__file__)) + "Procfile", "a+")
+f = open(os.path.dirname(os.path.realpath(__file__)) + "/Procfile", "a+")
 for i in range(fileIndex):
     f.write("\nall_"+str(i)+": ""./run_all_"+str(i)+".sh")

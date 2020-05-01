@@ -42,3 +42,9 @@ vitwitchain: bin/watcher --config ./configs/vitwitchain.json
 vostok-1: bin/watcher --config ./configs/vostok-1.json
 westaking: bin/watcher --config ./configs/westaking.json
 all: ./run_all.sh
+
+all_0: ./run_all_0.sh
+all_1: ./run_all_1.sh
+all_2: ./run_all_2.sh
+all_3: ./run_all_3.sh
+all_4: ./run_all_4.sh
