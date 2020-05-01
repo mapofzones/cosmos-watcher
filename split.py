@@ -19,6 +19,7 @@ while len(content) > 0:
     content = content[10:]
     fileIndex += 1
     f.close()
+    os.chmod(f.name, 0o755)
 
 
 f = open(os.path.dirname(os.path.realpath(__file__)) + "/Procfile", "a+")
