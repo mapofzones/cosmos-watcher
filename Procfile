@@ -1,50 +1,54 @@
-01node: bin/watcher --config ./configs/01node.json
-ateam: bin/watcher --config ./configs/ateam.json
-capychain: bin/watcher --config ./configs/capychain.json
-chainylira: bin/watcher --config ./configs/chainylira.json
-coco-post-chain: bin/watcher --config ./configs/coco-post-chain.json
-Compass: bin/watcher --config ./configs/Compass.json
-dawnsworld: bin/watcher --config ./configs/dawnsworld.json
-dokia: bin/watcher --config ./configs/dokia.json
-dos-ibc: bin/watcher --config ./configs/dos-ibc.json
-dropschain: bin/watcher --config ./configs/dropschain.json
-everstakechain: bin/watcher --config ./configs/everstakechain.json
-freeflix-media-hub: bin/watcher --config ./configs/freeflix-media-hub.json
-gemstone: bin/watcher --config ./configs/gemstone.json
-gunchain: bin/watcher --config ./configs/gunchain.json
-hashquarkchain: bin/watcher --config ./configs/hashquarkchain.json
-ibc-band-testnet1: bin/watcher --config ./configs/ibc-band-testnet1.json
-iqlusionchain: bin/watcher --config ./configs/iqlusionchain.json
-irishub: bin/watcher --config ./configs/irishub.json
-isillienchain: bin/watcher --config ./configs/isillienchain.json
-kappa: bin/watcher --config ./configs/kappa.json
-kava-ibc: bin/watcher --config ./configs/kava-ibc.json
-konstellation: bin/watcher --config ./configs/konstellation.json
-mallowchain: bin/watcher --config ./configs/mallowchain.json
-melea-11: bin/watcher --config ./configs/melea-11.json
-morpheus-ibc-3000: bin/watcher --config ./configs/morpheus-ibc-3000.json
-newroadchain: bin/watcher --config ./configs/newroadchain.json
-nibiru-ibc: bin/watcher --config ./configs/nibiru-ibc.json
-nochainnogain: bin/watcher --config ./configs/nochainnogain.json
-okchain: bin/watcher --config ./configs/okchain.json
-ping-ibc: bin/watcher --config ./configs/ping-ibc.json
-ptpchain: bin/watcher --config ./configs/ptpchain.json
-pylonchain: bin/watcher --config ./configs/pylonchain.json
-retz80chain: bin/watcher --config ./configs/retz80chain.json
-setanchain: bin/watcher --config ./configs/setanchain.json
-simplystaking: bin/watcher --config ./configs/simplystaking.json
-stakingfund: bin/watcher --config ./configs/stakingfund.json
-supernova: bin/watcher --config ./configs/supernova.json
-umbrellachain: bin/watcher --config ./configs/umbrellachain.json
-vipnamai: bin/watcher --config ./configs/vipnamai.json
-vitwitchain-1: bin/watcher --config ./configs/vitwitchain-1.json
-vitwitchain: bin/watcher --config ./configs/vitwitchain.json
-vostok-1: bin/watcher --config ./configs/vostok-1.json
-westaking: bin/watcher --config ./configs/westaking.json
-all: ./run_all.sh
-
-all_0: ./run_all_0.sh
-all_1: ./run_all_1.sh
-all_2: ./run_all_2.sh
-all_3: ./run_all_3.sh
-all_4: ./run_all_4.sh
+01node: bin/watcher --rabbitMQ  --zone 01node
+ateam: bin/watcher --rabbitMQ  --zone ateam
+capychain: bin/watcher --rabbitMQ  --zone capychain
+chainylira: bin/watcher --rabbitMQ  --zone chainylira
+coco-post-chain: bin/watcher --rabbitMQ  --zone coco-post-chain
+Compass: bin/watcher --rabbitMQ  --zone Compass
+dawnsworld: bin/watcher --rabbitMQ  --zone dawnsworld
+dokia: bin/watcher --rabbitMQ  --zone dokia
+dos-ibc: bin/watcher --rabbitMQ  --zone dos-ibc
+dropschain: bin/watcher --rabbitMQ  --zone dropschain
+everstakechain: bin/watcher --rabbitMQ  --zone everstakechain
+freeflix-media-hub: bin/watcher --rabbitMQ  --zone freeflix-media-hub
+gemstone: bin/watcher --rabbitMQ  --zone gemstone
+gunchain: bin/watcher --rabbitMQ  --zone gunchain
+hashquarkchain: bin/watcher --rabbitMQ  --zone hashquarkchain
+ibc-band-testnet1: bin/watcher --rabbitMQ  --zone ibc-band-testnet1
+iqlusionchain: bin/watcher --rabbitMQ  --zone iqlusionchain
+irishub: bin/watcher --rabbitMQ  --zone irishub
+isillienchain: bin/watcher --rabbitMQ  --zone isillienchain
+kappa: bin/watcher --rabbitMQ  --zone kappa
+kava-ibc: bin/watcher --rabbitMQ  --zone kava-ibc
+konstellation: bin/watcher --rabbitMQ  --zone konstellation
+mallowchain: bin/watcher --rabbitMQ  --zone mallowchain
+melea-11: bin/watcher --rabbitMQ  --zone melea-11
+morpheus-ibc-3000: bin/watcher --rabbitMQ  --zone morpheus-ibc-3000
+newroadchain: bin/watcher --rabbitMQ  --zone newroadchain
+nibiru-ibc: bin/watcher --rabbitMQ  --zone nibiru-ibc
+nochainnogain: bin/watcher --rabbitMQ  --zone nochainnogain
+okchain: bin/watcher --rabbitMQ  --zone okchain
+ping-ibc: bin/watcher --rabbitMQ  --zone ping-ibc
+ptpchain: bin/watcher --rabbitMQ  --zone ptpchain
+pylonchain: bin/watcher --rabbitMQ  --zone pylonchain
+retz80chain: bin/watcher --rabbitMQ  --zone retz80chain
+setanchain: bin/watcher --rabbitMQ  --zone setanchain
+simplystaking: bin/watcher --rabbitMQ  --zone simplystaking
+stakingfund: bin/watcher --rabbitMQ  --zone stakingfund
+supernova: bin/watcher --rabbitMQ  --zone supernova
+umbrellachain: bin/watcher --rabbitMQ  --zone umbrellachain
+vipnamai: bin/watcher --rabbitMQ  --zone vipnamai
+vitwitchain-1: bin/watcher --rabbitMQ  --zone vitwitchain-1
+vitwitchain: bin/watcher --rabbitMQ  --zone vitwitchain
+vostok-1: bin/watcher --rabbitMQ  --zone vostok-1
+westaking: bin/watcher --rabbitMQ  --zone westaking
+all: ./scripts/run_all.sh
+all_0: ./scripts/run_all_0.sh
+all_1: ./scripts/run_all_1.sh
+all_2: ./scripts/run_all_2.sh
+all_3: ./scripts/run_all_3.sh
+all_4: ./scripts/run_all_4.sh
+goz_0: ./scripts/goz_0.sh
+goz_1: ./scripts/goz_1.sh
+goz_2: ./scripts/goz_2.sh
+goz_3: ./scripts/goz_3.sh
+goz_4: ./scripts/goz_4.sh
