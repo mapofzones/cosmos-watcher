@@ -38,7 +38,7 @@ func toBlockStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan B
 					return
 				}
 				select {
-				case blockStream <- blockFromTmResultBlock(v.Data.(types.EventDataNewBlock)):
+				case blockStream <- BlockFromTmResultBlock(v.Data.(types.EventDataNewBlock)):
 				case <-ctx.Done():
 				}
 			}
@@ -63,7 +63,7 @@ func toTxStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan TxSt
 					return
 				}
 				select {
-				case txStream <- txStatusFromTmResultTx(v.Data.(types.EventDataTx)):
+				case txStream <- TxStatusFromTmResultTx(v.Data.(types.EventDataTx)):
 				case <-ctx.Done():
 				}
 			}

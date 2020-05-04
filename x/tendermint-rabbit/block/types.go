@@ -10,8 +10,8 @@ type Block struct {
 	types.Txs
 }
 
-// blockFromTmResultBlock parses tm websocket response to fit our block structure
-func blockFromTmResultBlock(b types.EventDataNewBlock) Block {
+// BlockFromTmResultBlock parses tm websocket response to fit our block structure
+func BlockFromTmResultBlock(b types.EventDataNewBlock) Block {
 	return Block{
 		Header: b.Block.Header,
 		Txs:    b.Block.Txs,
@@ -25,9 +25,9 @@ type TxStatus struct {
 	Height     int64
 }
 
-// txStatusFromTmResultTx parses ResultTx to give us tx hash, height and error code
+// TxStatusFromTmResultTx parses ResultTx to give us tx hash, height and error code
 // actual tx body is stored in the block
-func txStatusFromTmResultTx(t types.EventDataTx) TxStatus {
+func TxStatusFromTmResultTx(t types.EventDataTx) TxStatus {
 	return TxStatus{
 		ResultCode: t.Result.Code,
 		Hash:       t.Tx.Hash(),
