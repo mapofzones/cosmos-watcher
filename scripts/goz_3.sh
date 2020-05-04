@@ -1,12 +1,12 @@
 #!/bin/bash
-watcher --tmRPC "ws://setan.ml:26657/websocket" --rabbitMQ "$RABBITMQ" --zone setan.ml &
-watcher --tmRPC "ws://goz.01node.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.01node.com &
-watcher --tmRPC "ws://capychain.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone capychain.com &
-watcher --tmRPC "ws://51.178.119.163:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 51.178.119.163 &
-watcher --tmRPC "ws://dropschain.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone dropschain.com &
-watcher --tmRPC "ws://goz.everstake.one:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.everstake.one &
-watcher --tmRPC "ws://51.178.119.162:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 51.178.119.162 &
-watcher --tmRPC "ws://goz.jptpool.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.jptpool.com &
-watcher --tmRPC "ws://goz.gunray.xyz:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.gunray.xyz &
-watcher --tmRPC "ws://49.12.106.6:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 49.12.106.6 &
+watcher --tmRPC "tcp://ibc.j96.me:26657" --rabbitMQ "$RABBITMQ" --zone plex &
+watcher --tmRPC "tcp://goz.cyphercore.io:26657" --rabbitMQ "$RABBITMQ" --zone petomhub &
+watcher --tmRPC "tcp://relayer.persistence.one:26657" --rabbitMQ "$RABBITMQ" --zone persistence &
+watcher --tmRPC "tcp://p2p-org-1.goz.p2p.org:26657" --rabbitMQ "$RABBITMQ" --zone p2p-org-1 &
+watcher --tmRPC "tcp://goz.ozonechain.xyz:26657" --rabbitMQ "$RABBITMQ" --zone ozone &
+watcher --tmRPC "tcp://goz.kysenpool.io:26657" --rabbitMQ "$RABBITMQ" --zone outpost &
+watcher --tmRPC "tcp://3.112.29.150:26657" --rabbitMQ "$RABBITMQ" --zone okchain &
+watcher --tmRPC "tcp://144.76.118.133:26657" --rabbitMQ "$RABBITMQ" --zone nodeasy &
+watcher --tmRPC "tcp://193.30.121.61:26657" --rabbitMQ "$RABBITMQ" --zone Node123 &
+watcher --tmRPC "tcp://goz.nibiru.network:26657" --rabbitMQ "$RABBITMQ" --zone nibiru-ibc &
 wait

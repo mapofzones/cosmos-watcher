@@ -19,31 +19,35 @@ for file in files:
 
 
 subprocess.run(
-    ["rm", "-rf", "/tmp/ibc-viz-server"]
+    ["rm", "-rf", "/tmp/goz"]
 )
 
 subprocess.run(
-    ["git", "clone", "https://github.com/allinbits/ibc-viz-server.git", "/tmp/ibc-viz-server"])
+    ["git", "clone", "https://github.com/cosmosdevs/GameOfZones.git", "/tmp/goz"])
 
-ibc_config = open("/tmp/ibc-viz-server/src/config.json")
-
-data = json.load(ibc_config)
-
-Procfile = open("Procfile", "a+")
-
-for blockchain in data["blockchains"]:
-    if blockchain not in chains.values():
-        open(os.path.dirname(os.path.realpath(__file__)) + "/../configs/" + blockchain + ".json",
-             "w+").write(json.dumps({"NodeAddr": "ws://"+blockchain+":26657/websocket"}))
-
+ibc_configs = [f for f in listdir(
+    "/tmp/goz/contestant_info") if isfile(join("/tmp/goz/contestant_info", f))]
 
 # add goz configs to a separate file
 # watcher --tmRPC "ws://ibc.staking.fund:26657/websocket" --rabbitMQ "$RABBITMQ" --zone stakingfund &
 f = open(os.path.dirname(os.path.realpath(__file__)) + "/goz.sh", "w+")
 os.chmod(f.name, 0o755)
 f.write("#!/bin/bash\n")
-for blockchain in data["blockchains"]:
-    f.write("watcher --tmRPC \"ws://"+blockchain+":26657/websocket\"" +
-            " --rabbitMQ \"$RABBITMQ\" --zone "+blockchain+" &\n")
 
+for file in ibc_configs:
+    try:
+        data = json.load(open("/tmp/goz/contestant_info/"+file))
+    except:
+        print("could not read: ", file)
+        continue
+    try:
+        if 'node_addr' in data:
+            f.write("watcher --tmRPC \"" + data["node_addr"] + "\"" +
+                    " --rabbitMQ \"$RABBITMQ\" --zone " + data["chain_id"] + " &\n")
+        if 'node addr' in data:
+            f.write("watcher --tmRPC \"" + data["node addr"] + "\"" +
+                    " --rabbitMQ \"$RABBITMQ\" --zone " + data["chain_id"] + " &\n")
+    except:
+        print("could not read: ", file)
+f.write('watcher --tmRPC "ws://35.233.155.199:26657/websocket" --rabbitMQ "$RABBITMQ" --zone gameofzoneshub-1a &\n')
 f.write("wait")

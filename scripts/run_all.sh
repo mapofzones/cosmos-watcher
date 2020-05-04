@@ -12,12 +12,9 @@ watcher --tmRPC "ws://dropschain.com:26657/websocket" --rabbitMQ "$RABBITMQ" --z
 watcher --tmRPC "ws://goz.everstake.one:26657/websocket" --rabbitMQ "$RABBITMQ" --zone everstakechain &
 watcher --tmRPC "ws://51.178.119.162:26657/websocket" --rabbitMQ "$RABBITMQ" --zone freeflix-media-hub &
 watcher --tmRPC "ws://goz.jptpool.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone gemstone &
-watcher --tmRPC "ws://goz.kalpatech.co:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.kalpatech.co &
 watcher --tmRPC "ws://goz.gunray.xyz:26657/websocket" --rabbitMQ "$RABBITMQ" --zone gunchain &
 watcher --tmRPC "ws://152.32.135.74:26657/websocket" --rabbitMQ "$RABBITMQ" --zone hashquarkchain &
 watcher --tmRPC "ws://ibc-testnet1.bandchain.org:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc-band-testnet1 &
-watcher --tmRPC "ws://ibc.cosmoon.org:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.cosmoon.org &
-watcher --tmRPC "ws://ibc.izo.ro:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.izo.ro &
 watcher --tmRPC "ws://fridayco.in:26657/websocket" --rabbitMQ "$RABBITMQ" --zone iqlusionchain &
 watcher --tmRPC "ws://goz.irisnet.org:26657/websocket" --rabbitMQ "$RABBITMQ" --zone irishub &
 watcher --tmRPC "ws://49.12.106.6:26657/websocket" --rabbitMQ "$RABBITMQ" --zone isillienchain &
@@ -26,7 +23,6 @@ watcher --tmRPC "ws://ibc-alpha.kava.io:26657/websocket" --rabbitMQ "$RABBITMQ" 
 watcher --tmRPC "ws://goz.konstellation.tech:26657/websocket" --rabbitMQ "$RABBITMQ" --zone konstellation &
 watcher --tmRPC "ws://3.211.57.24:26657/websocket" --rabbitMQ "$RABBITMQ" --zone mallowchain &
 watcher --tmRPC "ws://gozmelea.mycryptobets.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone melea-11 &
-watcher --tmRPC "ws://mmmh.sytes.net:26657/websocket" --rabbitMQ "$RABBITMQ" --zone mmmh.sytes.net &
 watcher --tmRPC "ws://ibc-alpha.desmos.network:26657/websocket" --rabbitMQ "$RABBITMQ" --zone morpheus-ibc-3000 &
 watcher --tmRPC "ws://ibct01.newroad.network:26657/websocket" --rabbitMQ "$RABBITMQ" --zone newroadchain &
 watcher --tmRPC "ws://167.179.104.210:26657/websocket" --rabbitMQ "$RABBITMQ" --zone nibiru-ibc &
@@ -46,5 +42,4 @@ watcher --tmRPC "ws://ibc1.vitwit.in:26657/websocket" --rabbitMQ "$RABBITMQ" --z
 watcher --tmRPC "ws://ibc.vitwit.in:26657/websocket" --rabbitMQ "$RABBITMQ" --zone vitwitchain &
 watcher --tmRPC "ws://chain.exchange-fees.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone vostok-1 &
 watcher --tmRPC "ws://ibc.westaking.io:26657/websocket" --rabbitMQ "$RABBITMQ" --zone westaking &
-watcher --tmRPC "ws://35.233.155.199:26657/websocket" --rabbitMQ "$RABBITMQ" --zone gameofzoneshub-1a &
 wait

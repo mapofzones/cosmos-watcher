@@ -1,11 +1,12 @@
 #!/bin/bash
-watcher --tmRPC "ws://tnet-csg.c9ret.xyz:26657/websocket" --rabbitMQ "$RABBITMQ" --zone tnet-csg.c9ret.xyz &
-watcher --tmRPC "ws://supernova.commonwealth.im:26657/websocket" --rabbitMQ "$RABBITMQ" --zone supernova.commonwealth.im &
-watcher --tmRPC "ws://173.249.12.108:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 173.249.12.108 &
-watcher --tmRPC "ws://chain.exchange-fees.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone chain.exchange-fees.com &
-watcher --tmRPC "ws://ibc.izo.ro:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.izo.ro &
-watcher --tmRPC "ws://goz.kalpatech.co:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.kalpatech.co &
-watcher --tmRPC "ws://goz.01node.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.01node.com &
-watcher --tmRPC "ws://ibc.cosmoon.org:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.cosmoon.org &
-watcher --tmRPC "ws://mmmh.sytes.net:26657/websocket" --rabbitMQ "$RABBITMQ" --zone mmmh.sytes.net &
+watcher --tmRPC "tcp://muzamint.com:26657/" --rabbitMQ "$RABBITMQ" --zone muzamint &
+watcher --tmRPC "tcp://goz.modulus.network:26657" --rabbitMQ "$RABBITMQ" --zone modulus-goz-1 &
+watcher --tmRPC "tcp://mmmh.sytes.net:26657" --rabbitMQ "$RABBITMQ" --zone mmmh-lazy &
+watcher --tmRPC "tcp://45.77.91.232:26657" --rabbitMQ "$RABBITMQ" --zone mintonium &
+watcher --tmRPC "tcp://melea.xyz:26657" --rabbitMQ "$RABBITMQ" --zone melea-111 &
+watcher --tmRPC "tcp://validating.for.co.ke:26657" --rabbitMQ "$RABBITMQ" --zone meeseeks &
+watcher --tmRPC "tcp://goz.labeleet.com:26657" --rabbitMQ "$RABBITMQ" --zone kugs-030 &
+watcher --tmRPC "tcp://goz.konstellation.tech:26657" --rabbitMQ "$RABBITMQ" --zone konstellation &
+watcher --tmRPC "tcp://goz.kiraex.com:10001" --rabbitMQ "$RABBITMQ" --zone kira-1 &
+watcher --tmRPC "tcp://213.32.70.133:26657" --rabbitMQ "$RABBITMQ" --zone jtbchain &
 wait

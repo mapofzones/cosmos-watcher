@@ -1,12 +1,12 @@
 #!/bin/bash
-watcher --tmRPC "ws://ibc-testnet1.bandchain.org:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc-testnet1.bandchain.org &
-watcher --tmRPC "ws://157.230.255.202:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 157.230.255.202 &
-watcher --tmRPC "ws://ibc-alpha.kava.io:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc-alpha.kava.io &
-watcher --tmRPC "ws://ibc-alpha.desmos.network:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc-alpha.desmos.network &
-watcher --tmRPC "ws://ibc.ping.pub:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.ping.pub &
-watcher --tmRPC "ws://3.211.57.24:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 3.211.57.24 &
-watcher --tmRPC "ws://ibc.staking.fund:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.staking.fund &
-watcher --tmRPC "ws://ibct01.newroad.network:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibct01.newroad.network &
-watcher --tmRPC "ws://13.231.12.191:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 13.231.12.191 &
-watcher --tmRPC "ws://95.217.135.90:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 95.217.135.90 &
+watcher --tmRPC "tcp://goz.starcluster.tech:26657" --rabbitMQ "$RABBITMQ" --zone starcluster-1337 &
+watcher --tmRPC "tcp://161.35.45.178:26657" --rabbitMQ "$RABBITMQ" --zone stakin &
+watcher --tmRPC "tcp://goz2.stake.zone:26657" --rabbitMQ "$RABBITMQ" --zone szchain &
+watcher --tmRPC "tcp://stakewolf.com:26657" --rabbitMQ "$RABBITMQ" --zone stakewolf &
+watcher --tmRPC "tcp://35.198.125.128:26657" --rabbitMQ "$RABBITMQ" --zone stakematic &
+watcher --tmRPC "tcp://goz.cosmos.fish:26657" --rabbitMQ "$RABBITMQ" --zone jellyfish &
+watcher --tmRPC "tcp://ibc.staked.cloud:26657" --rabbitMQ "$RABBITMQ" --zone staked-ibc &
+watcher --tmRPC "tcp://goz.stakebird.com:26657" --rabbitMQ "$RABBITMQ" --zone stakebird-1 &
+watcher --tmRPC "tcp://ibc.stake.sh:26657" --rabbitMQ "$RABBITMQ" --zone nuube-goz &
+watcher --tmRPC "tcp://goz.stakedao.org:26657" --rabbitMQ "$RABBITMQ" --zone stake-capital &
 wait

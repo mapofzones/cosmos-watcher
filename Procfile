@@ -52,3 +52,11 @@ goz_1: ./scripts/goz_1.sh
 goz_2: ./scripts/goz_2.sh
 goz_3: ./scripts/goz_3.sh
 goz_4: ./scripts/goz_4.sh
+goz_5: ./scripts/goz_5.sh
+goz_6: ./scripts/goz_6.sh
+goz_7: ./scripts/goz_7.sh
+goz_8: ./scripts/goz_8.sh
+goz_9: ./scripts/goz_9.sh
+goz_10: ./scripts/goz_10.sh
+goz_11: ./scripts/goz_11.sh
+goz_12: ./scripts/goz_12.sh
