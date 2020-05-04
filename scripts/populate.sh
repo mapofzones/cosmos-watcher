@@ -34,6 +34,8 @@ for filename in $DIR/../configs/*.json; do
     name=$(basename -- "$filename" .json)
     echo "watcher --tmRPC \"$(jq <$filename .NodeAddr -r)\" --rabbitMQ" '"$RABBITMQ"'" --zone $name &" >> $DIR/run_all.sh
 done
+
+echo "watcher --tmRPC \"ws://35.233.155.199:26657/websocket\" --rabbitMQ" '"$RABBITMQ"'" --zone gameofzoneshub-1a &" >> $DIR/run_all.sh
 echo "wait" >> $DIR/run_all.sh
 
 python3 $DIR/split.py

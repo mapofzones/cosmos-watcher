@@ -1,4 +1,5 @@
 #!/bin/bash
+watcher --tmRPC "ws://tnet-csg.c9ret.xyz:26657/websocket" --rabbitMQ "$RABBITMQ" --zone tnet-csg.c9ret.xyz &
 watcher --tmRPC "ws://supernova.commonwealth.im:26657/websocket" --rabbitMQ "$RABBITMQ" --zone supernova.commonwealth.im &
 watcher --tmRPC "ws://173.249.12.108:26657/websocket" --rabbitMQ "$RABBITMQ" --zone 173.249.12.108 &
 watcher --tmRPC "ws://chain.exchange-fees.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone chain.exchange-fees.com &

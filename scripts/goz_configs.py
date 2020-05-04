@@ -41,7 +41,7 @@ for blockchain in data["blockchains"]:
 # watcher --tmRPC "ws://ibc.staking.fund:26657/websocket" --rabbitMQ "$RABBITMQ" --zone stakingfund &
 f = open(os.path.dirname(os.path.realpath(__file__)) + "/goz.sh", "w+")
 os.chmod(f.name, 0o755)
-f.write("#!/bin/bash")
+f.write("#!/bin/bash\n")
 for blockchain in data["blockchains"]:
     f.write("watcher --tmRPC \"ws://"+blockchain+":26657/websocket\"" +
             " --rabbitMQ \"$RABBITMQ\" --zone "+blockchain+" &\n")

@@ -1,4 +1,5 @@
-#!/bin/bashwatcher --tmRPC "ws://gozmelea.mycryptobets.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone gozmelea.mycryptobets.com &
+#!/bin/bash
+watcher --tmRPC "ws://gozmelea.mycryptobets.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone gozmelea.mycryptobets.com &
 watcher --tmRPC "ws://ibc.westaking.io:26657/websocket" --rabbitMQ "$RABBITMQ" --zone ibc.westaking.io &
 watcher --tmRPC "ws://goz.irisnet.org:26657/websocket" --rabbitMQ "$RABBITMQ" --zone goz.irisnet.org &
 watcher --tmRPC "ws://achain.nodeateam.com:26657/websocket" --rabbitMQ "$RABBITMQ" --zone achain.nodeateam.com &
