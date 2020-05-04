@@ -17,6 +17,9 @@ type Block struct {
 	T         time.Time        `json:"block_time"`
 }
 
+// alias for convenient use
+type TxStatus = block.TxStatus
+
 // Normalize takes block with transactions and transforms it Block structure that is being send over rabbitmq
 func Normalize(w block.WithTxs) Block {
 	return Block{
