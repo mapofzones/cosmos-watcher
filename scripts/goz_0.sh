@@ -8,5 +8,5 @@ watcher --tmRPC "tcp://144.202.100.245:26657" --rabbitMQ "$RABBITMQ" --zone vbst
 watcher --tmRPC "tcp://goz.umbrellavalidator.com:26657" --rabbitMQ "$RABBITMQ" --zone umbrella &
 watcher --tmRPC "tcp://3.22.166.56:26657" --rabbitMQ "$RABBITMQ" --zone timetowinchain &
 watcher --tmRPC "tcp://thetechtrap.com:26657" --rabbitMQ "$RABBITMQ" --zone thetechtrap-goz &
-watcher --tmRPC "tcp:stratus.mycryptobets.com:26657" --rabbitMQ "$RABBITMQ" --zone stardust-1111 &
+watcher --tmRPC "tcp://supernovachain.cosmostation.io:26657" --rabbitMQ "$RABBITMQ" --zone supernovachain &
 wait

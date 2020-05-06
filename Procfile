@@ -33,6 +33,7 @@ pylonchain: bin/watcher --rabbitMQ  --zone pylonchain
 retz80chain: bin/watcher --rabbitMQ  --zone retz80chain
 setanchain: bin/watcher --rabbitMQ  --zone setanchain
 simplystaking: bin/watcher --rabbitMQ  --zone simplystaking
+stakematic-asia: bin/watcher --rabbitMQ  --zone stakematic-asia
 stakingfund: bin/watcher --rabbitMQ  --zone stakingfund
 supernova: bin/watcher --rabbitMQ  --zone supernova
 umbrellachain: bin/watcher --rabbitMQ  --zone umbrellachain
