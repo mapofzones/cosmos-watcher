@@ -28,18 +28,21 @@ func NewWorker(cp client.ClientProxy, broker *broker.Broker, queue Queue) Worker
 }
 
 // Start starts a worker by listening for new jobs (block heights) from the
-// given worker queue. Any failed job is logged and re-enqueued.
+// given worker queue. Any failed job is logged and re-processed.
 func (w Worker) Start() {
 	for i := range w.queue {
 		log.Info().Int64("height", i).Msg("processing block")
 
-		if err := w.process(i); err != nil {
-			// re-enqueue any failed job
-			// TODO: Implement exponential backoff or max retries for a block height.
-			go func() {
-				log.Info().Int64("height", i).Msg("re-enqueueing failed block")
-				w.queue <- i
-			}()
+		for {
+			if err := w.process(i); err != nil {
+				// re-enqueue any failed job
+				// TODO: Implement exponential backoff or max retries for a block height.
+				log.Info().Int64("height", i).Msg("re-processing failed block")
+				continue
+			} else {
+				log.Info().Int64("height", i).Msg("Successfully processed!")
+				break
+			}
 		}
 	}
 }

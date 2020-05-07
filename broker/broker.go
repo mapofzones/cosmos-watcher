@@ -14,6 +14,5 @@ func New() (*Broker, error) {
 
 func (broker *Broker) ExportBlock(block watcher.Block) error {
 	//todo
-	println("Block with height: ", block.Height, ". Done!")
 	return nil
 }
