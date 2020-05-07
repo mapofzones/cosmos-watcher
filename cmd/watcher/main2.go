@@ -6,6 +6,7 @@ import (
 	"github.com/mapofzones/cosmos-watcher/client"
 	"github.com/mapofzones/cosmos-watcher/processor"
 	"github.com/pkg/errors"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	tmtypes "github.com/tendermint/tendermint/types"
 	"os"
@@ -30,22 +31,23 @@ func init() {
 	configsFlag = flag.String("configs", "configs/", "path to a configs directory, where all files must be valid json config files")
 	atomic.StoreInt64(&startHeight, 50)
 	atomic.StoreInt64(&lastExportedHeight, atomic.LoadInt64(&startHeight)-1)
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+	workerCount = 1
 }
 
 func start() error {
 	//os.Getenv()
 
-	workerCount := 1
 	rpcNode := ""
 	workers := make([]processor.Worker, workerCount, workerCount)
 	cp, err := client.New(rpcNode)
 	if err != nil {
-		//todo
-		println("failed to start RPC client")
+		log.Error().Err(err).Msg("failed to start RPC client")
 		return errors.Wrap(err, "failed to start RPC client")
 	}
 	br, err := broker.New()
 	if err != nil {
+		log.Error().Err(err).Msg("failed to start broker")
 		return errors.Wrap(err, "failed to start broker")
 	}
 	exportQueue := processor.NewQueue(100)
@@ -58,7 +60,7 @@ func start() error {
 	// Start each blocking worker in a go-routine where the worker consumes jobs
 	// off of the export queue.
 	for i, w := range workers {
-		println("number", i+1, "starting worker...")
+		log.Info().Int("number", i+1).Msg("starting worker...")
 		go w.Start()
 	}
 
@@ -79,32 +81,30 @@ func enqueueMissingBlocks(exportQueue processor.Queue, cp client.ClientProxy) {
 	var err error
 	temporaryHeight, err := cp.LatestHeight()
 	if err != nil {
-		log.Fatal().Err(errors.Wrap(err, "failed to get lastest block from RPC client"))
+		log.Error().Err(err).Msg( "failed to get lastest block from RPC client")
 	}
 	atomic.StoreInt64(&latestHeight, temporaryHeight)
 
-	//todo: loggin
-	println("syncing missing blocks...")
-	println("latestHeight: ", atomic.LoadInt64(&latestHeight), " startHeight: ", atomic.LoadInt64(&startHeight))
+	log.Info().Int64("latestHeight: ", atomic.LoadInt64(&latestHeight)).
+		Int64(" startHeight: ", atomic.LoadInt64(&startHeight)).Msg("crawl started...")
 	for {
 		for atomic.StoreInt64(&currentHeight, atomic.LoadInt64(&startHeight));
 		atomic.LoadInt64(&currentHeight) <= atomic.LoadInt64(&latestHeight); atomic.AddInt64(&currentHeight, 1) {
-			println("index: ", atomic.LoadInt64(&currentHeight))
 			if atomic.LoadInt64(&currentHeight) <= 0 {
 				continue
 			}
-			log.Info().Int64(" currentHeight", atomic.LoadInt64(&currentHeight)).Msg(" crawler append queue!")
+			log.Info().Int64("currentHeight", atomic.LoadInt64(&currentHeight)).Msg("crawler adds height to the queue")
 			appendQueue(exportQueue, atomic.LoadInt64(&currentHeight))
 		}
 		time.Sleep(5 * time.Second)
 		if atomic.LoadInt64(&lastExportedHeight) >= atomic.LoadInt64(&currentHeight)-1 {
-			log.Info().Int64(" currentHeight", atomic.LoadInt64(&currentHeight)).
-				Int64("crawler processed height:", atomic.LoadInt64(&currentHeight)-1).Msg(" crawler finished!")
+			log.Info().Int64("currentHeight", atomic.LoadInt64(&currentHeight)).
+				Int64("crawler processed height:", atomic.LoadInt64(&currentHeight)-1).Msg("crawler finished!")
 			break
 		}
 		temporaryHeight, err := cp.LatestHeight()
 		if err != nil {
-			log.Fatal().Err(errors.Wrap(err, "failed to get latest block from RPC client"))
+			log.Error().Err(err).Msg("failed to get latest block from RPC client")
 		}
 		atomic.StoreInt64(&latestHeight, temporaryHeight)
 		atomic.StoreInt64(&startHeight, atomic.LoadInt64(&currentHeight) + 1)
@@ -120,7 +120,7 @@ func startNewBlockListener(exportQueue processor.Queue, cp client.ClientProxy) {
 	eventCh, cancel, err := cp.SubscribeNewBlocks("watcher-client")
 	defer cancel()
 	if err != nil {
-		log.Fatal().Err(errors.Wrap(err, "failed to subscribe to new blocks"))
+		log.Error().Err(err).Msg("failed to subscribe to new blocks")
 	}
 	log.Info().Msg("listening for new block events...")
 
@@ -131,18 +131,18 @@ func startNewBlockListener(exportQueue processor.Queue, cp client.ClientProxy) {
 			appendQueue(exportQueue, height)
 		} else {
 			atomic.StoreInt64(&latestHeight, height)
-			log.Info().Int64("latestHeight", atomic.LoadInt64(&latestHeight)).Msg(" has been increased")
+			log.Info().Int64("latestHeight", atomic.LoadInt64(&latestHeight)).Msg("has been increased")
 		}
 	}
 }
 
 func appendQueue(exportQueue processor.Queue, height int64) {
 	if height == atomic.LoadInt64(&lastExportedHeight)+1 {
-		println("height", height, "enqueueing missing block")
+		log.Info().Int64("height", height).Msg("enqueueing missing block")
 		exportQueue <- height
 		atomic.AddInt64(&lastExportedHeight, 1)
 	} else {
-		println("Wrong height:", height, " must be 1 more than  lastExportedHeight:", atomic.LoadInt64(&lastExportedHeight))
+		log.Info().Int64("Wrong height:", height).Int64("must be 1 more than  lastExportedHeight:", atomic.LoadInt64(&lastExportedHeight))
 	}
 }
 
@@ -165,8 +165,7 @@ func trapSignal() {
 
 	go func() {
 		sig := <-sigCh
-		//todo: logging
-		println("signal", sig.String(), "caught signal; shutting down...")
+		log.Info().Str("signal", sig.String()).Msg("caught signal; shutting down...")
 		defer wg.Done()
 	}()
 }

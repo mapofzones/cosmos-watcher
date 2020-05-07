@@ -35,7 +35,7 @@ func (w Worker) Start() {
 
 		for {
 			if err := w.process(i); err != nil {
-				// re-enqueue any failed job
+				// re-processing any failed job
 				// TODO: Implement exponential backoff or max retries for a block height.
 				log.Info().Int64("height", i).Msg("re-processing failed block")
 				continue
