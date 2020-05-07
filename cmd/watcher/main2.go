@@ -6,7 +6,8 @@ import (
 	"github.com/mapofzones/cosmos-watcher/client"
 	"github.com/mapofzones/cosmos-watcher/processor"
 	"github.com/pkg/errors"
-	"log"
+	"github.com/rs/zerolog/log"
+	tmtypes "github.com/tendermint/tendermint/types"
 	"os"
 	"os/signal"
 	"sync"
@@ -14,21 +15,22 @@ import (
 )
 
 var (
-	configsFlag *string
-	lowerHeight int64
-	biggerHeight int64
-	workerCount int16
-	wg          sync.WaitGroup
+	configsFlag  *string
+	startHeight  int64
+	latestHeight int64
+	currentHeight int64
+	workerCount  int16
+	lastExportedHeight int64
+	wg           sync.WaitGroup
 )
 
 func init() {
 	configsFlag = flag.String("configs", "configs/", "path to a configs directory, where all files must be valid json config files")
-	lowerHeight = 50
-	biggerHeight = 60
+	startHeight = 50
+	lastExportedHeight = startHeight-1
 }
 
 func start() error {
-
 	workerCount := 1
 	rpcNode := "<rpc node addr>"
 	workers := make([]processor.Worker, workerCount, workerCount)
@@ -59,37 +61,80 @@ func start() error {
 	// listen for and trap any OS signal to gracefully shutdown and exit
 	trapSignal()
 
-	go enqueueMissingBlocks(exportQueue)
-
+	go enqueueMissingBlocks(exportQueue, cp)
+	go startNewBlockListener(exportQueue, cp)
+	//time.Sleep(10 * time.Second)
 	// block main process (signal capture will call WaitGroup's Done)
 	wg.Wait()
-
 	return nil
 }
 
 // enqueueMissingBlocks enqueues jobs (block heights) for missed blocks starting
-// at the biggerHeight up until the lowerHeight.
-func enqueueMissingBlocks(exportQueue processor.Queue) {
+// at the latestHeight up until the startHeight.
+func enqueueMissingBlocks(exportQueue processor.Queue, cp client.ClientProxy) {
+	latestHeight, err := cp.LatestHeight()
+	if err != nil {
+		log.Fatal().Err(errors.Wrap(err, "failed to get lastest block from RPC client"))
+	}
 	//todo: loggin
 	println("syncing missing blocks...")
-
-	println("biggerHeight: ", biggerHeight, " lowerHeight: ", lowerHeight)
-	for i := lowerHeight; i <= biggerHeight; i++ {
-		println("index: ", i)
-		if i == 1 {
-			// skip the first block
-			continue
+	println("latestHeight: ", latestHeight, " startHeight: ", startHeight)
+	for {
+		for currentHeight := startHeight; currentHeight <= latestHeight; currentHeight++ {
+			println("index: ", currentHeight)
+			if currentHeight == 1 {
+				// skip the first block
+				continue
+			}
+			//todo: logging
+			appendQueue(exportQueue, currentHeight)
 		}
-		//todo: logging
+		if lastExportedHeight >= currentHeight {
+			break
+		}
+	}
+}
 
-		println("height", i, "enqueueing missing block")
-		exportQueue <- i
+// startNewBlockListener subscribes to new block events via the Tendermint RPC
+// and enqueues each new block height onto the provided queue. It blocks as new
+// blocks are incoming.
+func startNewBlockListener(exportQueue processor.Queue, cp client.ClientProxy) {
+	eventCh, cancel, err := cp.SubscribeNewBlocks("watcher-client")
+	defer cancel()
+
+	if err != nil {
+		log.Fatal().Err(errors.Wrap(err, "failed to subscribe to new blocks"))
+	}
+
+	log.Info().Msg("listening for new block events...")
+
+	for e := range eventCh {
+		newBlock := e.Data.(tmtypes.EventDataNewBlock).Block
+		height := newBlock.Header.Height
+
+		if height > currentHeight {
+			latestHeight = height
+			log.Info().Int64("latestHeight", latestHeight).Msg(" has been increased")
+		} else {
+			appendQueue(exportQueue, currentHeight)
+		}
+	}
+}
+
+func appendQueue(exportQueue processor.Queue, height int64) {
+	if height == lastExportedHeight+1 {
+		println("height", height, "enqueueing missing block")
+		exportQueue <- height
+		lastExportedHeight++
+	} else {
+		println("Wrong height:", height, " must be 1 more than  lastExportedHeight:", lastExportedHeight)
+		os.Exit(0)
 	}
 }
 
 func main() {
 	// just log raw data  without any prefixes
-	log.SetFlags(0)
+	//log.SetFlags(0)
 
 	flag.Parse()
 

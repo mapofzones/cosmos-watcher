@@ -13,7 +13,7 @@ type (
 	// Worker defines a job consumer that is responsible for getting and
 	// aggregating block and associated data and exporting it to a database.
 	Worker struct {
-		cp    *client.ClientProxy
+		cp    client.ClientProxy
 		broker *broker.Broker
 		queue Queue
 	}
@@ -23,7 +23,7 @@ func NewQueue(size int) Queue {
 	return make(chan int64, size)
 }
 
-func NewWorker(cp *client.ClientProxy, broker *broker.Broker, queue Queue) Worker {
+func NewWorker(cp client.ClientProxy, broker *broker.Broker, queue Queue) Worker {
 	return Worker{cp, broker,queue}
 }
 

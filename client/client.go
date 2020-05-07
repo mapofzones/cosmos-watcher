@@ -1,11 +1,12 @@
 package client
 
 import (
+	"context"
 	"encoding/hex"
 	watcher "github.com/mapofzones/cosmos-watcher/types"
-	"time"
-	tmctypes "github.com/tendermint/tendermint/rpc/core/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
+	tmctypes "github.com/tendermint/tendermint/rpc/core/types"
+	"time"
 )
 
 var clientTimeout = 5 * time.Second
@@ -29,13 +30,13 @@ func newRPCClient(serviceRPC string) (*http.HTTP, error) {
 	return service, err
 }
 
-func New(rpcNode string) (*ClientProxy, error) {
+func New(rpcNode string) (ClientProxy, error) {
 	rpcClient, err := newRPCClient(rpcNode)
 	if err != nil {
-		return nil, err
+		return ClientProxy{} , err
 	}
 
-	return &ClientProxy{clientService: rpcClient}, nil
+	return ClientProxy{clientService: rpcClient}, nil
 
 }
 
@@ -74,6 +75,16 @@ func (cp ClientProxy) GetTxsByBlock(block *tmctypes.ResultBlock) ([]watcher.TxSt
 		})
 	}
 	return s, nil
+}
+
+// SubscribeNewBlocks subscribes to the new block event handler through the RPC
+// client with the given subscriber name. An receiving only channel, context
+// cancel function and an error is returned. It is up to the caller to cancel
+// the context and handle any errors appropriately.
+func (cp ClientProxy) SubscribeNewBlocks(subscriber string) (<-chan tmctypes.ResultEvent, context.CancelFunc, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	eventCh, err := cp.clientService.Subscribe(ctx, subscriber, "tm.event = 'NewBlock'")
+	return eventCh, cancel, err
 }
 
 func (cp ClientProxy) CreateWatcherBlock(block *tmctypes.ResultBlock, txs []watcher.TxStatus) (watcher.Block, error) {
