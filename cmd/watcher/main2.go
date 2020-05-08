@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"github.com/mapofzones/cosmos-watcher/broker"
 	"github.com/mapofzones/cosmos-watcher/client"
 	"github.com/mapofzones/cosmos-watcher/processor"
@@ -11,6 +10,7 @@ import (
 	tmtypes "github.com/tendermint/tendermint/types"
 	"os"
 	"os/signal"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"syscall"
@@ -18,27 +18,95 @@ import (
 )
 
 var (
-	configsFlag  *string
 	startHeight  int64
 	latestHeight int64
 	currentHeight int64
 	lastExportedHeight int64
 	workerCount  int16
 	wg           sync.WaitGroup
+	rpcNode string
 )
 
+func getenvStr(key string) (string, error) {
+	variable := os.Getenv(key)
+	if variable == "" {
+		return variable, errors.New("getenv: empty environment variable " + key)
+	}
+	return variable, nil
+}
+
+func getenvInt(key string) (int, error) {
+	str, err := getenvStr(key)
+	if err != nil {
+		return 0, err
+	}
+	variable, err := strconv.Atoi(str)
+	if err != nil {
+		return 0, err
+	}
+	return variable, nil
+}
+
+func getenvIntSize(key string, size int) (int64, error) {
+	str, err := getenvStr(key)
+	if err != nil {
+		return 0, err
+	}
+	variable, err := strconv.ParseInt(str, 10, size)
+	if err != nil {
+		return 0, err
+	}
+	return variable, nil
+}
+
+func getenvInt64(key string) (int64, error) {
+	return getenvIntSize(key, 64)
+}
+
+func getenvInt16(key string) (int16, error) {
+	variable, err := getenvIntSize(key, 16)
+	return int16(variable), err
+}
+
+func getenvBool(key string) (bool, error) {
+	str, err := getenvStr(key)
+	if err != nil {
+		return false, err
+	}
+	variable, err := strconv.ParseBool(str)
+	if err != nil {
+		return false, err
+	}
+	return variable, nil
+}
+
 func init() {
-	configsFlag = flag.String("configs", "configs/", "path to a configs directory, where all files must be valid json config files")
-	atomic.StoreInt64(&startHeight, 50)
-	atomic.StoreInt64(&lastExportedHeight, atomic.LoadInt64(&startHeight)-1)
+	//os.Setenv("rpc", "")
+	//os.Setenv("startHeight", "1")
+	//os.Setenv("workerCount", "1")
+
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
-	workerCount = 1
+	height, err := getenvInt64("startHeight")
+	if err != nil {
+		log.Info().Msg("The value of startHeight is not set, the default value of 1 is used")
+		atomic.StoreInt64(&startHeight, 1)
+	} else {
+		atomic.StoreInt64(&startHeight, height)
+	}
+	atomic.StoreInt64(&lastExportedHeight, atomic.LoadInt64(&startHeight)-1)
+
+	workerCount, err = getenvInt16("workerCount")
+	if err != nil {
+		log.Info().Msg("The value of workerCount is not set, the default value of 1 is used")
+		workerCount = 1
+	}
+	rpcNode, err = getenvStr("rpc")
+	if err != nil {
+		log.Error().Err(err).Msg("failed to parse RPC env variable")
+	}
 }
 
 func start() error {
-	//os.Getenv()
-
-	rpcNode := ""
 	workers := make([]processor.Worker, workerCount, workerCount)
 	cp, err := client.New(rpcNode)
 	if err != nil {
@@ -147,11 +215,6 @@ func appendQueue(exportQueue processor.Queue, height int64) {
 }
 
 func main() {
-	// just log raw data  without any prefixes
-	//log.SetFlags(0)
-
-	flag.Parse()
-
 	start()
 }
 
