@@ -3,13 +3,14 @@ package block
 import (
 	"context"
 
+	block "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 	coretypes "github.com/tendermint/tendermint/rpc/core/types"
 	"github.com/tendermint/tendermint/types"
 )
 
 // Subscribe dials tendermint rpc and returns two streams, one for committed blocks, one for transactions that occurred
-func Subscribe(ctx context.Context, client *http.HTTP) (<-chan Block, <-chan TxStatus, error) {
+func Subscribe(ctx context.Context, client *http.HTTP) (<-chan block.TmBlock, <-chan block.TxStatus, error) {
 	blockChan, err := client.Subscribe(context.Background(), "", "tm.event = 'NewBlock'", 10000)
 	if err != nil {
 		return nil, nil, err
@@ -24,8 +25,8 @@ func Subscribe(ctx context.Context, client *http.HTTP) (<-chan Block, <-chan TxS
 }
 
 // this function returns values from c channel but also checks if it's closed and respects context
-func toBlockStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan Block {
-	blockStream := make(chan Block)
+func toBlockStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan block.TmBlock {
+	blockStream := make(chan block.TmBlock)
 
 	go func() {
 		defer close(blockStream)
@@ -38,7 +39,7 @@ func toBlockStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan B
 					return
 				}
 				select {
-				case blockStream <- BlockFromTmResultBlock(v.Data.(types.EventDataNewBlock)):
+				case blockStream <- block.BlockFromTmResultBlock(v.Data.(types.EventDataNewBlock)):
 				case <-ctx.Done():
 				}
 			}
@@ -49,8 +50,8 @@ func toBlockStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan B
 }
 
 // this function returns values from c channel but also checks if it's closed and respects context
-func toTxStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan TxStatus {
-	txStream := make(chan TxStatus)
+func toTxStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan block.TxStatus {
+	txStream := make(chan block.TxStatus)
 
 	go func() {
 		defer close(txStream)
@@ -63,7 +64,7 @@ func toTxStream(ctx context.Context, c <-chan coretypes.ResultEvent) <-chan TxSt
 					return
 				}
 				select {
-				case txStream <- TxStatusFromTmResultTx(v.Data.(types.EventDataTx)):
+				case txStream <- block.TxStatusFromTmResultTx(v.Data.(types.EventDataTx)):
 				case <-ctx.Done():
 				}
 			}
