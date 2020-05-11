@@ -8,6 +8,21 @@ import (
 	"github.com/tendermint/tendermint/types"
 )
 
+// Block is a unit of data being sent over in order to be processed
+type Block struct {
+	ChainID   string `json:"chain_id"`
+	Height    int64  `json:"height"`
+	types.Txs `json:"txs"`
+	Results   []TxStatus `json:"tx_results"`
+	T         time.Time  `json:"block_time"`
+}
+
+// JSON returns byte slice which represents block in json from
+func (b Block) JSON() []byte {
+	data, _ := json.Marshal(b)
+	return data
+}
+
 // TmBlock is like tendermint block but without unnecessary mutex and unused data
 type TmBlock struct {
 	types.Header
@@ -39,6 +54,17 @@ type WithTxs struct {
 func (w WithTxs) JSON() []byte {
 	bytes, _ := json.Marshal(w)
 	return bytes
+}
+
+// Normalize takes block with transactions and transforms it Block structure that is being send over rabbitmq
+func Normalize(w WithTxs) Block {
+	return Block{
+		ChainID: w.B.ChainID,
+		Height:  w.B.Height,
+		Txs:     w.B.Txs,
+		Results: w.Txs,
+		T:       w.B.Time,
+	}
 }
 
 // Full returns true if all txs are matched inside this block
@@ -74,31 +100,5 @@ func TxStatusFromTmResultTx(t types.EventDataTx) TxStatus {
 		ResultCode: t.Result.Code,
 		Hash:       t.Tx.Hash(),
 		Height:     t.Height,
-	}
-}
-
-// Block is a unit of data being sent over in order to be processed
-type Block struct {
-	ChainID   string `json:"chain_id"`
-	Height    int64  `json:"height"`
-	types.Txs `json:"txs"`
-	Results   []TxStatus `json:"tx_results"`
-	T         time.Time  `json:"block_time"`
-}
-
-// JSON returns byte slice which represents block in json from
-func (b Block) JSON() []byte {
-	data, _ := json.Marshal(b)
-	return data
-}
-
-// Normalize takes block with transactions and transforms it Block structure that is being send over rabbitmq
-func Normalize(w WithTxs) Block {
-	return Block{
-		ChainID: w.B.ChainID,
-		Height:  w.B.Height,
-		Txs:     w.B.Txs,
-		Results: w.Txs,
-		T:       w.B.Time,
 	}
 }

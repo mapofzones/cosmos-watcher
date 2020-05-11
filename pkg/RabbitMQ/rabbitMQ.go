@@ -4,17 +4,17 @@ import (
 	"context"
 	"net/url"
 
-	types "github.com/mapofzones/cosmos-watcher/types"
+	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
 	"github.com/streadway/amqp"
 )
 
 // BlockQueue will call inside of itself another function which in an infinite loop receives from channel
 // same as websocket but the other way around
 // send blocks to blocks channel value and listen to errors from error channel
-func BlockQueue(ctx context.Context, nodeAddr url.URL) (chan<- types.Block, <-chan error, error) {
-	blockStream := make(chan types.Block)
+func BlockQueue(ctx context.Context, addr url.URL, queue string) (chan<- block.Block, <-chan error, error) {
+	blockStream := make(chan block.Block)
 	errCh := make(chan error)
-	conn, err := amqp.Dial(nodeAddr.String())
+	conn, err := amqp.Dial(addr.String())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -23,7 +23,7 @@ func BlockQueue(ctx context.Context, nodeAddr url.URL) (chan<- types.Block, <-ch
 	ch, err := conn.Channel()
 	// create query for our messages
 	q, err := ch.QueueDeclare(
-		"blocks",
+		queue,
 		true,  // Durable means that messages are not lost when rabbitMQ exits
 		false, // auto-delete
 		false, // exclusive

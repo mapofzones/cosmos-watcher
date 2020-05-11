@@ -3,7 +3,7 @@ package block
 import (
 	"sync"
 
-	block "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block/types"
+	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
 )
 
 func init() {

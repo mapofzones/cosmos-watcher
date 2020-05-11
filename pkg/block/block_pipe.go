@@ -4,11 +4,17 @@ import (
 	"context"
 	"log"
 
-	crawler "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block/crawler"
-	block "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block/types"
-	websocket "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block/websocket"
+	crawler "github.com/mapofzones/cosmos-watcher/pkg/block/crawler"
+	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
+	websocket "github.com/mapofzones/cosmos-watcher/pkg/block/websocket"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
+
+// this the method that we export to the watcher
+// it returns ordered stream of blocks
+func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-chan block.Block {
+	return ordered(ctx, crawlerToWebsocket(ctx, client, startHeight), startHeight)
+}
 
 // normalizedStream is used to format websocket data correspondingly to our exported block structure
 func normalizedStream(ctx context.Context, blockWithTxs <-chan block.WithTxs) <-chan block.Block {
@@ -88,12 +94,6 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 	}()
 
 	return orderedStream
-}
-
-// this the method that we export to the watcher
-// it returns ordered stream of blocks
-func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-chan block.Block {
-	return ordered(ctx, crawlerToWebsocket(ctx, client, startHeight), startHeight)
 }
 
 // crawler to websocket check blockchain height and decides whether to run crawler or we can listen on websocket

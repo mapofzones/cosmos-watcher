@@ -1,16 +1,9 @@
 package watcher
 
 import (
-	"github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block"
+	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
 )
 
-// alias for convenient use
+// aliases for other projects
 type TxStatus = block.TxStatus
-
-// WType is used to choose Watcher implementation
-type WType = uint32
-
-const (
-	// TmRabbit is tendermint and rabbitMQ watcher interface implementation
-	TmRabbit WType = iota
-)
+type Block = block.Block

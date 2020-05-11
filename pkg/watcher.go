@@ -3,10 +3,11 @@ package watcher
 import (
 	"context"
 	"net/url"
+	"strconv"
 
+	rabbitmq "github.com/mapofzones/cosmos-watcher/pkg/RabbitMQ"
+	"github.com/mapofzones/cosmos-watcher/pkg/block"
 	types "github.com/mapofzones/cosmos-watcher/types"
-	rabbitmq "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/RabbitMQ"
-	"github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
@@ -18,16 +19,22 @@ type Watcher struct {
 	rabbitMQAddr   url.URL
 	client         *http.HTTP
 	chainID        string
+	startingHeight int64
 }
 
 // NewWatcher returns instanciated Watcher
-func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
+func NewWatcher(tendermintRPCAddr, rabbitmqAddr string, startingHeight string) (*Watcher, error) {
 	//we checked if urls are valid in GetConfig already
 	nodeURL, err := url.Parse(tendermintRPCAddr)
 	if err != nil {
 		return nil, err
 	}
 	rabbitURL, err := url.Parse(rabbitmqAddr)
+	if err != nil {
+		return nil, err
+	}
+
+	height, err := strconv.ParseInt(startingHeight, 10, 64)
 	if err != nil {
 		return nil, err
 	}
@@ -46,18 +53,18 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string) (*Watcher, error) {
 		return nil, err
 	}
 
-	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL, chainID: info.NodeInfo.Network, client: client}, nil
+	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL, chainID: info.NodeInfo.Network, client: client, startingHeight: height}, nil
 }
 
 // serve buffers and sends txs to rabbitmq, returns errors if something is wrong
 // Accepts input and output channels, also an error channel if something goes wrong
-func (w *Watcher) serve(ctx context.Context, blockInput <-chan block.WithTxs, blockOutput chan<- types.Block, errors <-chan error) error {
+func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, blockOutput chan<- types.Block, errors <-chan error) error {
 	for {
 		select {
 		case block, ok := <-blockInput:
 			if ok {
 				select {
-				case blockOutput <- types.Normalize(block):
+				case blockOutput <- block:
 				case err := <-errors:
 					return err
 				}
@@ -79,15 +86,12 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan block.WithTxs, bl
 // Watch implements watcher interface
 // Collects txs from tendermint websocket and sends them to rabbitMQ
 func (w *Watcher) Watch(ctx context.Context) error {
-	queue, errors, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr)
+	queue, errors, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, w.chainID)
 	if err != nil {
 		return err
 	}
 
-	blocks, err := block.GetBlockStream(ctx, w.client)
-	if err != nil {
-		return err
-	}
+	blocks := block.BlockStream(ctx, w.client, w.startingHeight)
 
 	return w.serve(ctx, blocks, queue, errors)
 }

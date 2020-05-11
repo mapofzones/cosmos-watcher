@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	block "github.com/mapofzones/cosmos-watcher/x/tendermint-rabbit/block/types"
+	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
