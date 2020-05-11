@@ -90,7 +90,15 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 	return orderedStream
 }
 
+// this the method that we export to the watcher
+// it returns ordered stream of blocks
 func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-chan block.Block {
+	return ordered(ctx, crawlerToWebsocket(ctx, client, startHeight), startHeight)
+}
+
+// crawler to websocket check blockchain height and decides whether to run crawler or we can listen on websocket
+// if we caught up with blockchain, this method switches from crawler stream to websocket stream
+func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int64) <-chan block.Block {
 	blockStream := make(chan block.Block)
 
 	go func() {
