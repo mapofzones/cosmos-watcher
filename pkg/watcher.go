@@ -2,7 +2,7 @@ package watcher
 
 import (
 	"context"
-	"net/url"
+	"errors"
 	"strconv"
 
 	rabbitmq "github.com/mapofzones/cosmos-watcher/pkg/RabbitMQ"
@@ -15,8 +15,8 @@ import (
 // this particular implementation is used to listen on tendermint websocket and
 // send results to RabbitMQ
 type Watcher struct {
-	tendermintAddr url.URL
-	rabbitMQAddr   url.URL
+	tendermintAddr string
+	rabbitMQAddr   string
 	client         *http.HTTP
 	chainID        string
 	startingHeight int64
@@ -24,22 +24,13 @@ type Watcher struct {
 
 // NewWatcher returns instanciated Watcher
 func NewWatcher(tendermintRPCAddr, rabbitmqAddr string, startingHeight string) (*Watcher, error) {
-	//we checked if urls are valid in GetConfig already
-	nodeURL, err := url.Parse(tendermintRPCAddr)
-	if err != nil {
-		return nil, err
-	}
-	rabbitURL, err := url.Parse(rabbitmqAddr)
-	if err != nil {
-		return nil, err
-	}
 
 	height, err := strconv.ParseInt(startingHeight, 10, 64)
 	if err != nil {
 		return nil, err
 	}
 
-	client, err := http.New("tcp"+"://"+nodeURL.Host, "/websocket")
+	client, err := http.New(tendermintRPCAddr, "/websocket")
 	if err != nil {
 		return nil, err
 	}
@@ -53,24 +44,25 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string, startingHeight string) (
 		return nil, err
 	}
 
-	return &Watcher{tendermintAddr: *nodeURL, rabbitMQAddr: *rabbitURL, chainID: info.NodeInfo.Network, client: client, startingHeight: height}, nil
+	return &Watcher{tendermintAddr: tendermintRPCAddr, rabbitMQAddr: rabbitmqAddr, chainID: info.NodeInfo.Network, client: client, startingHeight: height}, nil
 }
 
 // serve buffers and sends txs to rabbitmq, returns errors if something is wrong
 // Accepts input and output channels, also an error channel if something goes wrong
-func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, blockOutput chan<- types.Block, errors <-chan error) error {
+func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, blockOutput chan<- types.Block, errorStream <-chan error) error {
 	for {
 		select {
 		case block, ok := <-blockInput:
-			if ok {
-				select {
-				case blockOutput <- block:
-				case err := <-errors:
-					return err
-				}
+			if !ok {
+				return errors.New("block channel is closed")
 			}
-
-		case err := <-errors:
+			select {
+			case blockOutput <- block:
+				continue
+			case err := <-errorStream:
+				return err
+			}
+		case err := <-errorStream:
 			w.client.Stop()
 			w.client.Wait()
 			return err

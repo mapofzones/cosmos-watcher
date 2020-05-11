@@ -48,48 +48,50 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 		defer close(orderedStream)
 		expectedHeight := startHeight
 
-		blocks := map[int64]block.Block{}
 		for {
-			// go through the local cache
-			if block, ok := blocks[expectedHeight]; ok {
-				select {
-				case orderedStream <- block:
-					delete(blocks, expectedHeight)
-					expectedHeight++
-					continue
-				case <-ctx.Done():
-					return
+			blocks := map[int64]block.Block{}
+			for {
+				// go through the local cache
+				if block, ok := blocks[expectedHeight]; ok {
+					select {
+					case orderedStream <- block:
+						delete(blocks, expectedHeight)
+						expectedHeight++
+						continue
+					case <-ctx.Done():
+						return
+					}
 				}
-			}
-			break
-		}
-		select {
-		case block, ok := <-orderedStream:
-			// return since the source channel closed
-			if !ok {
-				return
-			}
-
-			// should not happen, but worth checking in case of a bug somewhere in the pipe
-			if block.Height < expectedHeight {
 				break
 			}
-
-			// if we got the block we expected to get
-			if block.Height == expectedHeight {
-				select {
-				case orderedStream <- block:
-					expectedHeight++
-				case <-ctx.Done():
+			select {
+			case block, ok := <-stream:
+				// return since the source channel is closed
+				if !ok {
 					return
 				}
-				// if this is not the block we need
-			} else {
-				// put it in local cache
-				blocks[block.Height] = block
+
+				// should not happen, but worth checking in case of a bug somewhere in the pipe
+				if block.Height < expectedHeight {
+					break
+				}
+
+				// if we got the block we expected to get
+				if block.Height == expectedHeight {
+					select {
+					case orderedStream <- block:
+						expectedHeight++
+					case <-ctx.Done():
+						return
+					}
+					// if this is not the block we need
+				} else {
+					// put it in local cache
+					blocks[block.Height] = block
+				}
+			case <-ctx.Done():
+				return
 			}
-		case <-ctx.Done():
-			return
 		}
 	}()
 

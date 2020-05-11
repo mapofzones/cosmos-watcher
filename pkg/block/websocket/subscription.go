@@ -11,12 +11,12 @@ import (
 
 // Subscribe dials tendermint rpc and returns two streams, one for committed blocks, one for transactions that occurred
 func Subscribe(ctx context.Context, client *http.HTTP) (<-chan block.TmBlock, <-chan block.TxStatus, error) {
-	blockChan, err := client.Subscribe(context.Background(), "", "tm.event = 'NewBlock'", 10000)
+	blockChan, err := client.Subscribe(ctx, "", "tm.event = 'NewBlock'", 10000)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	txChan, err := client.Subscribe(context.Background(), "", "tm.event = 'Tx'", 10000)
+	txChan, err := client.Subscribe(ctx, "", "tm.event = 'Tx'", 10000)
 	if err != nil {
 		return nil, nil, err
 	}

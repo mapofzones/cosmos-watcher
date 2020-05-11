@@ -2,7 +2,6 @@ package rabbitmq
 
 import (
 	"context"
-	"net/url"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
 	"github.com/streadway/amqp"
@@ -11,16 +10,20 @@ import (
 // BlockQueue will call inside of itself another function which in an infinite loop receives from channel
 // same as websocket but the other way around
 // send blocks to blocks channel value and listen to errors from error channel
-func BlockQueue(ctx context.Context, addr url.URL, queue string) (chan<- block.Block, <-chan error, error) {
+func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Block, <-chan error, error) {
 	blockStream := make(chan block.Block)
 	errCh := make(chan error)
-	conn, err := amqp.Dial(addr.String())
+	conn, err := amqp.Dial(addr)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	// channel handles API stuff for us
 	ch, err := conn.Channel()
+	if err != nil {
+		return nil, nil, err
+	}
+
 	// create query for our messages
 	q, err := ch.QueueDeclare(
 		queue,
@@ -38,7 +41,10 @@ func BlockQueue(ctx context.Context, addr url.URL, queue string) (chan<- block.B
 		defer ch.Close()
 		for {
 			select {
-			case block := <-blockStream:
+			case block, ok := <-blockStream:
+				if !ok {
+					return
+				}
 				err = ch.Publish(
 					"",
 					q.Name,
