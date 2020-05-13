@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	watcher, err := watcher.NewWatcher(os.Getenv("tmRPC"), os.Getenv("rabbitmq"), os.Getenv("StartHeight"))
+	watcher, err := watcher.NewWatcher(os.Getenv("rpc"), os.Getenv("rabbitmq"), os.Getenv("height"))
 	if err != nil {
 		log.Fatal(err)
 	}
