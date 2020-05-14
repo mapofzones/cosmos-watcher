@@ -78,7 +78,7 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, bloc
 // Watch implements watcher interface
 // Collects txs from tendermint websocket and sends them to rabbitMQ
 func (w *Watcher) Watch(ctx context.Context) error {
-	queue, errors, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, w.chainID)
+	queue, errors, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, "block")
 	if err != nil {
 		return err
 	}
