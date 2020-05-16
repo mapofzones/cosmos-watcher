@@ -48,8 +48,8 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 		defer close(orderedStream)
 		expectedHeight := startHeight
 
+		blocks := map[int64]block.Block{}
 		for {
-			blocks := map[int64]block.Block{}
 			for {
 				// go through the local cache
 				if block, ok := blocks[expectedHeight]; ok {
