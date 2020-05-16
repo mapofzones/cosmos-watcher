@@ -19,7 +19,7 @@ if [ "$height" == "" ]; then
 fi
 
 # increment height since we need to start getting blocks from last_processed_height +1
-((height++))
+let "height=height+1"
 export height
 
 echo "Try connect to $rpc on $chain_id with $height"
