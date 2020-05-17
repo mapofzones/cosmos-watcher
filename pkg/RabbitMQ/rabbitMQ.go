@@ -24,6 +24,14 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Bl
 		return nil, nil, err
 	}
 
+	// confirm deliveries to ensure strict order
+	if err := ch.Confirm(false); err != nil {
+		return nil, nil, err
+	}
+
+	notifications := make(chan amqp.Confirmation)
+	ch.NotifyPublish(notifications)
+
 	// create query for our messages
 	q, err := ch.QueueDeclare(
 		queue,
@@ -48,7 +56,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Bl
 				err = ch.Publish(
 					"",
 					q.Name,
-					false,
+					true,
 					false,
 					amqp.Publishing{
 						ContentType: "application/json",
@@ -61,6 +69,21 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Bl
 					close(errCh)
 					return
 				}
+				// now wait for confirmation in order to preserve order
+				select {
+				case confirmation := <-notifications:
+					if !confirmation.Ack {
+						//server could not receive our  publishing
+						close(blockStream)
+						close(errCh)
+						return
+					}
+				case <-ctx.Done():
+					close(blockStream)
+					close(errCh)
+					return
+				}
+
 			case <-ctx.Done():
 				close(blockStream)
 				close(errCh)
