@@ -6,6 +6,7 @@ MoZ demo video: https://www.youtube.com/watch?v=Q30mDD2N3UY
 The MoZ watcher is a standalone process that takes 2 input arguments: 
 * a zone RPC address, 
 * a starting block number, 
+
 and listens to the given zone starting from the given block number.
 
 # Responsibilies
