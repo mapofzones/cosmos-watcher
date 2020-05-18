@@ -1,23 +1,18 @@
 package main
 
 import (
+	"context"
 	"log"
+	"os"
 
-	watcher "github.com/attractor-spectrum/cosmos-watcher"
-	config "github.com/attractor-spectrum/cosmos-watcher/x/config"
+	watcher "github.com/mapofzones/cosmos-watcher/pkg"
 )
 
 func main() {
-	// log raw data without time and date prefixes
-	log.SetFlags(0)
+	watcher, err := watcher.NewWatcher(os.Getenv("rpc"), os.Getenv("rabbitmq"), os.Getenv("height"))
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	config, err := config.GetDefaultConfig()
-	if err != nil {
-		log.Fatal(err)
-	}
-	watcher, err := watcher.NewWatcher(watcher.TmRabbit, config)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Fatal(watcher.Watch())
+	log.Fatal(watcher.Watch(context.Background()))
 }
