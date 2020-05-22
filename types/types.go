@@ -1,9 +1,11 @@
 package watcher
 
-import (
-	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
-)
+type StateTransition interface {
+	Type() string
+}
 
-// aliases for other projects
-type TxStatus = block.TxStatus
-type Block = block.Block
+type Block interface {
+	Height() int64
+	ChainID() string
+	Transitions() []StateTransition
+}
