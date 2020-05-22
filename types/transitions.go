@@ -8,6 +8,8 @@ var (
 
 // Transaction is a special type of transition because it can
 // contain multiple other transitions inside of it
+// this is done in order to know what transitions belong to what tx
+// or to know even that they have happened outside of tx
 type Transaction struct {
 	Hash        string
 	Accepted    bool
@@ -20,8 +22,10 @@ func (t Transaction) Type() string {
 
 type Transfer struct {
 	Sender, Recipient string
-	Amount            int64
-	Coin              string
+	Amount            []struct {
+		Amount int64
+		Coin   string
+	}
 }
 
 func (t Transfer) Type() string {
@@ -81,7 +85,8 @@ func (t CreateChannel) Type() string {
 
 // this transition covers openAck and openConfirm
 type OpenChannel struct {
-	ID string
+	ID     string
+	PortID string
 }
 
 func (t OpenChannel) Type() string {
@@ -95,4 +100,23 @@ type CloseChannel struct {
 
 func (t CloseChannel) Type() string {
 	return "close_channel"
+}
+
+// transitions related to IBC token transfer
+// https://github.com/cosmos/ics/tree/master/spec/ics-020-fungible-token-transfer
+// there are two actions performed on open channels responsible for ibc token transfer:
+// SendPacket(transfer.MsgTransfer) and receivePacket(channel.MsgPackget)
+
+// same as regular transfer, but with channel specified
+type IBCTransfer struct {
+	ChannelID         string
+	Sender, Recipient string
+	Amount            []struct {
+		Amount int64
+		Coin   string
+	}
+}
+
+func (t IBCTransfer) Type() string {
+	return "ibc_transfer"
 }
