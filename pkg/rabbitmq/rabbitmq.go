@@ -3,30 +3,28 @@ package rabbitmq
 import (
 	"context"
 
-	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
+	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/streadway/amqp"
+	"github.com/tendermint/go-amino"
 )
 
 // BlockQueue will call inside of itself another function which in an infinite loop receives from channel
-// same as websocket but the other way around
-// send blocks to blocks channel value and listen to errors from error channel
-func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Block, <-chan error, error) {
-	blockStream := make(chan block.Block)
-	errCh := make(chan error)
+func BlockQueue(ctx context.Context, addr string, queue string, cdc *amino.Codec) (chan<- watcher.Block, error) {
+	blockStream := make(chan watcher.Block)
 	conn, err := amqp.Dial(addr)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	// channel handles API stuff for us
 	ch, err := conn.Channel()
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	// confirm deliveries to ensure strict order
 	if err := ch.Confirm(false); err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	notifications := make(chan amqp.Confirmation)
@@ -42,7 +40,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Bl
 		nil,
 	)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	go func() {
 		defer conn.Close()
@@ -53,20 +51,19 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Bl
 				if !ok {
 					return
 				}
-				err = ch.Publish(
+				data := cdc.MustMarshalJSON(block)
+				err := ch.Publish(
 					"",
 					q.Name,
 					true,
 					false,
 					amqp.Publishing{
 						ContentType: "application/json",
-						Body:        block.JSON(),
+						Body:        data,
 					},
 				)
 				if err != nil {
-					errCh <- err
 					close(blockStream)
-					close(errCh)
 					return
 				}
 				// now wait for confirmation in order to preserve order
@@ -75,22 +72,19 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- block.Bl
 					if !confirmation.Ack {
 						//server could not receive our  publishing
 						close(blockStream)
-						close(errCh)
 						return
 					}
 				case <-ctx.Done():
 					close(blockStream)
-					close(errCh)
 					return
 				}
 
 			case <-ctx.Done():
 				close(blockStream)
-				close(errCh)
 				return
 			}
 		}
 	}()
 
-	return blockStream, errCh, nil
+	return blockStream, nil
 }
