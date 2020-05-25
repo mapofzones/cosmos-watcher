@@ -105,8 +105,8 @@ func TxStatusFromTmResultTx(t types.EventDataTx) TxStatus {
 }
 
 type ProcessedBlock struct {
-	height           int64
-	chainID          string
+	Height_          int64
+	ChainID_         string
 	T                time.Time
 	BeginBlockEvents []watcher.Message
 	Txs              []watcher.Message
@@ -114,11 +114,11 @@ type ProcessedBlock struct {
 }
 
 func (b ProcessedBlock) Height() int64 {
-	return b.height
+	return b.Height_
 }
 
 func (b ProcessedBlock) ChainID() string {
-	return b.chainID
+	return b.ChainID_
 }
 
 func (b ProcessedBlock) Time() time.Time {

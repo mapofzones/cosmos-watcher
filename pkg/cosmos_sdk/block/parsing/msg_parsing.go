@@ -5,17 +5,12 @@ import (
 	"log"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/auth"
 	connection "github.com/cosmos/cosmos-sdk/x/ibc/03-connection"
 	channel "github.com/cosmos/cosmos-sdk/x/ibc/04-channel"
 	tendermint "github.com/cosmos/cosmos-sdk/x/ibc/07-tendermint/types"
 	transfer "github.com/cosmos/cosmos-sdk/x/ibc/20-transfer"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 )
-
-func parseTx(tx auth.StdTx) watcher.Message {
-	return watcher.Transaction{}
-}
 
 func parseMsg(msg sdk.Msg) []watcher.Message {
 	switch msg := msg.(type) {

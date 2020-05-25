@@ -13,7 +13,7 @@ var (
 type Transaction struct {
 	Hash     string
 	Accepted bool
-	messages []Message
+	Messages []Message
 }
 
 func (t Transaction) Type() string {
