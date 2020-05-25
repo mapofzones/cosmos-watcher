@@ -1,10 +1,10 @@
-package block
+package cosmos
 
 import (
 	"context"
 	"log"
 
-	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
+	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
 

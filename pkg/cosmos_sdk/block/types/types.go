@@ -1,10 +1,11 @@
-package block
+package cosmos
 
 import (
 	"bytes"
 	"encoding/json"
 	"time"
 
+	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/tendermint/tendermint/types"
 )
 
@@ -101,4 +102,35 @@ func TxStatusFromTmResultTx(t types.EventDataTx) TxStatus {
 		Hash:       t.Tx.Hash(),
 		Height:     t.Height,
 	}
+}
+
+type ProcessedBlock struct {
+	height           int64
+	chainID          string
+	T                time.Time
+	BeginBlockEvents []watcher.Message
+	Txs              []watcher.Message
+	EndBlockEvents   []watcher.Message
+}
+
+func (b ProcessedBlock) Height() int64 {
+	return b.height
+}
+
+func (b ProcessedBlock) ChainID() string {
+	return b.chainID
+}
+
+func (b ProcessedBlock) Time() time.Time {
+	return b.T
+}
+
+func (b ProcessedBlock) Messages() []watcher.Message {
+	res := make([]watcher.Message, 0, len(b.BeginBlockEvents)+
+		len(b.Txs)+len(b.EndBlockEvents))
+
+	res = append(res, b.BeginBlockEvents...)
+	res = append(res, b.Txs...)
+	res = append(res, b.EndBlockEvents...)
+	return res
 }

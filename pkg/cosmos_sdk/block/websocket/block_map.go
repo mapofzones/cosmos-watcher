@@ -1,9 +1,9 @@
-package block
+package cosmos
 
 import (
 	"sync"
 
-	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
+	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 )
 
 func init() {

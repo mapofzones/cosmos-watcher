@@ -39,7 +39,7 @@ func (t Transfer) Type() string {
 
 type CreateClient struct {
 	// client ID
-	ID string
+	ClientID string
 	// type of lite-client
 	ClientType string
 	// chain-ID of the blockchain to which client belongs to
@@ -58,8 +58,8 @@ func (t CreateClient) Type() string {
 //  Initialize connection with chain some other chain
 // this could be openInit on chain A or openTry on chain B
 type CreateConnection struct {
-	ID       string
-	ClientID string
+	ConnectionID string
+	ClientID     string
 }
 
 func (t CreateConnection) Type() string {
@@ -75,8 +75,9 @@ func (t CreateConnection) Type() string {
 
 // this message covers openInit and openTry
 type CreateChannel struct {
-	ID           string
-	connectionID string
+	ChannelID    string
+	ConnectionID string
+	PortID       string
 }
 
 func (t CreateChannel) Type() string {
@@ -85,8 +86,7 @@ func (t CreateChannel) Type() string {
 
 // this message covers openAck and openConfirm
 type OpenChannel struct {
-	ID     string
-	PortID string
+	ChannelID string
 }
 
 func (t OpenChannel) Type() string {
@@ -95,7 +95,7 @@ func (t OpenChannel) Type() string {
 
 // this message covers closeInit and closeConfirm
 type CloseChannel struct {
-	ID string
+	ChannelID string
 }
 
 func (t CloseChannel) Type() string {

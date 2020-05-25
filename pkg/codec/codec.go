@@ -6,7 +6,7 @@ import (
 )
 
 func RegisterTypes(codec *amino.Codec) {
-	codec.RegisterInterface((*watcher.StateTransition)(nil), nil)
+	codec.RegisterInterface((*watcher.Message)(nil), nil)
 	codec.RegisterInterface((*watcher.Block)(nil), nil)
 	codec.RegisterConcrete(&watcher.Transaction{}, "watcher/transaction", nil)
 	codec.RegisterConcrete(&watcher.Transfer{}, "watcher/transfer", nil)

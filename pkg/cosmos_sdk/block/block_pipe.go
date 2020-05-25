@@ -1,12 +1,12 @@
-package block
+package cosmos
 
 import (
 	"context"
 	"log"
 
-	crawler "github.com/mapofzones/cosmos-watcher/pkg/block/crawler"
-	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
-	websocket "github.com/mapofzones/cosmos-watcher/pkg/block/websocket"
+	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
+	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
+	websocket "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/websocket"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
 

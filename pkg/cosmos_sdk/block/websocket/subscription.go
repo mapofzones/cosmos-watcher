@@ -1,9 +1,9 @@
-package block
+package cosmos
 
 import (
 	"context"
 
-	block "github.com/mapofzones/cosmos-watcher/pkg/block/types"
+	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 	coretypes "github.com/tendermint/tendermint/rpc/core/types"
 	"github.com/tendermint/tendermint/types"
