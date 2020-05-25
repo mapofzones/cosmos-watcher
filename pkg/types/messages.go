@@ -2,18 +2,18 @@ package watcher
 
 // interface compile-time checks
 var (
-	_ StateTransition = Transaction{}
-	_ StateTransition = Transfer{}
+	_ Message = Transaction{}
+	_ Message = Transfer{}
 )
 
-// Transaction is a special type of transition because it can
-// contain multiple other transitions inside of it
-// this is done in order to know what transitions belong to what tx
+// Transaction is a special type of message because it can
+// contain multiple other messages inside of it
+// this is done in order to know what messages belong to what tx
 // or to know even that they have happened outside of tx
 type Transaction struct {
-	Hash        string
-	Accepted    bool
-	Transitions []StateTransition
+	Hash     string
+	Accepted bool
+	messages []Message
 }
 
 func (t Transaction) Type() string {
@@ -32,9 +32,9 @@ func (t Transfer) Type() string {
 	return "transfer"
 }
 
-// IBC protocol transitions
+// IBC protocol messages
 
-// client-related transitions
+// client-related messages
 // https://github.com/cosmos/ics/tree/master/spec/ics-002-client-semantics
 
 type CreateClient struct {
@@ -50,7 +50,7 @@ func (t CreateClient) Type() string {
 	return "create_client"
 }
 
-// connection-related transitions
+// connection-related messages
 // https://github.com/cosmos/ics/tree/master/spec/ics-003-connection-semantics
 // There are 4 parts of connection handshake between chain A and B:
 //  openInit(A), openTry(B), openAck(A), openConfirm(B)
@@ -66,14 +66,14 @@ func (t CreateConnection) Type() string {
 	return "create_connection"
 }
 
-// channel-related transitions
+// channel-related messages
 // https://github.com/cosmos/ics/tree/master/spec/ics-004-channel-and-packet-semantics
 // There are 4 parts of channel handshake between chain A and B:
 //  openInit(A), openTry(B), openAck(A), openConfirm(B)
 // There are also two methods responsible for closing channels:
 // closeInit(A), closeConfirm(B)
 
-// this transition covers openInit and openTry
+// this message covers openInit and openTry
 type CreateChannel struct {
 	ID           string
 	connectionID string
@@ -83,7 +83,7 @@ func (t CreateChannel) Type() string {
 	return "create_channel"
 }
 
-// this transition covers openAck and openConfirm
+// this message covers openAck and openConfirm
 type OpenChannel struct {
 	ID     string
 	PortID string
@@ -93,7 +93,7 @@ func (t OpenChannel) Type() string {
 	return "open_channel"
 }
 
-// this transition covers closeInit and closeConfirm
+// this message covers closeInit and closeConfirm
 type CloseChannel struct {
 	ID string
 }
@@ -102,7 +102,7 @@ func (t CloseChannel) Type() string {
 	return "close_channel"
 }
 
-// transitions related to IBC token transfer
+// messages related to IBC token transfer
 // https://github.com/cosmos/ics/tree/master/spec/ics-020-fungible-token-transfer
 // there are two actions performed on open channels responsible for ibc token transfer:
 // SendPacket(transfer.MsgTransfer) and receivePacket(channel.MsgPackget)
