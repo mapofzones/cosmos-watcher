@@ -4,16 +4,74 @@ import (
 	"context"
 	"log"
 
+	simapp "github.com/cosmos/cosmos-sdk/simapp"
 	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
+	parsing "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/parsing"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	websocket "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/websocket"
+	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
-// this the method that we export to the watcher
-// it returns ordered stream of blocks
-func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-chan block.Block {
-	return ordered(ctx, crawlerToWebsocket(ctx, client, startHeight), startHeight)
+// BlockStream returns channel of ordered blocks
+func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-chan watcher.Block {
+	return toInterface(
+		ctx, decodedStream(
+			ctx, ordered(
+				ctx, crawlerToWebsocket(
+					ctx, client, startHeight), startHeight)))
+}
+
+// decodedStream is used to convert decode amino-encoded blocks with cosmos-sdk codec
+// as well as to convert the data in blocks to messages specified by the app
+func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.ProcessedBlock {
+	processedStream := make(chan block.ProcessedBlock)
+	_, cdc := simapp.MakeCodecs()
+
+	go func() {
+		defer close(processedStream)
+		for {
+			select {
+			case block := <-stream:
+				decoded, err := parsing.DecodeBlock(cdc, block)
+				if err != nil {
+					log.Println(err)
+					return
+				}
+				select {
+				case processedStream <- decoded:
+				case <-ctx.Done():
+					return
+				}
+			case <-ctx.Done():
+				return
+			}
+		}
+	}()
+
+	return processedStream
+}
+
+func toInterface(ctx context.Context, stream <-chan block.ProcessedBlock) <-chan watcher.Block {
+	out := make(chan watcher.Block)
+
+	go func() {
+		defer close(out)
+		for {
+			select {
+			case block := <-stream:
+				select {
+				case out <- block:
+				case <-ctx.Done():
+					return
+				}
+			case <-ctx.Done():
+				return
+			}
+		}
+	}()
+
+	return out
 }
 
 // normalizedStream is used to format websocket data correspondingly to our exported block structure

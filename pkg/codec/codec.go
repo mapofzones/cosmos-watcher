@@ -1,13 +1,23 @@
 package watcher
 
 import (
+	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/tendermint/go-amino"
 )
 
 func RegisterTypes(codec *amino.Codec) {
-	codec.RegisterInterface((*watcher.Message)(nil), nil)
+	registerBlocks(codec)
+	registerTransitions(codec)
+}
+
+func registerBlocks(codec *amino.Codec) {
 	codec.RegisterInterface((*watcher.Block)(nil), nil)
+	codec.RegisterConcrete(&cosmos.ProcessedBlock{}, "watcher/cosmos_block", nil)
+}
+
+func registerTransitions(codec *amino.Codec) {
+	codec.RegisterInterface((*watcher.Message)(nil), nil)
 	codec.RegisterConcrete(&watcher.Transaction{}, "watcher/transaction", nil)
 	codec.RegisterConcrete(&watcher.Transfer{}, "watcher/transfer", nil)
 	codec.RegisterConcrete(&watcher.CreateClient{}, "watcher/create_client", nil)

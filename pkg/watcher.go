@@ -5,9 +5,11 @@ import (
 	"errors"
 	"strconv"
 
-	rabbitmq "github.com/mapofzones/cosmos-watcher/pkg/RabbitMQ"
-	"github.com/mapofzones/cosmos-watcher/pkg/block"
-	types "github.com/mapofzones/cosmos-watcher/types"
+	codec "github.com/mapofzones/cosmos-watcher/pkg/codec"
+	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block"
+	"github.com/mapofzones/cosmos-watcher/pkg/rabbitmq"
+	types "github.com/mapofzones/cosmos-watcher/pkg/types"
+	"github.com/tendermint/go-amino"
 	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
@@ -24,7 +26,6 @@ type Watcher struct {
 
 // NewWatcher returns instanciated Watcher
 func NewWatcher(tendermintRPCAddr, rabbitmqAddr string, startingHeight string) (*Watcher, error) {
-
 	height, err := strconv.ParseInt(startingHeight, 10, 64)
 	if err != nil {
 		return nil, err
@@ -49,7 +50,7 @@ func NewWatcher(tendermintRPCAddr, rabbitmqAddr string, startingHeight string) (
 
 // serve buffers and sends txs to rabbitmq, returns errors if something is wrong
 // Accepts input and output channels, also an error channel if something goes wrong
-func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, blockOutput chan<- types.Block, errorStream <-chan error) error {
+func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, blockOutput chan<- types.Block) error {
 	for {
 		select {
 		case block, ok := <-blockInput:
@@ -58,15 +59,8 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, bloc
 			}
 			select {
 			case blockOutput <- block:
-				continue
-			case err := <-errorStream:
-				return err
+			case <-ctx.Done():
 			}
-		case err := <-errorStream:
-			w.client.Stop()
-			w.client.Wait()
-			return err
-
 		case <-ctx.Done():
 			err := w.client.Stop()
 			w.client.Wait()
@@ -78,12 +72,14 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, bloc
 // Watch implements watcher interface
 // Collects txs from tendermint websocket and sends them to rabbitMQ
 func (w *Watcher) Watch(ctx context.Context) error {
-	queue, errors, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, "block")
+	cdc := amino.NewCodec()
+	codec.RegisterTypes(cdc)
+	queue, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, "block", cdc)
 	if err != nil {
 		return err
 	}
 
-	blocks := block.BlockStream(ctx, w.client, w.startingHeight)
+	blocks := cosmos.BlockStream(ctx, w.client, w.startingHeight)
 
-	return w.serve(ctx, blocks, queue, errors)
+	return w.serve(ctx, blocks, queue)
 }
