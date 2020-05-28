@@ -146,6 +146,12 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 				} else {
 					// put it in local cache
 					blocks[block.Height] = block
+					// if this happened, might as well kill the watcher
+					// because blocks cache should never be this large
+					if len(blocks) > 1024 {
+						log.Println("ordered blocks buffer overflow")
+						return
+					}
 				}
 			case <-ctx.Done():
 				return

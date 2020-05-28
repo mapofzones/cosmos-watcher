@@ -14,5 +14,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Fatal(watcher.Watch(context.Background()))
+	ctx, cancel := context.WithCancel(context.Background())
+
+	err = watcher.Watch(ctx)
+	cancel()
+	log.Fatal(err)
 }

@@ -2,6 +2,8 @@ package cosmos
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"log"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
@@ -19,8 +21,10 @@ func GetBlock(client *http.HTTP, N int64) (block.Block, error) {
 	s := []block.TxStatus{}
 	for _, tx := range Block.Block.Txs {
 		res, err := client.Tx(tx.Hash(), false)
-		if err != nil {
-			panic(err)
+		if errors.Is(err, errors.New("Tx")) {
+			return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
+		} else if err != nil {
+			return block.Block{}, err
 		}
 		s = append(s, block.TxStatus{
 			ResultCode: res.TxResult.Code,

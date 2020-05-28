@@ -35,8 +35,8 @@ func DecodeBlock(cdc *amino.Codec, b types.Block) (types.ProcessedBlock, error) 
 	block := types.ProcessedBlock{
 		Height_:          b.Height,
 		ChainID_:         b.ChainID,
-		BeginBlockEvents: []watcher.Message{},
-		EndBlockEvents:   []watcher.Message{},
+		BeginBlockEvents: nil,
+		EndBlockEvents:   nil,
 		T:                b.T,
 	}
 

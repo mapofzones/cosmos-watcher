@@ -11,7 +11,7 @@ func init() {
 	lock = &sync.Mutex{}
 }
 
-// assume that each process is launched in separate binary
+// assume that each watcher is launched in separate binary
 // so all records in map belong to one chain
 
 // blocks is a global map object where tx data is stored
@@ -28,7 +28,7 @@ func pushBlock(b block.TmBlock) {
 		return
 	}
 
-	// our write to map critical section
+	// write to map critical section
 	lock.Lock()
 	// if WithTx structure is already present in the map
 	if _, ok := blocks[b.Height]; ok {
