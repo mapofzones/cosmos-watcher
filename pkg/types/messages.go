@@ -4,6 +4,12 @@ package watcher
 var (
 	_ Message = Transaction{}
 	_ Message = Transfer{}
+	_ Message = CreateClient{}
+	_ Message = CreateConnection{}
+	_ Message = CreateChannel{}
+	_ Message = OpenChannel{}
+	_ Message = CloseChannel{}
+	_ Message = IBCTransfer{}
 )
 
 // Transaction is a special type of message because it can
@@ -11,6 +17,7 @@ var (
 // this is done in order to know what messages belong to what tx
 // or to know even that they have happened outside of tx
 type Transaction struct {
+	Sender   string
 	Hash     string
 	Accepted bool
 	Messages []Message
@@ -115,6 +122,9 @@ type IBCTransfer struct {
 		Amount int64
 		Coin   string
 	}
+	// source must be true if this blockchain initiated the transfer
+	// i.e. ics20 transfer
+	Source bool
 }
 
 func (t IBCTransfer) Type() string {

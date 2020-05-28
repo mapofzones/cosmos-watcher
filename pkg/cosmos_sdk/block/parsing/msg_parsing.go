@@ -93,6 +93,7 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				Sender:    msg.Sender.String(),
 				Recipient: msg.Receiver,
 				Amount:    sdkCoinsToStruct(msg.Amount),
+				Source:    true,
 			},
 		}
 	case channel.MsgPacket:
@@ -108,6 +109,7 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				Sender:    data.Sender,
 				Recipient: data.Receiver,
 				Amount:    sdkCoinsToStruct(data.Amount),
+				Source:    false,
 			},
 		}
 
