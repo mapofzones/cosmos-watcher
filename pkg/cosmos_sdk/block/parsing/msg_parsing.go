@@ -2,7 +2,6 @@ package cosmos
 
 import (
 	"encoding/json"
-	"log"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	connection "github.com/cosmos/cosmos-sdk/x/ibc/03-connection"
@@ -12,7 +11,7 @@ import (
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 )
 
-func parseMsg(msg sdk.Msg) []watcher.Message {
+func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 	switch msg := msg.(type) {
 
 	// client creation
@@ -23,7 +22,7 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				ClientID:   msg.ClientID,
 				ClientType: msg.GetClientType(),
 			},
-		}
+		}, nil
 
 	// connection creation
 	case connection.MsgConnectionOpenInit:
@@ -32,14 +31,15 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				ConnectionID: msg.ConnectionID,
 				ClientID:     msg.ClientID,
 			},
-		}
+		}, nil
+
 	case connection.MsgConnectionOpenTry:
 		return []watcher.Message{
 			watcher.CreateConnection{
 				ConnectionID: msg.ConnectionID,
 				ClientID:     msg.ClientID,
 			},
-		}
+		}, nil
 
 	// channel creation
 	case channel.MsgChannelOpenInit:
@@ -49,7 +49,8 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				PortID:       msg.PortID,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
-		}
+		}, nil
+
 	case channel.MsgChannelOpenTry:
 		return []watcher.Message{
 			watcher.CreateChannel{
@@ -57,7 +58,7 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				PortID:       msg.PortID,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
-		}
+		}, nil
 
 	// channel opening/closing
 	case channel.MsgChannelOpenAck:
@@ -65,25 +66,28 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 			watcher.OpenChannel{
 				ChannelID: msg.ChannelID,
 			},
-		}
+		}, nil
+
 	case channel.MsgChannelOpenConfirm:
 		return []watcher.Message{
 			watcher.OpenChannel{
 				ChannelID: msg.ChannelID,
 			},
-		}
+		}, nil
+
 	case channel.MsgChannelCloseInit:
 		return []watcher.Message{
 			watcher.CloseChannel{
 				ChannelID: msg.ChannelID,
 			},
-		}
+		}, nil
+
 	case channel.MsgChannelCloseConfirm:
 		return []watcher.Message{
 			watcher.CloseChannel{
 				ChannelID: msg.ChannelID,
 			},
-		}
+		}, nil
 
 	// ibc transfer messages
 	case transfer.MsgTransfer:
@@ -95,27 +99,26 @@ func parseMsg(msg sdk.Msg) []watcher.Message {
 				Amount:    sdkCoinsToStruct(msg.Amount),
 				Source:    true,
 			},
-		}
+		}, nil
 	case channel.MsgPacket:
 		data := transfer.FungibleTokenPacketData{}
 		err := json.Unmarshal(msg.Packet.Data, &data)
 		if err != nil {
-			log.Println(err)
-			break
+			return nil, err
 		}
 		return []watcher.Message{
 			watcher.IBCTransfer{
-				ChannelID: msg.Packet.SourceChannel,
+				ChannelID: msg.Packet.DestinationChannel,
 				Sender:    data.Sender,
 				Recipient: data.Receiver,
 				Amount:    sdkCoinsToStruct(data.Amount),
 				Source:    false,
 			},
-		}
+		}, nil
 
 	}
 
-	return []watcher.Message{}
+	return []watcher.Message{}, nil
 }
 
 func sdkCoinsToStruct(data []sdk.Coin) []struct {

@@ -10,15 +10,19 @@ import (
 	"github.com/tendermint/go-amino"
 )
 
-func txToMessage(tx auth.StdTx, hash string, errCode uint32) watcher.Message {
+func txToMessage(tx auth.StdTx, hash string, errCode uint32) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
 	}
 	for _, msg := range tx.Msgs {
-		Tx.Messages = append(Tx.Messages, parseMsg(msg)...)
+		msgs, err := parseMsg(msg)
+		if err != nil {
+			return Tx, err
+		}
+		Tx.Messages = append(Tx.Messages, msgs...)
 	}
-	return Tx
+	return Tx, nil
 }
 
 func txErrCode(b types.Block, hash []byte) uint32 {
@@ -47,8 +51,11 @@ func DecodeBlock(cdc *amino.Codec, b types.Block) (types.ProcessedBlock, error) 
 			return block, err
 		}
 
-		block.Txs = append(block.Txs,
-			txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash())))
+		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()))
+		if err != nil {
+			return block, err
+		}
+		block.Txs = append(block.Txs, txMessage)
 	}
 
 	return block, nil
