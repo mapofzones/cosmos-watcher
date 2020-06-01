@@ -74,7 +74,7 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, bloc
 func (w *Watcher) Watch(ctx context.Context) error {
 	cdc := amino.NewCodec()
 	codec.RegisterTypes(cdc)
-	queue, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, "block", cdc)
+	queue, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, "blocks_v2", cdc)
 	if err != nil {
 		return err
 	}
