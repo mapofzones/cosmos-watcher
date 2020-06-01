@@ -8,7 +8,7 @@ import (
 
 func RegisterTypes(codec *amino.Codec) {
 	registerBlocks(codec)
-	registerTransitions(codec)
+	registerMessages(codec)
 }
 
 func registerBlocks(codec *amino.Codec) {
@@ -16,14 +16,14 @@ func registerBlocks(codec *amino.Codec) {
 	codec.RegisterConcrete(&cosmos.ProcessedBlock{}, "watcher/cosmos_block", nil)
 }
 
-func registerTransitions(codec *amino.Codec) {
+func registerMessages(codec *amino.Codec) {
 	codec.RegisterInterface((*watcher.Message)(nil), nil)
-	codec.RegisterConcrete(&watcher.Transaction{}, "watcher/transaction", nil)
-	codec.RegisterConcrete(&watcher.Transfer{}, "watcher/transfer", nil)
-	codec.RegisterConcrete(&watcher.CreateClient{}, "watcher/create_client", nil)
-	codec.RegisterConcrete(&watcher.CreateConnection{}, "watcher/create_connection", nil)
-	codec.RegisterConcrete(&watcher.CreateChannel{}, "watcher/create_channel", nil)
-	codec.RegisterConcrete(&watcher.OpenChannel{}, "watcher/open_channel", nil)
-	codec.RegisterConcrete(&watcher.CloseChannel{}, "watcher/close_channel", nil)
-	codec.RegisterConcrete(&watcher.IBCTransfer{}, "watcher/ibc_transfer", nil)
+	codec.RegisterConcrete(watcher.Transaction{}, "watcher/transaction", nil)
+	codec.RegisterConcrete(watcher.Transfer{}, "watcher/transfer", nil)
+	codec.RegisterConcrete(watcher.CreateClient{}, "watcher/create_client", nil)
+	codec.RegisterConcrete(watcher.CreateConnection{}, "watcher/create_connection", nil)
+	codec.RegisterConcrete(watcher.CreateChannel{}, "watcher/create_channel", nil)
+	codec.RegisterConcrete(watcher.OpenChannel{}, "watcher/open_channel", nil)
+	codec.RegisterConcrete(watcher.CloseChannel{}, "watcher/close_channel", nil)
+	codec.RegisterConcrete(watcher.IBCTransfer{}, "watcher/ibc_transfer", nil)
 }
