@@ -148,7 +148,7 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 					blocks[block.Height] = block
 					// if this happened, might as well kill the watcher
 					// because blocks cache should never be this large
-					if len(blocks) > 1024 {
+					if len(blocks) > 16 {
 						log.Println("ordered blocks buffer overflow")
 						return
 					}
@@ -175,8 +175,8 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 			return
 		}
 		currentHeight := status.SyncInfo.LatestBlockHeight
-		// if we have a lot of catching up to do
-		for currentHeight-startHeight > 10 {
+		// if we have some catching up to do
+		for currentHeight-startHeight > 1 {
 			blocks := crawler.BlockRange(ctx, client, startHeight, currentHeight)
 			for block := range blocks {
 				select {
