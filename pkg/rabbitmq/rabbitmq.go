@@ -3,13 +3,14 @@ package rabbitmq
 import (
 	"context"
 
+	codec "github.com/mapofzones/cosmos-watcher/pkg/codec"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/streadway/amqp"
 	"github.com/tendermint/go-amino"
 )
 
 // BlockQueue will call inside of itself another function which in an infinite loop receives from channel
-func BlockQueue(ctx context.Context, addr string, queue string, cdc *amino.Codec) (chan<- watcher.Block, error) {
+func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.Block, error) {
 	blockStream := make(chan watcher.Block)
 	conn, err := amqp.Dial(addr)
 	if err != nil {
@@ -43,6 +44,10 @@ func BlockQueue(ctx context.Context, addr string, queue string, cdc *amino.Codec
 		return nil, err
 	}
 	go func() {
+		// initiate codec and register types for it to properly marshall data
+		cdc := amino.NewCodec()
+		codec.RegisterTypes(cdc)
+
 		defer conn.Close()
 		defer ch.Close()
 		for {

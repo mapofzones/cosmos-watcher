@@ -25,5 +25,5 @@ fi
 let "height=height+1"
 export height
 
-echo "starting watcher for $chain_id on $rpc at: $height"
+echo "starting watcher for $chain_id on $rpc at height: $height"
 /app/watcher ; sleep 600
