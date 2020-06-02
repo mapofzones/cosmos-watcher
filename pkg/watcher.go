@@ -3,87 +3,47 @@ package watcher
 import (
 	"context"
 	"errors"
-	"strconv"
 	"time"
 
-	codec "github.com/mapofzones/cosmos-watcher/pkg/codec"
-	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block"
-	"github.com/mapofzones/cosmos-watcher/pkg/rabbitmq"
-	types "github.com/mapofzones/cosmos-watcher/pkg/types"
-	"github.com/tendermint/go-amino"
-	"github.com/tendermint/tendermint/rpc/client/http"
+	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 )
 
-// Watcher implements the watcher interface described at the project root
-// this particular implementation is used to listen on tendermint websocket and
-// send results to RabbitMQ
+// Watcher is a wrapper around two channels:
+// first one (block stream) for getting and preprocessing blocks
+// second (Queue) for sending them somewhere else for further processing
 type Watcher struct {
-	tendermintAddr string
-	rabbitMQAddr   string
-	client         *http.HTTP
-	chainID        string
-	startingHeight int64
+	BlockStream <-chan watcher.Block
+	Queue       chan<- watcher.Block
 }
 
 // NewWatcher returns instanciated Watcher
-func NewWatcher(tendermintRPCAddr, rabbitmqAddr string, startingHeight string) (*Watcher, error) {
-	height, err := strconv.ParseInt(startingHeight, 10, 64)
-	if err != nil {
-		return nil, err
+func NewWatcher(ctx context.Context, blockStream <-chan watcher.Block, rabbitQueue chan<- watcher.Block) *Watcher {
+	return &Watcher{
+		BlockStream: blockStream,
+		Queue:       rabbitQueue,
 	}
-
-	client, err := http.New(tendermintRPCAddr, "/websocket")
-	if err != nil {
-		return nil, err
-	}
-	err = client.Start()
-	if err != nil {
-		return nil, err
-	}
-	//figure out name of the blockchain to which we are connecting
-	info, err := client.Status()
-	if err != nil {
-		return nil, err
-	}
-
-	return &Watcher{tendermintAddr: tendermintRPCAddr, rabbitMQAddr: rabbitmqAddr, chainID: info.NodeInfo.Network, client: client, startingHeight: height}, nil
 }
 
-// serve buffers and sends txs to rabbitmq, returns errors if something is wrong
-// Accepts input and output channels, also an error channel if something goes wrong
-func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, blockOutput chan<- types.Block) error {
+// WatchWithTimeout is used to receive blocks from Block Stream
+// and send them to Queue
+func (w *Watcher) WatchWithTimeout(ctx context.Context, timeout time.Duration) error {
 	for {
 		select {
-		case block, ok := <-blockInput:
+		// get block
+		case block, ok := <-w.BlockStream:
 			if !ok {
 				return errors.New("block channel is closed")
 			}
 			select {
-			case blockOutput <- block:
+			// send it for further processing
+			case w.Queue <- block:
 			case <-ctx.Done():
 			}
-		// timeout if we did not receive any data for 10 minutes
-		case <-time.Tick(time.Minute * 10):
+		// timeout if we did not receive any data
+		case <-time.Tick(timeout):
 			return errors.New("timeout: did not receive any blocks for 10 minutes")
 		case <-ctx.Done():
-			err := w.client.Stop()
-			w.client.Wait()
-			return err
+			return nil
 		}
 	}
-}
-
-// Watch implements watcher interface
-// Collects txs from tendermint websocket and sends them to rabbitMQ
-func (w *Watcher) Watch(ctx context.Context) error {
-	cdc := amino.NewCodec()
-	codec.RegisterTypes(cdc)
-	queue, err := rabbitmq.BlockQueue(ctx, w.rabbitMQAddr, "blocks_v2", cdc)
-	if err != nil {
-		return err
-	}
-
-	blocks := cosmos.BlockStream(ctx, w.client, w.startingHeight)
-
-	return w.serve(ctx, blocks, queue)
 }
