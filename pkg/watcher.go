@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"strconv"
+	"time"
 
 	codec "github.com/mapofzones/cosmos-watcher/pkg/codec"
 	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block"
@@ -61,6 +62,9 @@ func (w *Watcher) serve(ctx context.Context, blockInput <-chan types.Block, bloc
 			case blockOutput <- block:
 			case <-ctx.Done():
 			}
+		// timeout if we did not receive any data for 10 minutes
+		case <-time.Tick(time.Minute * 10):
+			return errors.New("timeout: did not receive any blocks for 10 minutes")
 		case <-ctx.Done():
 			err := w.client.Stop()
 			w.client.Wait()
