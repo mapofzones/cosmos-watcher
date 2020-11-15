@@ -12,6 +12,12 @@ The MoZ watcher is a standalone process that takes 2 input arguments:
 
 and listens to the given zone starting from the given block number.
 
+## Usage
+
+Running in a container:
+* `docker build -t cosmos-watcher:v1 .`
+* `docker run --env height=1 --env rpc=http://<ip>:<default_port=26657> --env rabbitmq=amqp://<login>:<pass>@<ip>:<default_port=5672> -it --network="host" cosmos-watcher:v1`
+
 # Responsibilies
 The watcher listens to the new blocks, parses them, and assembly the information into the zone-neutral data structures.
 ```
