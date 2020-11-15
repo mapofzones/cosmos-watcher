@@ -1,5 +1,8 @@
 # cosmos-watcher
 
+Status of Last Deployment:<br>
+<img src="https://github.com/mapofzones/cosmos-watcher/workflows/Docker%20Image%20CI/badge.svg"><br>
+
 MoZ demo video: https://www.youtube.com/watch?v=Q30mDD2N3UY 
 
 # General
