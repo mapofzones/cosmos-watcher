@@ -9,13 +9,51 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag cosmos-watcher:$(date +%s)
+#     - name: Build the Docker image
+#       run: docker build . --file Dockerfile --tag cosmos-watcher:$(date +%s)
+    - name: Publish Docker watcher
+      # You may pin to the exact commit or the version.
+      # uses: elgohr/Publish-Docker-Github-Action@5e568ddac4916066726841dda8fd537ea841f827
+      uses: elgohr/Publish-Docker-Github-Action@3.01
+      with:
+        # The name of the image you would like to push
+        name: hasura-moz
+        # The login username for the registry
+        username: ${{ github.actor }}
+        # The login password for the registry
+        password: ${{ secrets.GITHUB_TOKEN }}
+        # Use registry for pushing to a custom registry
+        registry: docker.pkg.github.com/mapofzones/cosmos-watcher #ghcr.io # optional
+        # Use snapshot to push an additional image
+#         snapshot: # optional
+        # Set the default branch of your repository (default: master)
+#         default_branch: # optional
+        # Use dockerfile when you would like to explicitly build a Dockerfile
+#         dockerfile: # optional
+        # Use workdir when you would like to change the directory for building
+#         workdir: # optional
+        # Use context when you would like to change the Docker build context.
+#         context: # optional
+        # Use buildargs when you want to pass a list of environment variables as build-args
+#         buildargs: # optional
+        # Use buildoptions when you want to configure options for building
+#         buildoptions: # optional
+        # Use cache when you have big images, that you would only like to build partially
+#         cache: # optional
+        # Use tags when you want to bring your own tags (separated by comma)
+        tags: "latest,${{ env.STATE_RELEASE_VERSION }}" # optional
+        # Use tag_names when you want to push tags/release by their git name
+#         tag_names: # optional
+        # Push semver docker tags. e.g. image:1.2.3, image:1.2, image:1
+#         tag_semver: # optional
+        # Set no_push to true if you want to prevent the action from pushing to a registry (default: false)
+#         no_push: # optional
+  notify:
+    runs-on: ubuntu-latest
+    steps:
     - name: Notify Telegram
       uses: yanzay/notify-telegram@v0.1.0
       if: always()
