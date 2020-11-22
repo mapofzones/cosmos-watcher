@@ -20,7 +20,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@3.01
       with:
         # The name of the image you would like to push
-        name: hasura-moz
+        name: cosmos-watcher
         # The login username for the registry
         username: ${{ github.actor }}
         # The login password for the registry
