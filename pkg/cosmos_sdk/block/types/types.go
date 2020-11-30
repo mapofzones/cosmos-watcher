@@ -99,7 +99,7 @@ func (w WithTxs) Full() bool {
 func TxStatusFromTmResultTx(t types.EventDataTx) TxStatus {
 	return TxStatus{
 		ResultCode: t.Result.Code,
-		Hash:       t.Tx.Hash(),
+		Hash:       t.Tx,
 		Height:     t.Height,
 	}
 }

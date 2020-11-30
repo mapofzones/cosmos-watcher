@@ -4,103 +4,121 @@ import (
 	"encoding/json"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	connection "github.com/cosmos/cosmos-sdk/x/ibc/03-connection"
-	channel "github.com/cosmos/cosmos-sdk/x/ibc/04-channel"
-	tendermint "github.com/cosmos/cosmos-sdk/x/ibc/07-tendermint/types"
-	transfer "github.com/cosmos/cosmos-sdk/x/ibc/20-transfer"
+	types "github.com/cosmos/cosmos-sdk/x/bank/types"
+	transfer "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
+	types5 "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
+	types2 "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
+	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
+	types4 "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
+	types7 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	"log"
 )
 
 func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
+	log.Println("parseMsg")
 	switch msg := msg.(type) {
 
+	// send creation
+	case *types.MsgSend:
+		return []watcher.Message{
+			watcher.Transfer{
+				Sender: (*msg).FromAddress,
+				Recipient: (*msg).ToAddress,
+				Amount: sdkCoinsToStruct((*msg).Amount),
+			},
+		}, nil
+
 	// client creation
-	case tendermint.MsgCreateClient:
+	case *types2.MsgCreateClient:
+		value := msg.ClientState.GetCachedValue()
+		chainId := value.(*types7.ClientState).ChainId
 		return []watcher.Message{
 			watcher.CreateClient{
-				ChainID:    msg.Header.ChainID,
-				ClientID:   msg.ClientID,
-				ClientType: msg.GetClientType(),
+				ChainID:    chainId,
+				ClientID:   msg.ClientId,
+				ClientType: "",
 			},
 		}, nil
 
 	// connection creation
-	case connection.MsgConnectionOpenInit:
+	case *types3.MsgConnectionOpenInit:
 		return []watcher.Message{
 			watcher.CreateConnection{
-				ConnectionID: msg.ConnectionID,
-				ClientID:     msg.ClientID,
+				ConnectionID: msg.ConnectionId,
+				ClientID:     msg.ClientId,
 			},
 		}, nil
 
-	case connection.MsgConnectionOpenTry:
+	case *types3.MsgConnectionOpenTry:
 		return []watcher.Message{
 			watcher.CreateConnection{
-				ConnectionID: msg.ConnectionID,
-				ClientID:     msg.ClientID,
+				ConnectionID: msg.DesiredConnectionId,
+				ClientID:     msg.ClientId,
 			},
 		}, nil
 
 	// channel creation
-	case channel.MsgChannelOpenInit:
+	case *types4.MsgChannelOpenInit:
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    msg.ChannelID,
-				PortID:       msg.PortID,
+				ChannelID:    msg.ChannelId,
+				PortID:       msg.PortId,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
 		}, nil
 
-	case channel.MsgChannelOpenTry:
+	case *types4.MsgChannelOpenTry:
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    msg.ChannelID,
-				PortID:       msg.PortID,
+				ChannelID:    msg.DesiredChannelId,
+				PortID:       msg.PortId,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
 		}, nil
 
 	// channel opening/closing
-	case channel.MsgChannelOpenAck:
+	case *types4.MsgChannelOpenAck:
 		return []watcher.Message{
 			watcher.OpenChannel{
-				ChannelID: msg.ChannelID,
+				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
-	case channel.MsgChannelOpenConfirm:
+	case *types4.MsgChannelOpenConfirm:
 		return []watcher.Message{
 			watcher.OpenChannel{
-				ChannelID: msg.ChannelID,
+				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
-	case channel.MsgChannelCloseInit:
+	case *types4.MsgChannelCloseInit:
 		return []watcher.Message{
 			watcher.CloseChannel{
-				ChannelID: msg.ChannelID,
+				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
-	case channel.MsgChannelCloseConfirm:
+	case *types4.MsgChannelCloseConfirm:
 		return []watcher.Message{
 			watcher.CloseChannel{
-				ChannelID: msg.ChannelID,
+				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
 	// ibc transfer messages
-	case transfer.MsgTransfer:
+	case *types5.MsgTransfer:
 		return []watcher.Message{
 			watcher.IBCTransfer{
 				ChannelID: msg.SourceChannel,
-				Sender:    msg.Sender.String(),
+				Sender:    msg.Sender,
 				Recipient: msg.Receiver,
-				Amount:    sdkCoinsToStruct(msg.Amount),
+				Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
 				Source:    true,
 			},
 		}, nil
-	case channel.MsgPacket:
+
+	case *types4.MsgRecvPacket:
 		data := transfer.FungibleTokenPacketData{}
 		err := json.Unmarshal(msg.Packet.Data, &data)
 		if err != nil {
@@ -111,11 +129,10 @@ func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 				ChannelID: msg.Packet.DestinationChannel,
 				Sender:    data.Sender,
 				Recipient: data.Receiver,
-				Amount:    sdkCoinsToStruct(data.Amount),
+				Amount:	packetToStruct(data),
 				Source:    false,
 			},
 		}, nil
-
 	}
 
 	return []watcher.Message{}, nil
@@ -138,6 +155,25 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 			Coin:   sdkCoin.Denom,
 			Amount: sdkCoin.Amount.Int64(),
 		}
+	}
+	return transformed
+}
+
+func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
+	Amount int64
+	Coin   string
+} {
+	transformed := make([]struct {
+		Amount int64
+		Coin   string
+	}, 1)
+
+	transformed[0] = struct {
+		Amount int64
+		Coin   string
+	}{
+		Coin:   data.Denom,
+		Amount: int64(data.Amount),
 	}
 	return transformed
 }
