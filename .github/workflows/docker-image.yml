@@ -52,25 +52,25 @@ jobs:
         # Set no_push to true if you want to prevent the action from pushing to a registry (default: false)
 #         no_push: # optional
 
-#     - name: GitHub Action for DigitalOcean - doctl
-#       # You may pin to the exact commit or the version.
-#       # uses: digitalocean/action-doctl@7f3a9967e5f7b8f4581cf10e6891535614f36850
-#       uses: digitalocean/action-doctl@v2.0.0
-#       with:
-#         # Version of doctl to install
-# #         version: # optional, default is latest
-#         # DigitalOcean API Token
-#         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-    - name: doctl tool installer
+    - name: GitHub Action for DigitalOcean - doctl
       # You may pin to the exact commit or the version.
-      # uses: musagen/setup-doctl@6be7691291cb5b7eaf5e555dc0c17f9a2001f244
-      uses: musagen/setup-doctl@v1.0
+      # uses: digitalocean/action-doctl@7f3a9967e5f7b8f4581cf10e6891535614f36850
+      uses: digitalocean/action-doctl@v2.1.0
       with:
-        # Version of doctl
-#         version: # default is latest
-        # DigitalOcean Access Token
+        # Version of doctl to install
+#         version: # optional, default is latest
+        # DigitalOcean API Token
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+#     - name: doctl tool installer
+#       # You may pin to the exact commit or the version.
+#       # uses: musagen/setup-doctl@6be7691291cb5b7eaf5e555dc0c17f9a2001f244
+#       uses: musagen/setup-doctl@v1.0
+#       with:
+#         # Version of doctl
+# #         version: # default is latest
+#         # DigitalOcean Access Token
+#         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
     - name: DigitalOcean Docker Image Publish
       # You may pin to the exact commit or the version.
