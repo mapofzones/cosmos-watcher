@@ -15,7 +15,7 @@ jobs:
     - name: GitHub Action for DigitalOcean - doctl
       # You may pin to the exact commit or the version.
       # uses: digitalocean/action-doctl@7f3a9967e5f7b8f4581cf10e6891535614f36850
-      uses: digitalocean/action-doctl@v2.0.0
+      uses: digitalocean/action-doctl@v2.1.0
       with:
         # Version of doctl to install
 #         version: # optional, default is latest
