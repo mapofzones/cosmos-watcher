@@ -51,6 +51,15 @@ jobs:
 #         tag_semver: # optional
         # Set no_push to true if you want to prevent the action from pushing to a registry (default: false)
 #         no_push: # optional
+    - name: DigitalOcean Docker Image Publish
+      # You may pin to the exact commit or the version.
+      # uses: ripplr-io/docr-docker-publish@4b4d57000d6e16fe589b3cea2d491830b9d7da87
+      uses: ripplr-io/docr-docker-publish@v1
+      with:
+        # Image path in the format registry-name/image-name
+        image_path: mapofzones/cosmos-watcher
+        # Number of characters from the commit SHA
+        sha_size: 8 # optional, default is 8
   notify:
     runs-on: ubuntu-latest
     steps:
