@@ -3,19 +3,21 @@ package cosmos
 import (
 	"bytes"
 	"encoding/hex"
+	"github.com/cosmos/cosmos-sdk/codec"
+	"log"
 
-	"github.com/cosmos/cosmos-sdk/x/auth"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	"github.com/tendermint/go-amino"
+	types2 "github.com/cosmos/cosmos-sdk/types"
 )
 
-func txToMessage(tx auth.StdTx, hash string, errCode uint32) (watcher.Message, error) {
+func txToMessage(tx types2.Tx, hash string, errCode uint32) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
 	}
-	for _, msg := range tx.Msgs {
+	for _, msg := range tx.GetMsgs() {
+		log.Println(msg)
 		msgs, err := parseMsg(msg)
 		if err != nil {
 			return Tx, err
@@ -35,7 +37,7 @@ func txErrCode(b types.Block, hash []byte) uint32 {
 	panic("could not find tx status for given tx hash")
 }
 
-func DecodeBlock(cdc *amino.Codec, b types.Block) (types.ProcessedBlock, error) {
+func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, error) {
 	block := types.ProcessedBlock{
 		Height_:          b.Height,
 		ChainID_:         b.ChainID,
@@ -44,8 +46,10 @@ func DecodeBlock(cdc *amino.Codec, b types.Block) (types.ProcessedBlock, error) 
 		T:                b.T,
 	}
 
+	log.Println("height:", b.Height, " txs:", b.Txs)
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
 	for _, tx := range b.Txs {
+		log.Println("here!")
 		decoded, err := decodeTx(cdc, tx)
 		if err != nil {
 			return block, err

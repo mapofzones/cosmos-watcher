@@ -2,18 +2,21 @@ package cosmos
 
 import (
 	"errors"
+	"log"
 
-	"github.com/tendermint/go-amino"
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/tendermint/tendermint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/auth"
+	auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
+	auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
 )
 
 var DecodeErr = errors.New("could not decode tx")
 
-func decodeTx(codec *amino.Codec, tx types.Tx) (auth.StdTx, error) {
-	txInterface, err := auth.DefaultTxDecoder(codec)(tx)
+func decodeTx(codec *codec.ProtoCodec, tx types.Tx) (sdk.Tx, error) {
+	txInterface, err := auth2.DefaultTxDecoder(codec)(tx)
+	log.Println(err)
 	if err != nil {
 		return auth.StdTx{}, DecodeErr
 	}
@@ -21,10 +24,11 @@ func decodeTx(codec *amino.Codec, tx types.Tx) (auth.StdTx, error) {
 }
 
 // Decode accept tx bytes and transforms them to cosmos std tx
-func toStdTx(tx sdk.Tx) (auth.StdTx, error) {
-	stdTx, ok := tx.(auth.StdTx)
+func toStdTx(tx sdk.Tx) (sdk.Tx, error) {
+	stdTx, ok := tx.(sdk.Tx)
+	log.Println(stdTx)
 	if !ok {
-		return auth.StdTx{}, DecodeErr
+		return nil, DecodeErr
 	}
 	return stdTx, nil
 }

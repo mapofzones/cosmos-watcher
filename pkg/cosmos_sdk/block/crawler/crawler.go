@@ -12,15 +12,17 @@ import (
 
 // GetBlock queries tendermint rpc at provided height and formats block
 // it does that by fetching the block itself and then querying each tx in the block
-func GetBlock(client *http.HTTP, N int64) (block.Block, error) {
-	Block, err := client.Block(&N)
+func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, error) {
+	Block, err := client.Block(ctx, &N)
 	if err != nil {
 		return block.Block{}, err
 	}
 
 	s := []block.TxStatus{}
 	for _, tx := range Block.Block.Txs {
-		res, err := client.Tx(tx.Hash(), false)
+		log.Println("here")
+		res, err := client.Tx(ctx, tx.Hash(), false)
+		log.Println(err)
 		if errors.Is(err, errors.New("Tx")) {
 			return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
 		} else if err != nil {
@@ -53,7 +55,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 	go func() {
 		defer close(blockStream)
 		for N := first; N <= last; N++ {
-			block, err := GetBlock(client, N)
+			block, err := GetBlock(ctx, client, N)
 			if err != nil {
 				log.Println(err)
 				return
