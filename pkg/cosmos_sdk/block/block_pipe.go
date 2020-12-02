@@ -61,7 +61,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 			case block := <-stream:
 				decoded, err := parsing.DecodeBlock(cdc, block)
 				if err != nil {
-					log.Println(err)
+					log.Fatal(err)
 					return
 				}
 				select {
