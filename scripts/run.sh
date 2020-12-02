@@ -18,7 +18,10 @@ height=$(curl -H 'Content-Type: application/json' \
   | jq .data.blocks_log[].last_processed_block)
 
 if [ "$height" == "" ]; then
+    height="$height"
+    if [ "$height" == "" ]; then
     height=0
+    fi
 fi
 
 # increment height since we need to start getting blocks from last_processed_height +1
