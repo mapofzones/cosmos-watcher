@@ -50,6 +50,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 // should also keep track of that
 func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-chan block.Block {
 	blockStream := make(chan block.Block)
+	log.Println("BlockRange last",last," first",first)
 
 	go func() {
 		defer close(blockStream)

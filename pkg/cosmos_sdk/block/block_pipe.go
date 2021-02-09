@@ -204,7 +204,6 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 		// if we have some catching up to do
 		for currentHeight-startHeight > 1 {
 			blocks := crawler.BlockRange(ctx, client, startHeight, currentHeight)
-			log.Println("len blocks ",len(blocks))
 			for block := range blocks {
 				select {
 				case blockStream <- block:
