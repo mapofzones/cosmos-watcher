@@ -88,6 +88,7 @@ func toInterface(ctx context.Context, stream <-chan block.ProcessedBlock) <-chan
 			case block := <-stream:
 				select {
 				case out <- block:
+					log.Println("toInterface")
 				case <-ctx.Done():
 					return
 				}
