@@ -71,6 +71,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 					},
 				)
 				if err != nil {
+					log.Println("rabbitmq err",err.Error())
 					close(blockStream)
 					return
 				}
