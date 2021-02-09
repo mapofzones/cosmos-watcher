@@ -20,7 +20,6 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 
 	s := []block.TxStatus{}
 	for _, tx := range Block.Block.Txs {
-		log.Println("here")
 		res, err := client.Tx(ctx, tx.Hash(), false)
 		log.Println(err)
 		if errors.Is(err, errors.New("Tx")) {
@@ -66,6 +65,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 				return
 			}
 		}
+		log.Println("here BlockRange finished")
 	}()
 
 	return blockStream
