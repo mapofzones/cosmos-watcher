@@ -59,6 +59,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		for {
 			select {
 			case block := <-stream:
+				log.Println("Creating decoder")
 				decoded, err := parsing.DecodeBlock(cdc, block)
 				if err != nil {
 					log.Fatal(err)
@@ -66,6 +67,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 				}
 				select {
 				case processedStream <- decoded:
+					log.Println("Stream from decoder to processedStream")
 				case <-ctx.Done():
 					return
 				}
