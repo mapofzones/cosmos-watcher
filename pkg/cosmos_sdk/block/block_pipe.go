@@ -221,6 +221,7 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 			}
 			currentHeight = status.SyncInfo.LatestBlockHeight
 		}
+		log.Println("finished for check  currentHeight-startHeight")
 
 		// alias variable to make stuff less confusing
 		// since we synced up, start height == lastProcessedBlock
