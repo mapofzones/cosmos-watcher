@@ -55,6 +55,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 			select {
 			case block, ok := <-blockStream:
 				if !ok {
+					log.Println("rabbitmq block not ok")
 					return
 				}
 				log.Println("rabbitmq block",block.Height())
