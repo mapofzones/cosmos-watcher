@@ -80,10 +80,12 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 				case confirmation := <-notifications:
 					if !confirmation.Ack {
 						//server could not receive our  publishing
+						log.Println("rabbitmq err not ack")
 						close(blockStream)
 						return
 					}
 				case <-ctx.Done():
+					log.Println("rabbitmq ctx done")
 					close(blockStream)
 					return
 				}

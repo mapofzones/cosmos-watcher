@@ -207,6 +207,7 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 			for block := range blocks {
 				select {
 				case blockStream <- block:
+					log.Println("crawler.BlockRange ",startHeight)
 					startHeight++
 				case <-ctx.Done():
 					return
