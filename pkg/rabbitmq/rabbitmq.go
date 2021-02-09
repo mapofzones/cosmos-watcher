@@ -2,6 +2,7 @@ package rabbitmq
 
 import (
 	"context"
+	"log"
 
 	codec "github.com/mapofzones/cosmos-watcher/pkg/codec"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
@@ -56,6 +57,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 				if !ok {
 					return
 				}
+				log.Println("rabbitmq block",block.Height())
 				data := cdc.MustMarshalJSON(block)
 				err := ch.Publish(
 					"",
