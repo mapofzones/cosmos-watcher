@@ -4,7 +4,12 @@ WORKDIR /app
 
 COPY . /app
 
-RUN CGO_ENABLED=0 go build -o watcher ./cmd/watcher/main.go
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+RUN go build -o watcher ./cmd/watcher/main.go
 
 FROM alpine:latest as production
 
