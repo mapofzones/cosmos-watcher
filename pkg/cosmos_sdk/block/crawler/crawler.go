@@ -15,6 +15,7 @@ import (
 // GetBlock queries tendermint rpc at provided height and formats block
 // it does that by fetching the block itself and then querying each tx in the block
 func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, error) {
+	log.Println("Try get block N",N)
 	Block, err := client.Block(ctx, &N)
 	if err != nil {
 		return block.Block{}, err
