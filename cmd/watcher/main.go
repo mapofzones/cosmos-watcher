@@ -2,10 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
-	"runtime"
 	"strconv"
 	"time"
 
@@ -21,11 +19,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	numcpu := runtime.NumCPU()
-	fmt.Println("NumCPU", numcpu)
-	//runtime.GOMAXPROCS(numcpu)
-	runtime.GOMAXPROCS(1)
-
 	// initiate tendermint client for fetching blocks
 	client, err := http.New(os.Getenv("rpc"), "/websocket")
 	if err != nil {
