@@ -12,7 +12,7 @@ import (
 
 // BlockQueue will call inside of itself another function which in an infinite loop receives from channel
 func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.Block, error) {
-	blockStream := make(chan watcher.Block)
+	blockStream := make(chan watcher.Block,10000)
 	conn, err := amqp.Dial(addr)
 	if err != nil {
 		return nil, err

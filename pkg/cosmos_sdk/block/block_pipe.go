@@ -34,7 +34,7 @@ func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-ch
 // decodedStream is used to convert decode proto-encoded blocks with cosmos-sdk codec
 // as well as to convert the data in blocks to messages specified by the app
 func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.ProcessedBlock {
-	processedStream := make(chan block.ProcessedBlock)
+	processedStream := make(chan block.ProcessedBlock,10000)
 	interfaceRegistry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(interfaceRegistry)
 	simapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
@@ -81,7 +81,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 }
 
 func toInterface(ctx context.Context, stream <-chan block.ProcessedBlock) <-chan watcher.Block {
-	out := make(chan watcher.Block)
+	out := make(chan watcher.Block,10000)
 
 	go func() {
 		defer close(out)
@@ -128,7 +128,7 @@ func normalizedStream(ctx context.Context, blockWithTxs <-chan block.WithTxs) <-
 }
 
 func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) <-chan block.Block {
-	orderedStream := make(chan block.Block)
+	orderedStream := make(chan block.Block,10000)
 
 	go func() {
 		defer close(orderedStream)
@@ -193,7 +193,7 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 // crawler to websocket check blockchain height and decides whether to run crawler or we can listen on websocket
 // if we caught up with blockchain, this method switches from crawler stream to websocket stream
 func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int64) <-chan block.Block {
-	blockStream := make(chan block.Block)
+	blockStream := make(chan block.Block,10000)
 
 	go func() {
 		defer close(blockStream)
