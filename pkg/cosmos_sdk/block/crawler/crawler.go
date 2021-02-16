@@ -36,7 +36,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 			Height:     res.Height,
 		})
 	}
-	time.Sleep(500 *time.Millisecond)
+	time.Sleep(100 *time.Millisecond)
 
 	return block.Block{
 		ChainID: Block.Block.ChainID,
@@ -58,7 +58,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 
 	go func() {
 		defer close(blockStream)
-		timer := time.NewTimer(time.Second * 20)
+		timer := time.NewTimer(time.Second * 120)
 		for N := first; N <= last; N++ {
 			block, err := GetBlock(ctx, client, N)
 			if err != nil {
@@ -68,7 +68,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 			select {
 			case blockStream <- block:
 				log.Println("BlockRange to blockstream")
-				timer.Reset(time.Second *20)
+				timer.Reset(time.Second *120)
 			case <- timer.C:
 				log.Println("Timer finished exit")
 				os.Exit(1)
