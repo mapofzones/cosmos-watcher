@@ -36,6 +36,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 			Height:     res.Height,
 		})
 	}
+	time.Sleep(500 *time.Millisecond)
 
 	return block.Block{
 		ChainID: Block.Block.ChainID,
