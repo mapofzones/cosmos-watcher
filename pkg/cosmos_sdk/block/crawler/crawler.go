@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
+	"time"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
@@ -54,6 +56,8 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 
 	go func() {
 		defer close(blockStream)
+		duration := time.Second * 15
+		timer := time.NewTimer(duration)
 		for N := first; N <= last; N++ {
 			block, err := GetBlock(ctx, client, N)
 			if err != nil {
@@ -62,6 +66,10 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 			}
 			select {
 			case blockStream <- block:
+				timer.Reset(duration)
+			case <- timer.C:
+				log.Println("Timer finished exit")
+				os.Exit(1)
 			case <-ctx.Done():
 				return
 			}
