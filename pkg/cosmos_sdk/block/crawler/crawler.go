@@ -67,7 +67,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 			}
 			select {
 			case blockStream <- block:
-				log.Println("BlockRange to blockstream")
+				log.Println("BlockRange to blockstream for block",block.Height )
 				timer.Reset(time.Second *120)
 			case <- timer.C:
 				log.Println("Timer finished exit")
