@@ -104,7 +104,7 @@ func toInterface(ctx context.Context, stream <-chan block.ProcessedBlock) <-chan
 
 // normalizedStream is used to format websocket data correspondingly to our exported block structure
 func normalizedStream(ctx context.Context, blockWithTxs <-chan block.WithTxs) <-chan block.Block {
-	blockStream := make(chan block.Block)
+	blockStream := make(chan block.Block,10000)
 
 	go func() {
 		defer close(blockStream)
