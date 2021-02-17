@@ -56,7 +56,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 
 	go func() {
 		defer close(blockStream)
-		duration := time.Second * 15
+		duration := time.Second * 150
 		timer := time.NewTimer(duration)
 		for N := first; N <= last; N++ {
 			block, err := GetBlock(ctx, client, N)
