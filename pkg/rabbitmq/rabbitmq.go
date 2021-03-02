@@ -91,6 +91,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 							return
 						} else {
 							log.Println("Finished publish block= ", block.Height())
+							continue
 						}
 					case <-ctx.Done():
 						log.Println("rabbitmq ctx done")
