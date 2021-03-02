@@ -80,7 +80,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 				// now wait for confirmation in order to preserve order
 				for {
 					select {
-					case <-time.After(3 * time.Second):
+					case <-time.After(10 * time.Second):
 						log.Println("Timeout notification from rabbit ")
 						return
 					case confirmation := <-notifications:
