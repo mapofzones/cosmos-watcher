@@ -3,6 +3,7 @@ package rabbitmq
 import (
 	"context"
 	"log"
+	"time"
 
 	codec "github.com/mapofzones/cosmos-watcher/pkg/codec"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
@@ -75,8 +76,11 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 					close(blockStream)
 					return
 				}
+				go func() {
 				// now wait for confirmation in order to preserve order
 				select {
+				case <-time.After(time.Second * 5):
+					log.Println("Timeout notification from rabbit")
 				case confirmation := <-notifications:
 					if !confirmation.Ack {
 						//server could not receive our  publishing
@@ -89,6 +93,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 					close(blockStream)
 					return
 				}
+				}()
 
 			case <-ctx.Done():
 				close(blockStream)
