@@ -78,7 +78,6 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 				}
 				go func() {
 				// now wait for confirmation in order to preserve order
-				for {
 					select {
 					case <-time.After(10 * time.Second):
 						log.Println("Timeout notification from rabbit ")
@@ -98,7 +97,6 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 						close(blockStream)
 						return
 					}
-				}
 				}()
 
 			case <-ctx.Done():
