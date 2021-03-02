@@ -82,7 +82,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 					select {
 					case <-time.After(3 * time.Second):
 						log.Println("Timeout notification from rabbit ")
-						continue
+						return
 					case confirmation := <-notifications:
 						if !confirmation.Ack {
 							//server could not receive our  publishing
@@ -91,7 +91,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 							return
 						} else {
 							log.Println("Finished publish block= ", block.Height())
-							continue
+							return
 						}
 					case <-ctx.Done():
 						log.Println("rabbitmq ctx done")
