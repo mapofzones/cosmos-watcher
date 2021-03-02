@@ -81,7 +81,7 @@ func BlockQueue(ctx context.Context, addr string, queue string) (chan<- watcher.
 				for {
 					select {
 					case <-time.After(3 * time.Second):
-						log.Println("Timeout notification from rabbit")
+						log.Println("Timeout notification from rabbit ")
 						continue
 					case confirmation := <-notifications:
 						if !confirmation.Ack {
