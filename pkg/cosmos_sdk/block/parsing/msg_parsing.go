@@ -11,7 +11,9 @@ import (
 	types5 "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
 	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
 	types2 "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
+	connectiontypes "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
 	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
+	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
 	types4 "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
 	types7 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
@@ -46,41 +48,65 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 			},
 		}
 		if clientId == "" {
-			return messages, errors.New("clientId not found")
+			return messages, errors.New("clientID not found")
 		}
 		return messages, nil
 
 	// connection creation
 	case *types3.MsgConnectionOpenInit:
+		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenInit}
+		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
+		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
+			return nil, errors.New("connectionID not found")
+		}
 		return []watcher.Message{
 			watcher.CreateConnection{
-				ConnectionID: msg.Counterparty.ConnectionId,
+				ConnectionID: connectionIDs[0],
 				ClientID:     msg.ClientId,
 			},
 		}, nil
 
 	case *types3.MsgConnectionOpenTry:
+		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenTry}
+		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
+		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
+			return nil, errors.New("connectionID not found")
+		}
 		return []watcher.Message{
 			watcher.CreateConnection{
-				ConnectionID: msg.Counterparty.ConnectionId,
+				ConnectionID: connectionIDs[0],
 				ClientID:     msg.ClientId,
 			},
 		}, nil
 
 	// channel creation
 	case *types4.MsgChannelOpenInit:
+		expectedEvents := []string{channeltypes.EventTypeChannelOpenInit}
+		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
+		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
+			return nil, errors.New("channelID not found")
+		}
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    msg.Channel.Counterparty.ChannelId,
+				ChannelID:    channelIDs[0],
 				PortID:       msg.PortId,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
 		}, nil
 
 	case *types4.MsgChannelOpenTry:
+		expectedEvents := []string{channeltypes.EventTypeChannelOpenTry}
+		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
+		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
+			return nil, errors.New("channelID not found")
+		}
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    msg.Channel.Counterparty.ChannelId,
+				ChannelID:    channelIDs[0],
 				PortID:       msg.PortId,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
@@ -161,6 +187,29 @@ func ParseClientIDFromResults(results []*types6.ResponseDeliverTx, clientId stri
 		}
 	}
 	return clientId
+}
+
+func ParseIDsFromResults(results []*types6.ResponseDeliverTx, expectedEvents []string, attributeKeys []string) []string {
+	//expectedEvent := []string{connectiontypes.EventTypeConnectionOpenInit, connectiontypes.EventTypeConnectionOpenTry}
+	//attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
+	var attributesValues []string
+	for _, res := range results {
+		for _, event := range res.Events {
+			for _, expected := range expectedEvents {
+				if event.Type == expected {
+					for _, attr := range event.Attributes {
+						for _, expectedKey := range attributeKeys {
+							if string(attr.Key) == expectedKey {
+								attributesValues = append(attributesValues, string(attr.Value))
+								log.Println(expectedKey, " attr.Value:", string(attr.Value))
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return attributesValues
 }
 
 func sdkCoinsToStruct(data []sdk.Coin) []struct {
