@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/hex"
 	"github.com/cosmos/cosmos-sdk/codec"
+	types3 "github.com/tendermint/tendermint/abci/types"
 	"log"
 
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
@@ -11,14 +12,14 @@ import (
 	types2 "github.com/cosmos/cosmos-sdk/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32) (watcher.Message, error) {
+func txToMessage(tx types2.Tx, hash string, errCode uint32, results []*types3.ResponseDeliverTx, ) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
 	}
 	for _, msg := range tx.GetMsgs() {
 		log.Println(msg)
-		msgs, err := parseMsg(msg)
+		msgs, err := parseMsg(msg, results)
 		if err != nil {
 			return Tx, err
 		}
@@ -55,7 +56,7 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 			return block, err
 		}
 
-		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()))
+		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.BlockResults.TxsResults)
 		if err != nil {
 			return block, err
 		}

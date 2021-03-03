@@ -7,17 +7,19 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/simapp"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/x/bank/types"
+	types2 "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
 	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	types4 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
+	types5 "github.com/cosmos/cosmos-sdk/x/staking/types"
 	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
 	parsing "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/parsing"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	websocket "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/websocket"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	"github.com/tendermint/tendermint/crypto"
-	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
-
 	"github.com/tendermint/tendermint/rpc/client/http"
 	"log"
 )
@@ -38,12 +40,12 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 	interfaceRegistry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(interfaceRegistry)
 	simapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
-	//interfaceRegistry.RegisterImplementations((*sdk.Msg)(nil), &types.MsgSend{}, &types2.MsgCreateClient{}, &types5.MsgCreateValidator{})
+	interfaceRegistry.RegisterImplementations((*sdk.Msg)(nil), &types.MsgSend{}, &types2.MsgCreateClient{}, &types5.MsgCreateValidator{})
 
-	interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
-	interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &ed25519.PubKey{})
-	interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &secp256k1.PubKey{})
-	interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &multisig.LegacyAminoPubKey{})
+	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
+	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &ed25519.PubKey{})
+	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &secp256k1.PubKey{})
+	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &multisig.LegacyAminoPubKey{})
 
 	interfaceRegistry.RegisterInterface("cosmos.crypto.PubKey", (*cryptotypes.PubKey)(nil))
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ed25519.PubKey{})

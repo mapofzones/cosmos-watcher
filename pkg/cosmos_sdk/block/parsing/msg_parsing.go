@@ -2,11 +2,14 @@ package cosmos
 
 import (
 	"encoding/json"
+	"errors"
+	types6 "github.com/tendermint/tendermint/abci/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
 	transfer "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
 	types5 "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
+	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
 	types2 "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
 	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
 	types4 "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
@@ -15,7 +18,7 @@ import (
 	"log"
 )
 
-func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
+func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Message, error) {
 	log.Println("parseMsg")
 	switch msg := msg.(type) {
 
@@ -33,19 +36,25 @@ func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 	case *types2.MsgCreateClient:
 		value := msg.ClientState.GetCachedValue()
 		chainId := value.(*types7.ClientState).ChainId
-		return []watcher.Message{
+		clientId := ""
+		clientId = ParseClientIDFromResults(results, clientId)
+		messages := []watcher.Message{
 			watcher.CreateClient{
 				ChainID:    chainId,
-				ClientID:   msg.ClientId,
+				ClientID:   clientId,
 				ClientType: "",
 			},
-		}, nil
+		}
+		if clientId == "" {
+			return messages, errors.New("clientId not found")
+		}
+		return messages, nil
 
 	// connection creation
 	case *types3.MsgConnectionOpenInit:
 		return []watcher.Message{
 			watcher.CreateConnection{
-				ConnectionID: msg.ConnectionId,
+				ConnectionID: msg.Counterparty.ConnectionId,
 				ClientID:     msg.ClientId,
 			},
 		}, nil
@@ -53,7 +62,7 @@ func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 	case *types3.MsgConnectionOpenTry:
 		return []watcher.Message{
 			watcher.CreateConnection{
-				ConnectionID: msg.DesiredConnectionId,
+				ConnectionID: msg.Counterparty.ConnectionId,
 				ClientID:     msg.ClientId,
 			},
 		}, nil
@@ -62,7 +71,7 @@ func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 	case *types4.MsgChannelOpenInit:
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    msg.ChannelId,
+				ChannelID:    msg.Channel.Counterparty.ChannelId,
 				PortID:       msg.PortId,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
@@ -71,7 +80,7 @@ func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 	case *types4.MsgChannelOpenTry:
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    msg.DesiredChannelId,
+				ChannelID:    msg.Channel.Counterparty.ChannelId,
 				PortID:       msg.PortId,
 				ConnectionID: msg.Channel.ConnectionHops[0],
 			},
@@ -129,13 +138,29 @@ func parseMsg(msg sdk.Msg) ([]watcher.Message, error) {
 				ChannelID: msg.Packet.DestinationChannel,
 				Sender:    data.Sender,
 				Recipient: data.Receiver,
-				Amount:	packetToStruct(data),
+				Amount:    packetToStruct(data),
 				Source:    false,
 			},
 		}, nil
 	}
 
 	return []watcher.Message{}, nil
+}
+
+func ParseClientIDFromResults(results []*types6.ResponseDeliverTx, clientId string) string {
+	for _, res := range results {
+		for _, event := range res.Events {
+			if event.Type == clienttypes.EventTypeCreateClient {
+				for _, attr := range event.Attributes {
+					if string(attr.Key) == clienttypes.AttributeKeyClientID {
+						clientId = string(attr.Value)
+						log.Println("client attr.Value:", string(attr.Value))
+					}
+				}
+			}
+		}
+	}
+	return clientId
 }
 
 func sdkCoinsToStruct(data []sdk.Coin) []struct {

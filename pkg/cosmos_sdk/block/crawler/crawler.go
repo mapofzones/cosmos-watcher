@@ -20,6 +20,11 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 		return block.Block{}, err
 	}
 
+	results, err := client.BlockResults(ctx, &N)
+	if err != nil {
+		return block.Block{}, err
+	}
+
 	s := []block.TxStatus{}
 	for _, tx := range Block.Block.Txs {
 		log.Println("here")
@@ -43,6 +48,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 		T:       Block.Block.Time,
 		Txs:     Block.Block.Txs,
 		Results: s,
+		BlockResults: results,
 	}, nil
 }
 
