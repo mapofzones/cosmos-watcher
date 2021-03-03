@@ -213,41 +213,41 @@ func ParseIDsFromResults(results []*types6.ResponseDeliverTx, expectedEvents []s
 }
 
 func sdkCoinsToStruct(data []sdk.Coin) []struct {
-	Amount int64
+	Amount uint64
 	Coin   string
 } {
 	transformed := make([]struct {
-		Amount int64
+		Amount uint64
 		Coin   string
 	}, len(data))
 
 	for i, sdkCoin := range data {
 		transformed[i] = struct {
-			Amount int64
+			Amount uint64
 			Coin   string
 		}{
 			Coin:   sdkCoin.Denom,
-			Amount: sdkCoin.Amount.Int64(),
+			Amount: sdkCoin.Amount.Uint64(),
 		}
 	}
 	return transformed
 }
 
 func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
-	Amount int64
+	Amount uint64
 	Coin   string
 } {
 	transformed := make([]struct {
-		Amount int64
+		Amount uint64
 		Coin   string
 	}, 1)
 
 	transformed[0] = struct {
-		Amount int64
+		Amount uint64
 		Coin   string
 	}{
 		Coin:   data.Denom,
-		Amount: int64(data.Amount),
+		Amount: data.Amount,
 	}
 	return transformed
 }

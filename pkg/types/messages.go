@@ -30,7 +30,7 @@ func (t Transaction) Type() string {
 type Transfer struct {
 	Sender, Recipient string
 	Amount            []struct {
-		Amount int64
+		Amount uint64
 		Coin   string
 	}
 }
@@ -119,7 +119,7 @@ type IBCTransfer struct {
 	ChannelID         string
 	Sender, Recipient string
 	Amount            []struct {
-		Amount int64
+		Amount uint64
 		Coin   string
 	}
 	// source must be true if this blockchain initiated the transfer
