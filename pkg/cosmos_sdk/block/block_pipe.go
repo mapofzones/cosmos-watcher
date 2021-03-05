@@ -177,7 +177,7 @@ func ordered(ctx context.Context, stream <-chan block.Block, startHeight int64) 
 					// if this happened, might as well kill the watcher
 					// because blocks cache should never be this large
 					if len(blocks) > 16 {
-						log.Println("ordered blocks buffer overflow")
+						log.Fatal("ordered blocks buffer overflow")
 						return
 					}
 				}
