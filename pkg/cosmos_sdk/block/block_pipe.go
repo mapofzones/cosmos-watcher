@@ -15,6 +15,7 @@ import (
 	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	types4 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 	types5 "github.com/cosmos/cosmos-sdk/x/staking/types"
+	cybertypes "github.com/cybercongress/go-cyber/x/resources/types"
 	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
 	parsing "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/parsing"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
@@ -40,7 +41,12 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 	interfaceRegistry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(interfaceRegistry)
 	simapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
-	interfaceRegistry.RegisterImplementations((*sdk.Msg)(nil), &types.MsgSend{}, &types2.MsgCreateClient{}, &types5.MsgCreateValidator{})
+	interfaceRegistry.RegisterImplementations((*sdk.Msg)(nil),
+		&types.MsgSend{},
+		&types2.MsgCreateClient{},
+		&types5.MsgCreateValidator{},
+		&cybertypes.MsgConvert{},
+	)
 
 	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
 	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &ed25519.PubKey{})
@@ -56,6 +62,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 	interfaceRegistry.RegisterImplementations((*types3.ConsensusState)(nil), &types4.ConsensusState{})
 	interfaceRegistry.RegisterImplementations((*types3.Header)(nil), &types4.Header{})
 	interfaceRegistry.RegisterImplementations((*types3.Misbehaviour)(nil), &types4.Misbehaviour{})
+
 	go func() {
 		defer close(processedStream)
 		for {
