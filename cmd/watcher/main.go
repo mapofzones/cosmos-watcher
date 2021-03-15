@@ -37,7 +37,7 @@ func main() {
 	blocks := cosmos.BlockStream(ctx, client, height)
 
 	// initiate rabbitmq queue for watcher
-	queue, err := rabbitmq.BlockQueue(ctx, os.Getenv("rabbitmq"), "blocks_v2")
+	queue, err := rabbitmq.BlockQueue(ctx, os.Getenv("rabbitmq"), "hackatom_blocks_v2")
 	if err != nil {
 		log.Fatal(err)
 	}
