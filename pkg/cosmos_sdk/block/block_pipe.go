@@ -16,6 +16,7 @@ import (
 	types4 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 	types5 "github.com/cosmos/cosmos-sdk/x/staking/types"
 	cybertypes "github.com/cybercongress/go-cyber/x/resources/types"
+	cybertypes2 "github.com/cybercongress/go-cyber/x/graph/types"
 	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
 	parsing "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/parsing"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
@@ -46,6 +47,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		&types2.MsgCreateClient{},
 		&types5.MsgCreateValidator{},
 		&cybertypes.MsgConvert{},
+		&cybertypes2.MsgCyberlink{},
 	)
 
 	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
