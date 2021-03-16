@@ -1,6 +1,8 @@
 package watcher
 
 import (
+	"github.com/gogo/protobuf/proto"
+
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	cosmosauthvestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
@@ -18,7 +20,7 @@ import (
 
 	cybergraphtypes "github.com/cybercongress/go-cyber/x/graph/types"
 	cyberrecourcestypes "github.com/cybercongress/go-cyber/x/resources/types"
-	"github.com/gogo/protobuf/proto"
+
 	akashaudittypes "github.com/ovrclk/akash/x/audit/types"
 	akashcerttypes "github.com/ovrclk/akash/x/cert/types"
 	akashdeploymenttypes "github.com/ovrclk/akash/x/deployment/types"
@@ -109,6 +111,14 @@ func getAkashMessages() []proto.Message {
 		&akashmarkettypes.MsgCreateBid{},
 		&akashmarkettypes.MsgCloseBid{},
 		&akashmarkettypes.MsgCreateLease{},
+		&akashdeploymenttypes.MsgCloseGroup{},
+		&akashmarkettypes.MsgCloseLease{},
+		&akashprovidertypes.MsgDeleteProvider{},
+		&akashaudittypes.MsgDeleteProviderAttributes{},
+		&akashdeploymenttypes.MsgDepositDeployment{},
+		&akashdeploymenttypes.MsgPauseGroup{},
+		&akashdeploymenttypes.MsgStartGroup{},
+		&akashmarkettypes.MsgWithdrawLease{},
 	}
 	return akashMessages
 }
