@@ -51,6 +51,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		&cybertypes.MsgConvert{},
 		&cybertypes2.MsgCyberlink{},
 		&akashtypes.MsgCreateProvider{},
+		&akashtypes.MsgUpdateProvider{},
 		&akashtypes2.MsgCreateCertificate{},
 	)
 
