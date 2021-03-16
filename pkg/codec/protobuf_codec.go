@@ -40,6 +40,7 @@ func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.Interfac
 	irisnfttypes.RegisterInterfaces(interfaceRegistry)
 	registerCosmosInterfaces(interfaceRegistry)
 	registerCyberInterfaces(interfaceRegistry)
+	registerAkashInterfaces(interfaceRegistry)
 }
 
 func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -65,14 +66,18 @@ func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistr
 	cyberenergytypes.RegisterInterfaces(interfaceRegistry)
 }
 
+func registerAkashInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	akashprovidertypes.RegisterInterfaces(interfaceRegistry)
+	akashcerttypes.RegisterInterfaces(interfaceRegistry)
+	akashdeploymenttypes.RegisterInterfaces(interfaceRegistry)
+	akashaudittypes.RegisterInterfaces(interfaceRegistry)
+	akashmarkettypes.RegisterInterfaces(interfaceRegistry)
+}
+
 func getMessageImplementations() []proto.Message {
 	var impls []proto.Message
-
 	cosmosMessages := getCosmosMessages()
-	akashMessages := getAkashMessages()
 	impls = append(impls, cosmosMessages...)
-	impls = append(impls, akashMessages...)
-
 	return impls
 }
 
@@ -81,29 +86,4 @@ func getCosmosMessages() []proto.Message {
 		&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
 	}
 	return cosmosMessages
-}
-
-func getAkashMessages() []proto.Message {
-	akashMessages := []proto.Message{
-		&akashprovidertypes.MsgCreateProvider{},
-		&akashprovidertypes.MsgUpdateProvider{},
-		&akashcerttypes.MsgCreateCertificate{},
-		&akashcerttypes.MsgRevokeCertificate{},
-		&akashdeploymenttypes.MsgCreateDeployment{},
-		&akashdeploymenttypes.MsgCloseDeployment{},
-		&akashdeploymenttypes.MsgUpdateDeployment{},
-		&akashaudittypes.MsgSignProviderAttributes{},
-		&akashmarkettypes.MsgCreateBid{},
-		&akashmarkettypes.MsgCloseBid{},
-		&akashmarkettypes.MsgCreateLease{},
-		&akashdeploymenttypes.MsgCloseGroup{},
-		&akashmarkettypes.MsgCloseLease{},
-		&akashprovidertypes.MsgDeleteProvider{},
-		&akashaudittypes.MsgDeleteProviderAttributes{},
-		&akashdeploymenttypes.MsgDepositDeployment{},
-		&akashdeploymenttypes.MsgPauseGroup{},
-		&akashdeploymenttypes.MsgStartGroup{},
-		&akashmarkettypes.MsgWithdrawLease{},
-	}
-	return akashMessages
 }
