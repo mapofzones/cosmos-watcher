@@ -24,16 +24,10 @@ import (
 	cybergraphtypes "github.com/cybercongress/go-cyber/x/graph/types"
 	cyberresourcestypes "github.com/cybercongress/go-cyber/x/resources/types"
 
-	akashapp "github.com/ovrclk/akash/app"
-	akashaudittypes "github.com/ovrclk/akash/x/audit/types"
-	akashcerttypes "github.com/ovrclk/akash/x/cert/types"
-	akashdeploymenttypes "github.com/ovrclk/akash/x/deployment/types"
-	akashescrowtypes "github.com/ovrclk/akash/x/escrow/types"
-	akashmarkettypes "github.com/ovrclk/akash/x/market/types"
-	akashprovidertypes "github.com/ovrclk/akash/x/provider/types"
-
 	irisguardiantypes "github.com/irisnet/irishub/modules/guardian/types"
 	irisnfttypes "github.com/irisnet/irismod/modules/nft/types"
+
+	akashapp "github.com/ovrclk/akash/app"
 )
 
 func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -72,12 +66,6 @@ func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistr
 
 func registerAkashInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	akashapp.ModuleBasics().RegisterInterfaces(interfaceRegistry)
-	akashprovidertypes.RegisterInterfaces(interfaceRegistry)
-	akashcerttypes.RegisterInterfaces(interfaceRegistry)
-	akashdeploymenttypes.RegisterInterfaces(interfaceRegistry)
-	akashaudittypes.RegisterInterfaces(interfaceRegistry)
-	akashmarkettypes.RegisterInterfaces(interfaceRegistry)
-	akashescrowtypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func getMessageImplementations() []proto.Message {
