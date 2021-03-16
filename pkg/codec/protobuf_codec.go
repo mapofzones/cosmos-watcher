@@ -39,6 +39,7 @@ func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.Interfac
 	irisguardiantypes.RegisterInterfaces(interfaceRegistry)
 	irisnfttypes.RegisterInterfaces(interfaceRegistry)
 	registerCosmosInterfaces(interfaceRegistry)
+	registerCyberInterfaces(interfaceRegistry)
 }
 
 func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -57,14 +58,19 @@ func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegist
 	cosmostypes.RegisterInterfaces(interfaceRegistry)
 }
 
+func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	cyberresourcestypes.RegisterInterfaces(interfaceRegistry)
+	cybergraphtypes.RegisterInterfaces(interfaceRegistry)
+	cybercrontypes.RegisterInterfaces(interfaceRegistry)
+	cyberenergytypes.RegisterInterfaces(interfaceRegistry)
+}
+
 func getMessageImplementations() []proto.Message {
 	var impls []proto.Message
 
 	cosmosMessages := getCosmosMessages()
-	cyberMessages := getCyberMessages()
 	akashMessages := getAkashMessages()
 	impls = append(impls, cosmosMessages...)
-	impls = append(impls, cyberMessages...)
 	impls = append(impls, akashMessages...)
 
 	return impls
@@ -75,26 +81,6 @@ func getCosmosMessages() []proto.Message {
 		&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
 	}
 	return cosmosMessages
-}
-
-func getCyberMessages() []proto.Message {
-	cyberMessages := []proto.Message{
-		&cyberresourcestypes.MsgConvert{},
-		&cybergraphtypes.MsgCyberlink{},
-		&cyberresourcestypes.MsgCreateResource{},
-		&cybercrontypes.MsgCronAddJob{},
-		&cybercrontypes.MsgCronChangeJobBlock{},
-		&cybercrontypes.MsgCronChangeJobCID{},
-		&cybercrontypes.MsgCronChangeJobCallData{},
-		&cybercrontypes.MsgCronChangeJobGasPrice{},
-		&cybercrontypes.MsgCronChangeJobLabel{},
-		&cybercrontypes.MsgCronRemoveJob{},
-		&cyberenergytypes.MsgDeleteEnergyRoute{},
-		&cyberenergytypes.MsgEditEnergyRoute{},
-		&cyberenergytypes.MsgEditEnergyRouteAlias{},
-		&cyberresourcestypes.MsgRedeemResource{},
-	}
-	return cyberMessages
 }
 
 func getAkashMessages() []proto.Message {
