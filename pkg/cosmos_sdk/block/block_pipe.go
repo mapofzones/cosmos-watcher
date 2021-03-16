@@ -24,6 +24,7 @@ import (
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	akashtypes2 "github.com/ovrclk/akash/x/cert/types"
 	akashtypes3 "github.com/ovrclk/akash/x/deployment/types"
+	akashtypes4 "github.com/ovrclk/akash/x/audit/types"
 	akashtypes "github.com/ovrclk/akash/x/provider/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 	"log"
@@ -57,6 +58,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		&akashtypes2.MsgRevokeCertificate{},
 		&akashtypes3.MsgCreateDeployment{},
 		&akashtypes3.MsgCloseDeployment{},
+		&akashtypes4.MsgSignProviderAttributes{},
 	)
 
 	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
