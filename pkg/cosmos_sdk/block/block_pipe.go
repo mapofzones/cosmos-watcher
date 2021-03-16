@@ -56,6 +56,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		&akashtypes2.MsgCreateCertificate{},
 		&akashtypes2.MsgRevokeCertificate{},
 		&akashtypes3.MsgCreateDeployment{},
+		&akashtypes3.MsgCloseDeployment{},
 	)
 
 	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
