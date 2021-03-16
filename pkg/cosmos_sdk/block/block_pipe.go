@@ -22,9 +22,10 @@ import (
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	websocket "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/websocket"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	akashtypes4 "github.com/ovrclk/akash/x/audit/types"
 	akashtypes2 "github.com/ovrclk/akash/x/cert/types"
 	akashtypes3 "github.com/ovrclk/akash/x/deployment/types"
-	akashtypes4 "github.com/ovrclk/akash/x/audit/types"
+	akashtypes5 "github.com/ovrclk/akash/x/market/types"
 	akashtypes "github.com/ovrclk/akash/x/provider/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 	"log"
@@ -59,6 +60,9 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		&akashtypes3.MsgCreateDeployment{},
 		&akashtypes3.MsgCloseDeployment{},
 		&akashtypes4.MsgSignProviderAttributes{},
+		&akashtypes5.MsgCreateBid{},
+		&akashtypes5.MsgCloseBid{},
+		&akashtypes5.MsgCreateLease{},
 	)
 
 	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
