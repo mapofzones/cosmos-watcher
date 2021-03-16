@@ -7,6 +7,7 @@ replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.2-alp
 replace github.com/cosmos/cosmos-sdk v0.40.0-rc3 => github.com/mapofzones/cosmos-sdk v0.40.0-rc3-fix
 
 require (
+	github.com/CosmWasm/wasmd v0.16.0-alpha1
 	github.com/cosmos/cosmos-sdk v0.42.0
 	github.com/cybercongress/go-cyber v0.2.0-alpha1
 	github.com/gogo/protobuf v1.3.3
