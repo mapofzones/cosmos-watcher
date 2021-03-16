@@ -18,8 +18,10 @@ import (
 	cosmosslashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	cosmosstakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
+	cybercrontypes "github.com/cybercongress/go-cyber/x/cron/types"
+	cyberenergytypes "github.com/cybercongress/go-cyber/x/energy/types"
 	cybergraphtypes "github.com/cybercongress/go-cyber/x/graph/types"
-	cyberrecourcestypes "github.com/cybercongress/go-cyber/x/resources/types"
+	cyberresourcestypes "github.com/cybercongress/go-cyber/x/resources/types"
 
 	akashaudittypes "github.com/ovrclk/akash/x/audit/types"
 	akashcerttypes "github.com/ovrclk/akash/x/cert/types"
@@ -92,8 +94,20 @@ func getCosmosMessages() []proto.Message {
 
 func getCyberMessages() []proto.Message {
 	cyberMessages := []proto.Message{
-		&cyberrecourcestypes.MsgConvert{},
+		&cyberresourcestypes.MsgConvert{},
 		&cybergraphtypes.MsgCyberlink{},
+		&cyberresourcestypes.MsgCreateResource{},
+		&cybercrontypes.MsgCronAddJob{},
+		&cybercrontypes.MsgCronChangeJobBlock{},
+		&cybercrontypes.MsgCronChangeJobCID{},
+		&cybercrontypes.MsgCronChangeJobCallData{},
+		&cybercrontypes.MsgCronChangeJobGasPrice{},
+		&cybercrontypes.MsgCronChangeJobLabel{},
+		&cybercrontypes.MsgCronRemoveJob{},
+		&cyberenergytypes.MsgDeleteEnergyRoute{},
+		&cyberenergytypes.MsgEditEnergyRoute{},
+		&cyberenergytypes.MsgEditEnergyRouteAlias{},
+		&cyberresourcestypes.MsgRedeemResource{},
 	}
 	return cyberMessages
 }
