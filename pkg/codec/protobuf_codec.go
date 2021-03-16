@@ -38,6 +38,23 @@ func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.Interfac
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	irisguardiantypes.RegisterInterfaces(interfaceRegistry)
 	irisnfttypes.RegisterInterfaces(interfaceRegistry)
+	registerCosmosInterfaces(interfaceRegistry)
+}
+
+func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	cosmosibcchanneltypes.RegisterInterfaces(interfaceRegistry)
+	cosmosbanktypes.RegisterInterfaces(interfaceRegistry)
+	cosmosibcclienttypes.RegisterInterfaces(interfaceRegistry)
+	cosmosstakingtypes.RegisterInterfaces(interfaceRegistry)
+	cosmosibcconnectiontypes.RegisterInterfaces(interfaceRegistry)
+	cosmosauthvestingtypes.RegisterInterfaces(interfaceRegistry)
+	cosmosgovtypes.RegisterInterfaces(interfaceRegistry)
+	cosmosdistributiontypes.RegisterInterfaces(interfaceRegistry)
+	cosmosevidencetypes.RegisterInterfaces(interfaceRegistry)
+	cosmosibcapptransfertypes.RegisterInterfaces(interfaceRegistry)
+	cosmosslashingtypes.RegisterInterfaces(interfaceRegistry)
+	cosmoscrisistypes.RegisterInterfaces(interfaceRegistry)
+	cosmostypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func getMessageImplementations() []proto.Message {
@@ -55,44 +72,7 @@ func getMessageImplementations() []proto.Message {
 
 func getCosmosMessages() []proto.Message {
 	cosmosMessages := []proto.Message{
-		&cosmosbanktypes.MsgSend{},
-		&cosmosibcclienttypes.MsgCreateClient{},
-		&cosmosstakingtypes.MsgCreateValidator{},
-		&cosmosibcchanneltypes.MsgAcknowledgement{},
-		&cosmosstakingtypes.MsgBeginRedelegate{},
-		&cosmosibcchanneltypes.MsgChannelCloseConfirm{},
-		&cosmosibcchanneltypes.MsgChannelCloseInit{},
-		&cosmosibcchanneltypes.MsgChannelOpenAck{},
-		&cosmosibcchanneltypes.MsgChannelOpenConfirm{},
-		&cosmosibcchanneltypes.MsgChannelOpenInit{},
-		&cosmosibcchanneltypes.MsgChannelOpenTry{},
-		&cosmosibcconnectiontypes.MsgConnectionOpenAck{},
-		&cosmosibcconnectiontypes.MsgConnectionOpenConfirm{},
-		&cosmosibcconnectiontypes.MsgConnectionOpenInit{},
-		&cosmosibcconnectiontypes.MsgConnectionOpenTry{},
-		&cosmosauthvestingtypes.MsgCreateVestingAccount{},
-		&cosmosstakingtypes.MsgDelegate{},
-		&cosmosgovtypes.MsgDeposit{},
-		&cosmosstakingtypes.MsgEditValidator{},
-		&cosmosdistributiontypes.MsgFundCommunityPool{},
-		&cosmosbanktypes.MsgMultiSend{},
-		&cosmosibcchanneltypes.MsgRecvPacket{},
-		&cosmosdistributiontypes.MsgSetWithdrawAddress{},
-		&cosmosevidencetypes.MsgSubmitEvidence{},
-		&cosmosibcclienttypes.MsgSubmitMisbehaviour{},
-		&cosmosgovtypes.MsgSubmitProposal{},
-		&cosmosibcchanneltypes.MsgTimeout{},
-		&cosmosibcchanneltypes.MsgTimeoutOnClose{},
-		&cosmosibcapptransfertypes.MsgTransfer{},
-		&cosmosstakingtypes.MsgUndelegate{},
-		&cosmosslashingtypes.MsgUnjail{},
-		&cosmosibcclienttypes.MsgUpdateClient{},
-		&cosmosibcclienttypes.MsgUpgradeClient{},
-		&cosmoscrisistypes.MsgVerifyInvariant{},
-		&cosmosgovtypes.MsgVote{},
-		&cosmosdistributiontypes.MsgWithdrawDelegatorReward{},
-		&cosmosdistributiontypes.MsgWithdrawValidatorCommission{},
-		&cosmostypes.ServiceMsg{},
+		&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
 	}
 	return cosmosMessages
 }
