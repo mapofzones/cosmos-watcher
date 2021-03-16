@@ -35,6 +35,7 @@ import (
 func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
+	wasmtypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func getMessageImplementations() []proto.Message {
@@ -43,11 +44,9 @@ func getMessageImplementations() []proto.Message {
 	cosmosMessages := getCosmosMessages()
 	cyberMessages := getCyberMessages()
 	akashMessages := getAkashMessages()
-	wasmMessages := getWasmMessages()
 	impls = append(impls, cosmosMessages...)
 	impls = append(impls, cyberMessages...)
 	impls = append(impls, akashMessages...)
-	impls = append(impls, wasmMessages...)
 
 	return impls
 }
@@ -137,13 +136,6 @@ func getAkashMessages() []proto.Message {
 		&akashdeploymenttypes.MsgPauseGroup{},
 		&akashdeploymenttypes.MsgStartGroup{},
 		&akashmarkettypes.MsgWithdrawLease{},
-	}
-	return akashMessages
-}
-
-func getWasmMessages() []proto.Message {
-	akashMessages := []proto.Message{
-		&wasmtypes.MsgStoreCode{},
 	}
 	return akashMessages
 }
