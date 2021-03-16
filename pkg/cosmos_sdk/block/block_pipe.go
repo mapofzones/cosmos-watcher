@@ -59,6 +59,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 		&akashtypes2.MsgRevokeCertificate{},
 		&akashtypes3.MsgCreateDeployment{},
 		&akashtypes3.MsgCloseDeployment{},
+		&akashtypes3.MsgUpdateDeployment{},
 		&akashtypes4.MsgSignProviderAttributes{},
 		&akashtypes5.MsgCreateBid{},
 		&akashtypes5.MsgCloseBid{},
