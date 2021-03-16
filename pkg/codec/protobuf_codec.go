@@ -28,11 +28,16 @@ import (
 	akashdeploymenttypes "github.com/ovrclk/akash/x/deployment/types"
 	akashmarkettypes "github.com/ovrclk/akash/x/market/types"
 	akashprovidertypes "github.com/ovrclk/akash/x/provider/types"
+
+	irisguardiantypes "github.com/irisnet/irishub/modules/guardian/types"
+	irisnfttypes "github.com/irisnet/irismod/modules/nft/types"
 )
 
 func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
+	irisguardiantypes.RegisterInterfaces(interfaceRegistry)
+	irisnfttypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func getMessageImplementations() []proto.Message {
