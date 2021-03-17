@@ -29,7 +29,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 	processedStream := make(chan block.ProcessedBlock)
 	interfaceRegistry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(interfaceRegistry)
-	blockcodec.RegisterMessagesImplementations(interfaceRegistry)
+	blockcodec.RegisterInterfacesAndImpls(interfaceRegistry)
 
 	go func() {
 		defer close(processedStream)

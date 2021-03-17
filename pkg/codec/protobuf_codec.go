@@ -24,25 +24,25 @@ import (
 	akashapp "github.com/ovrclk/akash/app"
 )
 
-func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	registerCosmosInterfaces(interfaceRegistry)
-	registerIrisInterfaces(interfaceRegistry)
-	registerCyberInterfaces(interfaceRegistry)
-	registerAkashInterfaces(interfaceRegistry)
+	cosmosRegisterInterfaces(interfaceRegistry)
+	irisRegisterInterfaces(interfaceRegistry)
+	cyberRegisterInterfaces(interfaceRegistry)
+	akashRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	cosmossimapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
-func registerIrisInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+func irisRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	irissimapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
-func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+func cyberRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	//cyberapp.ModuleBasics.RegisterInterfaces(interfaceRegistry) // todo: need to fix docker build wasm error!
 	cyberresourcestypes.RegisterInterfaces(interfaceRegistry)
 	cybergraphtypes.RegisterInterfaces(interfaceRegistry)
@@ -50,7 +50,7 @@ func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistr
 	cyberenergytypes.RegisterInterfaces(interfaceRegistry)
 }
 
-func registerAkashInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+func akashRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	akashapp.ModuleBasics().RegisterInterfaces(interfaceRegistry)
 }
 
