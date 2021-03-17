@@ -4,13 +4,7 @@ import (
 	"context"
 	codec "github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
-	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
-	"github.com/cosmos/cosmos-sdk/simapp"
-	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
-	types4 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
+	blockcodec "github.com/mapofzones/cosmos-watcher/pkg/codec"
 	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
 	parsing "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/parsing"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
@@ -18,7 +12,6 @@ import (
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
 	"log"
-	blockcodec "github.com/mapofzones/cosmos-watcher/pkg/codec"
 )
 
 // BlockStream returns channel of ordered blocks
@@ -36,23 +29,7 @@ func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.
 	processedStream := make(chan block.ProcessedBlock)
 	interfaceRegistry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(interfaceRegistry)
-	simapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 	blockcodec.RegisterMessagesImplementations(interfaceRegistry)
-
-	//interfaceRegistry.RegisterInterface("tendermint.crypto.PubKey", (*crypto.PubKey)(nil))
-	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &ed25519.PubKey{})
-	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &secp256k1.PubKey{})
-	//interfaceRegistry.RegisterImplementations((*crypto.PubKey)(nil), &multisig.LegacyAminoPubKey{})
-
-	interfaceRegistry.RegisterInterface("cosmos.crypto.PubKey", (*cryptotypes.PubKey)(nil))
-	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ed25519.PubKey{})
-	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &secp256k1.PubKey{})
-	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &multisig.LegacyAminoPubKey{})
-
-	interfaceRegistry.RegisterImplementations((*types3.ClientState)(nil), &types4.ClientState{})
-	interfaceRegistry.RegisterImplementations((*types3.ConsensusState)(nil), &types4.ConsensusState{})
-	interfaceRegistry.RegisterImplementations((*types3.Header)(nil), &types4.Header{})
-	interfaceRegistry.RegisterImplementations((*types3.Misbehaviour)(nil), &types4.Misbehaviour{})
 
 	go func() {
 		defer close(processedStream)

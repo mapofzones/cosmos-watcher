@@ -4,8 +4,14 @@ import (
 	"github.com/gogo/protobuf/proto"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
+	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
+	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
+	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmossimapp "github.com/cosmos/cosmos-sdk/simapp"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
+	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
+	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 
 	//cyberapp "github.com/cybercongress/go-cyber/app"
 	cybercrontypes "github.com/cybercongress/go-cyber/x/cron/types"
@@ -25,6 +31,7 @@ func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.Interfac
 	registerIrisInterfaces(interfaceRegistry)
 	registerCyberInterfaces(interfaceRegistry)
 	registerAkashInterfaces(interfaceRegistry)
+	registerTypes(interfaceRegistry)
 }
 
 func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -45,6 +52,18 @@ func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistr
 
 func registerAkashInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	akashapp.ModuleBasics().RegisterInterfaces(interfaceRegistry)
+}
+
+func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
+	interfaceRegistry.RegisterInterface("cosmos.crypto.PubKey", (*cosmoscryptotypes.PubKey)(nil))
+	interfaceRegistry.RegisterImplementations((*cosmoscryptotypes.PubKey)(nil), &cosmoscryptoed.PubKey{})
+	interfaceRegistry.RegisterImplementations((*cosmoscryptotypes.PubKey)(nil), &cosmoscryptosecp.PubKey{})
+	interfaceRegistry.RegisterImplementations((*cosmoscryptotypes.PubKey)(nil), &cosmoscryptomultisig.LegacyAminoPubKey{})
+
+	interfaceRegistry.RegisterImplementations((*cosmosibcexported.ClientState)(nil), &cosmosibcclients.ClientState{})
+	interfaceRegistry.RegisterImplementations((*cosmosibcexported.ConsensusState)(nil), &cosmosibcclients.ConsensusState{})
+	interfaceRegistry.RegisterImplementations((*cosmosibcexported.Header)(nil), &cosmosibcclients.Header{})
+	interfaceRegistry.RegisterImplementations((*cosmosibcexported.Misbehaviour)(nil), &cosmosibcclients.Misbehaviour{})
 }
 
 func getMessageImplementations() []proto.Message {
