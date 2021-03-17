@@ -13,8 +13,7 @@ import (
 	cybergraphtypes "github.com/cybercongress/go-cyber/x/graph/types"
 	cyberresourcestypes "github.com/cybercongress/go-cyber/x/resources/types"
 
-	irisguardiantypes "github.com/irisnet/irishub/modules/guardian/types"
-	irisnfttypes "github.com/irisnet/irismod/modules/nft/types"
+	irissimapp "github.com/irisnet/irishub/simapp"
 
 	akashapp "github.com/ovrclk/akash/app"
 )
@@ -22,15 +21,18 @@ import (
 func RegisterMessagesImplementations(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	irisguardiantypes.RegisterInterfaces(interfaceRegistry)
-	irisnfttypes.RegisterInterfaces(interfaceRegistry)
 	registerCosmosInterfaces(interfaceRegistry)
+	registerIrisInterfaces(interfaceRegistry)
 	registerCyberInterfaces(interfaceRegistry)
 	registerAkashInterfaces(interfaceRegistry)
 }
 
 func registerCosmosInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	cosmossimapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+}
+
+func registerIrisInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	irissimapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerCyberInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
