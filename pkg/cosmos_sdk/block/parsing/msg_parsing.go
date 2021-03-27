@@ -220,7 +220,7 @@ func ParseIDsFromResults(results []*types6.ResponseDeliverTx, expectedEvents []s
 						var values []string
 						for _, expectedKey := range attributeKeys {
 							if string(attr.Key) == expectedKey && isCorrect {
-								values = append(attributesValues, string(attr.Value))
+								values = append(values, string(attr.Value))
 								log.Println(expectedKey, " attr.Value:", string(attr.Value))
 							}
 						}
