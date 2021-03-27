@@ -20,6 +20,11 @@ import (
 	"log"
 )
 
+type attributeFiler struct {
+	key string
+	value string
+}
+
 func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Message, error) {
 	log.Println("parseMsg")
 	switch msg := msg.(type) {
@@ -56,7 +61,8 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 	case *types3.MsgConnectionOpenInit:
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenInit}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
-		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
+		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
 		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
 			return nil, errors.New("connectionID not found")
 		}
@@ -70,7 +76,8 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 	case *types3.MsgConnectionOpenTry:
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenTry}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
-		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
+		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
 		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
 			return nil, errors.New("connectionID not found")
 		}
@@ -85,7 +92,8 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 	case *types4.MsgChannelOpenInit:
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenInit}
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
-		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
+		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
 		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
 			return nil, errors.New("channelID not found")
 		}
@@ -100,7 +108,8 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 	case *types4.MsgChannelOpenTry:
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenTry}
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
-		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys)
+		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
+		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
 		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
 			return nil, errors.New("channelID not found")
 		}
@@ -189,20 +198,34 @@ func ParseClientIDFromResults(results []*types6.ResponseDeliverTx, clientId stri
 	return clientId
 }
 
-func ParseIDsFromResults(results []*types6.ResponseDeliverTx, expectedEvents []string, attributeKeys []string) []string {
-	//expectedEvent := []string{connectiontypes.EventTypeConnectionOpenInit, connectiontypes.EventTypeConnectionOpenTry}
-	//attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
+func ParseIDsFromResults(results []*types6.ResponseDeliverTx, expectedEvents []string, attributeKeys []string, attrFiler attributeFiler) []string {
 	var attributesValues []string
 	for _, res := range results {
 		for _, event := range res.Events {
 			for _, expected := range expectedEvents {
 				if event.Type == expected {
+					isCorrect := false
+					if attrFiler == (attributeFiler{}) {
+						isCorrect = true
+					} else {
+						for _, attr := range event.Attributes {
+							if attrFiler != (attributeFiler{}) &&
+								attrFiler.key == string(attr.Key) &&
+								attrFiler.value == string(attr.Value) {
+								isCorrect = true
+							}
+						}
+					}
 					for _, attr := range event.Attributes {
+						var values []string
 						for _, expectedKey := range attributeKeys {
-							if string(attr.Key) == expectedKey {
-								attributesValues = append(attributesValues, string(attr.Value))
+							if string(attr.Key) == expectedKey && isCorrect {
+								values = append(attributesValues, string(attr.Value))
 								log.Println(expectedKey, " attr.Value:", string(attr.Value))
 							}
+						}
+						for _, value := range values {
+							attributesValues = append(attributesValues, value)
 						}
 					}
 				}
