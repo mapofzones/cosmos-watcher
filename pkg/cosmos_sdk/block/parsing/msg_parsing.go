@@ -25,7 +25,7 @@ type attributeFiler struct {
 	value string
 }
 
-func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Message, error) {
+func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) ([]watcher.Message, error) {
 	log.Println("parseMsg")
 	switch msg := msg.(type) {
 
@@ -44,7 +44,7 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 		value := msg.ClientState.GetCachedValue()
 		chainId := value.(*types7.ClientState).ChainId
 		clientId := ""
-		clientId = ParseClientIDFromResults(results, clientId)
+		clientId = ParseClientIDFromResults(txResult, clientId)
 		messages := []watcher.Message{
 			watcher.CreateClient{
 				ChainID:    chainId,
@@ -59,10 +59,13 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 
 	// connection creation
 	case *types3.MsgConnectionOpenInit:
+		if errCode != 0 {
+			return []watcher.Message{}, nil
+		}
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenInit}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
-		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
+		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
 			return nil, errors.New("connectionID not found")
 		}
@@ -74,10 +77,13 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 		}, nil
 
 	case *types3.MsgConnectionOpenTry:
+		if errCode != 0 {
+			return []watcher.Message{}, nil
+		}
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenTry}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
-		connectionIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
+		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
 			return nil, errors.New("connectionID not found")
 		}
@@ -90,10 +96,13 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 
 	// channel creation
 	case *types4.MsgChannelOpenInit:
+		if errCode != 0 {
+			return []watcher.Message{}, nil
+		}
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenInit}
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
-		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
+		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
 			return nil, errors.New("channelID not found")
 		}
@@ -106,10 +115,13 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 		}, nil
 
 	case *types4.MsgChannelOpenTry:
+		if errCode != 0 {
+			return []watcher.Message{}, nil
+		}
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenTry}
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
-		channelIDs := ParseIDsFromResults(results, expectedEvents, attributeKeys, attrFiler)
+		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
 			return nil, errors.New("channelID not found")
 		}
@@ -182,9 +194,9 @@ func parseMsg(msg sdk.Msg, results []*types6.ResponseDeliverTx) ([]watcher.Messa
 	return []watcher.Message{}, nil
 }
 
-func ParseClientIDFromResults(results []*types6.ResponseDeliverTx, clientId string) string {
-	for _, res := range results {
-		for _, event := range res.Events {
+func ParseClientIDFromResults(txResult *types6.ResponseDeliverTx, clientId string) string {
+	if txResult != nil {
+		for _, event := range txResult.Events {
 			if event.Type == clienttypes.EventTypeCreateClient {
 				for _, attr := range event.Attributes {
 					if string(attr.Key) == clienttypes.AttributeKeyClientID {
@@ -198,10 +210,10 @@ func ParseClientIDFromResults(results []*types6.ResponseDeliverTx, clientId stri
 	return clientId
 }
 
-func ParseIDsFromResults(results []*types6.ResponseDeliverTx, expectedEvents []string, attributeKeys []string, attrFiler attributeFiler) []string {
+func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []string, attributeKeys []string, attrFiler attributeFiler) []string {
 	var attributesValues []string
-	for _, res := range results {
-		for _, event := range res.Events {
+	if txResult != nil {
+		for _, event := range txResult.Events {
 			for _, expected := range expectedEvents {
 				if event.Type == expected {
 					isCorrect := false

@@ -12,14 +12,14 @@ import (
 	types2 "github.com/cosmos/cosmos-sdk/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32, results []*types3.ResponseDeliverTx, ) (watcher.Message, error) {
+func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, ) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
 	}
 	for _, msg := range tx.GetMsgs() {
 		log.Println(msg)
-		msgs, err := parseMsg(msg, results)
+		msgs, err := parseMsg(msg, txResult, errCode)
 		if err != nil {
 			return Tx, err
 		}
@@ -49,14 +49,15 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 
 	log.Println("height:", b.Height, " txs:", b.Txs)
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
-	for _, tx := range b.Txs {
+	txResults := b.BlockResults.TxsResults
+	for i, tx := range b.Txs {
 		log.Println("here!")
 		decoded, err := decodeTx(cdc, tx)
 		if err != nil {
 			return block, err
 		}
 
-		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.BlockResults.TxsResults)
+		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), txResults[i])
 		if err != nil {
 			return block, err
 		}
