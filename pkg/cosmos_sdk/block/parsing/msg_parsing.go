@@ -52,7 +52,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 				ClientType: "",
 			},
 		}
-		if clientId == "" {
+		if clientId == "" && errCode == 0 {
 			return messages, errors.New("clientID not found")
 		}
 		return messages, nil
@@ -66,7 +66,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
-		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
+		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0)  && errCode == 0{
 			return nil, errors.New("connectionID not found")
 		}
 		return []watcher.Message{
@@ -84,7 +84,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
-		if len(connectionIDs) != 1 || len(connectionIDs[0]) == 0 {
+		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("connectionID not found")
 		}
 		return []watcher.Message{
@@ -103,7 +103,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
 		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
-		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
+		if (len(channelIDs) != 1 || len(channelIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("channelID not found")
 		}
 		return []watcher.Message{
