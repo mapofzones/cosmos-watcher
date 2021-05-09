@@ -1,13 +1,17 @@
 #!/bin/sh
 
+if [ "$chain_id" != "" ]; then
+    rpc=$(curl -H 'Content-Type: application/json' \
+     -X POST -ss -H "x-hasura-admin-secret: $hasura_secret" \
+     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}}, order_by: {last_checked_at: desc}, limit: 1) {rpc_addr}}"}' $graphql \
+      | jq .data.zone_nodes[].rpc_addr)
+    rpc="${rpc%\"}" # remove the suffix "
+    rpc="${rpc#\"}" # remove the prefix "
+    export rpc
+fi
 
-# get last processed block
-rpcQuery="${rpc/tcp:\/\//http:\/\/}"
-
-export chain_id=$(curl --connect-timeout 3 -ss $rpcQuery/status | jq .result.node_info.network -r)
-
-if [ "$chain_id" == "" ]; then
-    echo "unable to fetch chain_id for $rpcQuery"
+if [ "$rpc" == "" ]; then
+    echo "Unable to fetch rpc for chain_id: $chain_id"
     sleep 600
     exit 1
 fi
