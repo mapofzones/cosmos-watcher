@@ -23,7 +23,7 @@ and listens to the given zone starting from the given block number.
 
 Running in a container:
 * `docker build -t cosmos-watcher:v1 .`
-* `docker run --env height=1 --env rpc=http://<ip>:<default_port=26657> --env rabbitmq=amqp://<login>:<pass>@<ip>:<default_port=5672> -it --network="host" cosmos-watcher:v1`
+* `docker run --env chain_id=<network like cosmoshub-4> --env graphql=<graphql endpoint like https://ip:port/v1/graphql --env rabbitmq=amqp://<login>:<pass>@<ip>:<default_port=5672> -it --network="host" cosmos-watcher:v1`
 
 # Responsibilies
 The watcher listens to the new blocks, parses them, and assembly the information into the zone-neutral data structures.
