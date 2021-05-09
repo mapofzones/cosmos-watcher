@@ -9,7 +9,7 @@ import (
 
 func TestParseIDsFromResults(t *testing.T) {
     type args struct {
-        results        []*types6.ResponseDeliverTx
+        txResult       *types6.ResponseDeliverTx
         expectedEvents []string
         attributeKeys  []string
     }
@@ -31,7 +31,7 @@ func TestParseIDsFromResults(t *testing.T) {
         {
             "empty_arg_tx_result",
             args{
-                []*types6.ResponseDeliverTx{},
+                &types6.ResponseDeliverTx{},
                 []string{connectiontypes.EventTypeConnectionOpenInit},
                 []string{connectiontypes.AttributeKeyConnectionID},
             },
@@ -40,10 +40,10 @@ func TestParseIDsFromResults(t *testing.T) {
         {
             "single_result_id",
             args{
-                []*types6.ResponseDeliverTx{{Events: []types6.Event{{
+                &types6.ResponseDeliverTx{Events: []types6.Event{{
                     connectiontypes.EventTypeConnectionOpenInit,
                     []types6.EventAttribute{{[]byte(connectiontypes.AttributeKeyConnectionID), []byte("myConnectionID"), true}},
-                }}}},
+                }}},
                 []string{connectiontypes.EventTypeConnectionOpenInit},
                 []string{connectiontypes.AttributeKeyConnectionID},
             },
@@ -52,7 +52,7 @@ func TestParseIDsFromResults(t *testing.T) {
         {
             "multiple_result_id",
             args{
-                []*types6.ResponseDeliverTx{{Events: []types6.Event{
+                &types6.ResponseDeliverTx{Events: []types6.Event{
                     {
                         connectiontypes.EventTypeConnectionOpenInit,
                         []types6.EventAttribute{
@@ -67,7 +67,7 @@ func TestParseIDsFromResults(t *testing.T) {
                             {[]byte(connectiontypes.AttributeKeyCounterpartyConnectionID), []byte("myCounterpartyConnectionID"), true},
                         },
                     },
-                }}},
+                }},
                 []string{connectiontypes.EventTypeConnectionOpenInit, connectiontypes.EventTypeConnectionOpenTry},
                 []string{connectiontypes.AttributeKeyConnectionID, connectiontypes.AttributeKeyCounterpartyConnectionID},
             },
@@ -76,7 +76,7 @@ func TestParseIDsFromResults(t *testing.T) {
     }
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
-            actual := ParseIDsFromResults(tt.args.results, tt.args.expectedEvents, tt.args.attributeKeys)
+            actual := ParseIDsFromResults(tt.args.txResult, tt.args.expectedEvents, tt.args.attributeKeys, attributeFiler{})
             assert.Equal(t, tt.expected, actual)
         })
     }
