@@ -11,7 +11,7 @@ require (
 	github.com/cybercongress/go-cyber v0.2.0-alpha1
 	github.com/gogo/protobuf v1.3.3
 	github.com/irisnet/irishub v1.1.1
-	github.com/ovrclk/akash v0.10.1
+	github.com/ovrclk/akash v0.12.1
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
