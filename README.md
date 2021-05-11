@@ -13,10 +13,10 @@ and listens to the given zone starting from the given block number.
 | Repository Branch | Supported zone | Blockchain version |
 | ---:   |                    :---: |                                       :--- |
 | master | `cosmoshub-4(cosmoshub)` | `cosmos-sdk v0.42.0`, `tendermint v0.34.8` |
-|        | `irishub-1`              | `irishub v1.0.1`                           |
-|        | `akash-testnet-5(akash)` | `akash v0.10.1`                            |
+| master | `irishub-1`              | `irishub v1.1.1`                           |
+| master | `akash`                  | `akash v0.12.1`                            |
 | wasm   | `bostromdev-1(cyber)`    | `go-cyber v0.2.0-alpha1`                   |
-|        | `musslenet-4(wasm)`      | `wasmd v0.16.0-alpha1`                     |
+| wasm   | `musslenet-4(wasm)`      | `wasmd v0.16.0-alpha1`                     |
 | ?      | `regen-devnet-5(regen)`  | `regen-ledger v0.6.0`                      |
 
 ## Usage
