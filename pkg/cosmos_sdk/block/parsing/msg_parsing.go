@@ -257,12 +257,18 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 	}, len(data))
 
 	for i, sdkCoin := range data {
+		var amount uint64
+		if sdkCoin.Amount.IsUint64() {
+			amount = sdkCoin.Amount.Uint64()
+		} else {
+			amount = 0
+		}
 		transformed[i] = struct {
 			Amount uint64
 			Coin   string
 		}{
 			Coin:   sdkCoin.Denom,
-			Amount: sdkCoin.Amount.Uint64(),
+			Amount: amount,
 		}
 	}
 	return transformed
