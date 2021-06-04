@@ -12,7 +12,7 @@ and listens to the given zone starting from the given block number.
 
 | Repository Branch | Supported zone | Blockchain version |
 | ---:   |                    :---:    |                                       :--- |
-| master | `cosmoshub-4 (cosmoshub)`   | `cosmos-sdk v0.42.3`, `tendermint v0.34.10`|
+| master | `cosmoshub-4 (cosmoshub)`   | `gaia v4.2.1`                              |
 | master | `irishub-1 (irishub)`       | `irishub v1.1.1`                           |
 | master | `akashnet-2 (akash.network)`| `akash v0.12.1`                            |
 | master | `sentinel (sentinel)`       | `sentinelhub v0.6.2`                       |
