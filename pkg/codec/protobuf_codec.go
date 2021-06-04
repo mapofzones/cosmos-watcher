@@ -26,6 +26,8 @@ import (
 	sentinelapp "github.com/sentinel-official/hub"
 
 	persistenceapp "github.com/persistenceOne/persistenceCore/application"
+
+	cosmosapp "github.com/cosmos/gaia/v4/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -42,6 +44,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	cosmossimapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func irisRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
