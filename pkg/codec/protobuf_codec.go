@@ -22,6 +22,8 @@ import (
 	irissimapp "github.com/irisnet/irishub/simapp"
 
 	akashapp "github.com/ovrclk/akash/app"
+
+	sentinelapp "github.com/sentinel-official/hub"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -31,6 +33,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 	irisRegisterInterfaces(interfaceRegistry)
 	cyberRegisterInterfaces(interfaceRegistry)
 	akashRegisterInterfaces(interfaceRegistry)
+	sentinelRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -52,6 +55,10 @@ func cyberRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistr
 
 func akashRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	akashapp.ModuleBasics().RegisterInterfaces(interfaceRegistry)
+}
+
+func sentinelRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	sentinelapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code

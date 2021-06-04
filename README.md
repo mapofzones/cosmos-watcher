@@ -11,13 +11,14 @@ The cosmos-watcher is a standalone process that takes 2 input arguments:
 and listens to the given zone starting from the given block number.
 
 | Repository Branch | Supported zone | Blockchain version |
-| ---:   |                    :---: |                                       :--- |
-| master | `cosmoshub-4(cosmoshub)` | `cosmos-sdk v0.42.0`, `tendermint v0.34.8` |
-| master | `irishub-1`              | `irishub v1.1.1`                           |
-| master | `akash`                  | `akash v0.12.1`                            |
-| wasm   | `bostromdev-1(cyber)`    | `go-cyber v0.2.0-alpha1`                   |
-| wasm   | `musslenet-4(wasm)`      | `wasmd v0.16.0-alpha1`                     |
-| ?      | `regen-devnet-5(regen)`  | `regen-ledger v0.6.0`                      |
+| ---:   |                    :---:    |                                       :--- |
+| master | `cosmoshub-4 (cosmoshub)`   | `cosmos-sdk v0.42.3`, `tendermint v0.34.10`|
+| master | `irishub-1 (irishub)`       | `irishub v1.1.1`                           |
+| master | `akashnet-2 (akash.network)`| `akash v0.12.1`                            |
+| master | `sentinel (sentinel)`       | `sentinelhub v0.6.2`                       |
+| wasm   | `bostromdev-1(cyber)`       | `go-cyber v0.2.0-alpha1`                   |
+| wasm   | `musslenet-4(wasm)`         | `wasmd v0.16.0-alpha1`                     |
+| ?      | `regen-devnet-5(regen)`     | `regen-ledger v0.6.0`                      |
 
 ## Usage
 
