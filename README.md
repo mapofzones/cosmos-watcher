@@ -16,6 +16,7 @@ and listens to the given zone starting from the given block number.
 | master | `irishub-1 (irishub)`       | `irishub v1.1.1`                           |
 | master | `akashnet-2 (akash.network)`| `akash v0.12.1`                            |
 | master | `sentinel (sentinel)`       | `sentinelhub v0.6.2`                       |
+| master | `core-1 (persistence)`      | `persistenceCore v0.1.3`                   |
 | wasm   | `bostromdev-1(cyber)`       | `go-cyber v0.2.0-alpha1`                   |
 | wasm   | `musslenet-4(wasm)`         | `wasmd v0.16.0-alpha1`                     |
 | ?      | `regen-devnet-5(regen)`     | `regen-ledger v0.6.0`                      |
