@@ -14,6 +14,7 @@ require (
 	github.com/irisnet/irishub v1.1.1
 	github.com/ovrclk/akash v0.12.1
 	github.com/persistenceOne/persistenceCore v0.1.3
+	github.com/regen-network/regen-ledger v1.0.0
 	github.com/sentinel-official/hub v0.6.2
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
