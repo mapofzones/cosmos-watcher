@@ -4,7 +4,8 @@ go 1.14
 
 replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 
-replace github.com/cosmos/cosmos-sdk v0.42.5 => github.com/mapofzones/cosmos-sdk v0.42.3-unmarshal-fix
+//replace github.com/cosmos/cosmos-sdk v0.42.5 => github.com/mapofzones/cosmos-sdk v0.42.3-unmarshal-fix
+replace github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.42.5-0.20210616143906-49caecfe0a60
 
 require (
 	github.com/cosmos/cosmos-sdk v0.42.5
@@ -12,6 +13,7 @@ require (
 	github.com/cybercongress/go-cyber v0.2.0-alpha1
 	github.com/gogo/protobuf v1.3.3
 	github.com/irisnet/irishub v1.1.1
+	github.com/osmosis-labs/osmosis v1.0.1
 	github.com/ovrclk/akash v0.12.1
 	github.com/persistenceOne/persistenceCore v0.1.3
 	github.com/sentinel-official/hub v0.6.2

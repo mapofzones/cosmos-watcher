@@ -28,6 +28,8 @@ import (
 	persistenceapp "github.com/persistenceOne/persistenceCore/application"
 
 	cosmosapp "github.com/cosmos/gaia/v4/app"
+
+	osmosisapp "github.com/osmosis-labs/osmosis/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -39,6 +41,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 	akashRegisterInterfaces(interfaceRegistry)
 	sentinelRegisterInterfaces(interfaceRegistry)
 	persistenceRegisterInterfaces(interfaceRegistry)
+	osmosisRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -69,6 +72,10 @@ func sentinelRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func persistenceRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	persistenceapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+}
+
+func osmosisRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	osmosisapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
