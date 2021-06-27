@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$chain_id" != "" ]; then
     resp=$(curl -H 'Content-Type: application/json' \
