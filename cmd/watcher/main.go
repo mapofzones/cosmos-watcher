@@ -27,7 +27,7 @@ func main() {
 	}
 	err = client.Start()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	// initiate context for our app
