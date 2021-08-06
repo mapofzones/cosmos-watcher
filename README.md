@@ -19,7 +19,7 @@ and listens to the given zone starting from the given block number.
 | master | `core-1 (persistence)`      | `persistenceCore v0.1.3`                   |
 | wasm   | `bostromdev-1(cyber)`       | `go-cyber v0.2.0-alpha1`                   |
 | wasm   | `musslenet-4(wasm)`         | `wasmd v0.16.0-alpha1`                     |
-| ?      | `regen-devnet-5(regen)`     | `regen-ledger v0.6.0`                      |
+| regen  | `regen-1(regen-network)`    | `regen-ledger v1.0.0`                      |
 
 ## Usage
 

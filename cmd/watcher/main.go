@@ -27,12 +27,18 @@ func main() {
 	}
 	err = client.Start()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	// initiate context for our app
 	ctx, cancel := context.WithCancel(context.Background())
 
+	//info, err := client.NetInfo(ctx)
+	//for _, p := range info.Peers {
+	//	log.Println("RPCAddress", p.NodeInfo.Other.RPCAddress)
+	//	log.Println("RemoteIP", p.RemoteIP)
+	//}
+	//log.Fatal("Finish")
 	// create block fetching pipeline
 	blocks := cosmos.BlockStream(ctx, client, height)
 

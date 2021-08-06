@@ -1,10 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$chain_id" != "" ]; then
-    rpc=$(curl -H 'Content-Type: application/json' \
+    resp=$(curl -H 'Content-Type: application/json' \
      -X POST -ss -H "x-hasura-admin-secret: $hasura_secret" \
-     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}}, order_by: {last_checked_at: desc}, limit: 1) {rpc_addr}}"}' $graphql \
+     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}}, order_by: {last_checked_at: desc}) {rpc_addr}}"}' $graphql \
       | jq .data.zone_nodes[].rpc_addr)
+
+    x=0
+    declare -a rpcs
+    while IFS=$'\n' read -ra ADDR; do
+        for i in "${ADDR[@]}"; do
+            rpcs=(${rpcs[@]} "$i")
+        done
+        x=$(( $x + 1 ))
+    done <<< "$resp"
+
+    rand=$[$RANDOM % ${#rpcs[@]}]
+    rpc="${rpcs[$rand]}"
     rpc="${rpc%\"}" # remove the suffix "
     rpc="${rpc#\"}" # remove the prefix "
     export rpc
