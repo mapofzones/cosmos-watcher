@@ -11,7 +11,8 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
-    regenapp "github.com/regen-network/regen-ledger/app"
+
+	regenapp "github.com/regen-network/regen-ledger/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
