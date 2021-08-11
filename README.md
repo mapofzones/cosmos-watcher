@@ -10,16 +10,19 @@ The cosmos-watcher is a standalone process that takes 2 input arguments:
 
 and listens to the given zone starting from the given block number.
 
-| Repository Branch | Supported zone | Blockchain version |
-| ---:   |                    :---:    |                                       :--- |
-| master | `cosmoshub-4 (cosmoshub)`   | `gaia v4.2.1`                              |
-| master | `irishub-1 (irishub)`       | `irishub v1.1.1`                           |
-| master | `akashnet-2 (akash.network)`| `akash v0.12.1`                            |
-| master | `sentinel (sentinel)`       | `sentinelhub v0.6.2`                       |
-| master | `core-1 (persistence)`      | `persistenceCore v0.1.3`                   |
-| wasm   | `bostromdev-1(cyber)`       | `go-cyber v0.2.0-alpha1`                   |
-| wasm   | `musslenet-4(wasm)`         | `wasmd v0.16.0-alpha1`                     |
-| regen  | `regen-1(regen-network)`    | `regen-ledger v1.0.0`                      |
+| Repository Branch | Supported zone                            | Workflow status |
+| ---:              |                    :---:                  |                                       :--- |
+| master, cosmoshub | `cosmoshub-4 (cosmoshub)`                 | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cosmoshub">   |
+| irishub           | `irishub-1 (irishub)`                     | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=irishub">     |
+| akash             | `akashnet-2 (akash.network)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=akash">       |
+| sentinelhub       | `sentinelhub-2 (sentinel)`                | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=sentinelhub"> |
+| persistence       | `core-1 (persistence)`                    | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=persistence"> |
+| regen             | `regen-1 (regen-network)`                 | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=regen">       |
+| osmosis           | `osmosis-1 (osmosis)`                     | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=osmosis">     |
+| crypto-org        | `crypto-org-chain-mainnet-1 (crypto.org)` | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=crypto-org">  |
+| starname          | `iov-mainnet-ibc (starname)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=starname">    |
+| wasm              | `bostromdev-1 (cyber)`                    |  |
+| wasm              | `musslenet-4 (wasm)`                      |  |
 
 ## Usage
 
