@@ -2,9 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ akash ]
 
 jobs:
 
@@ -40,7 +38,7 @@ jobs:
       uses: ripplr-io/docr-docker-publish@v1
       with:
         # Image path in the format registry-name/image-name
-        image_path: ${{ secrets.IMAGE_PATH }}
+        image_path: ${{ secrets.IMAGE_PATH_AKASH }}
         # Number of characters from the commit SHA
         sha_size: 8 # optional, default is 8
     - name: Notify Telegram
