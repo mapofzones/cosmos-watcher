@@ -4,7 +4,7 @@ go 1.14
 
 replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 
-replace github.com/cosmos/cosmos-sdk v0.42.6 => github.com/mapofzones/cosmos-sdk v0.42.6-unmarshal-fix
+replace github.com/cosmos/cosmos-sdk => github.com/mapofzones/cosmos-sdk v0.42.6-unmarshal-fix
 
 require (
 	github.com/cosmos/cosmos-sdk v0.42.5
