@@ -1,7 +1,7 @@
 # cosmos-watcher
 
 Status of Last Deployment:<br>
-<img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cosmoshub"><br>
+<img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cronos"><br>
 
 # General
 The cosmos-watcher is a standalone process that takes 2 input arguments: 
@@ -10,8 +10,8 @@ The cosmos-watcher is a standalone process that takes 2 input arguments:
 
 and listens to the given zone starting from the given block number.
 
-| Repository Branch | Supported zone                            | Workflow status |
-| ---:              |                    :---:                  |                                       :--- |
+| Repository Branch | Supported zone                            | Workflow status                                                                                                          |
+| ---:              |                    :---:                  |                                                                                                                     :--- |
 | master, cosmoshub | `cosmoshub-4 (cosmoshub)`                 | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cosmoshub">   |
 | irishub           | `irishub-1 (irishub)`                     | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=irishub">     |
 | akash             | `akashnet-2 (akash.network)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=akash">       |
@@ -21,8 +21,9 @@ and listens to the given zone starting from the given block number.
 | osmosis           | `osmosis-1 (osmosis)`                     | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=osmosis">     |
 | crypto-org        | `crypto-org-chain-mainnet-1 (crypto.org)` | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=crypto-org">  |
 | starname          | `iov-mainnet-ibc (starname)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=starname">    |
-| wasm              | `bostromdev-1 (cyber)`                    |  |
-| wasm              | `musslenet-4 (wasm)`                      |  |
+| cronos            | `cronostestnet-338 (cronos)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cronos">      |
+| wasm              | `bostromdev-1 (cyber)`                    |                                                                                                                          |
+| wasm              | `musslenet-4 (wasm)`                      |                                                                                                                          |
 
 ## Usage
 
