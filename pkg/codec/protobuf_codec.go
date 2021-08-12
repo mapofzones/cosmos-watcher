@@ -9,20 +9,20 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
-	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
-	cosmosapp "github.com/cosmos/gaia/v5/app"
+	cosmosibcexported "github.com/cosmos/ibc-go/modules/core/exported"
+	cosmosibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
+	cronosapp "github.com/tharsis/ethermint/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	cosmosRegisterInterfaces(interfaceRegistry)
+	cronosRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func cronosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	cronosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
@@ -46,7 +46,7 @@ func getMessageImplementations() []proto.Message {
 
 func getCosmosMessages() []proto.Message {
 	cosmosMessages := []proto.Message{
-		&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
+		//&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
 	}
 	return cosmosMessages
 }
