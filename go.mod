@@ -4,7 +4,7 @@ go 1.14
 
 replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
-replace github.com/cosmos/cosmos-sdk v0.42.6 => github.com/mapofzones/cosmos-sdk v0.42.6-unmarshal-fix
+replace github.com/cosmos/cosmos-sdk => github.com/mapofzones/cosmos-sdk v0.42.6-unmarshal-fix
 
 require (
 	github.com/Sifchain/sifnode v0.0.0-20210824131358-35744c0c9631
