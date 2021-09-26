@@ -10,8 +10,8 @@ The cosmos-watcher is a standalone process that takes 2 input arguments:
 
 and listens to the given zone starting from the given block number.
 
-| Repository Branch | Supported zone                            | Workflow status |
-| ---:              |                    :---:                  |                                       :--- |
+| Repository Branch | Supported zone                            | Workflow status                                                                                                          |
+| ---:              |                    :---:                  |                                                                                                                     :--- |
 | master, cosmoshub | `cosmoshub-4 (cosmoshub)`                 | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cosmoshub">   |
 | irishub           | `irishub-1 (irishub)`                     | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=irishub">     |
 | akash             | `akashnet-2 (akash.network)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=akash">       |
@@ -24,8 +24,8 @@ and listens to the given zone starting from the given block number.
 | sifchain          | `sifchain-1 (sifchain)`                   | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=sifchain">    |
 | microtick         | `microtick-1 (microtick)`                 | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=microtick">   |
 | emoney            | `emoney-3 (emoney)`                       | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=emoney">      |
-| wasm              | `bostromdev-1 (cyber)`                    |  |
-| wasm              | `musslenet-4 (wasm)`                      |  |
+| wasm              | `bostromdev-1 (cyber)`                    |                                                                                                                          |
+| wasm              | `musslenet-4 (wasm)`                      |                                                                                                                          |
 
 ## Usage
 
@@ -46,6 +46,8 @@ block {
 transaction {
    hash: <string>
    msgs: array [message]
+   accepted: <bool>
+   sender: <string>
 }
 
 message {
