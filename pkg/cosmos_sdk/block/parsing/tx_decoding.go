@@ -2,6 +2,7 @@ package cosmos
 
 import (
 	"errors"
+	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	"log"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -20,12 +21,24 @@ func decodeTx(codec *codec.ProtoCodec, tx types.Tx) (sdk.Tx, error) {
 	if err != nil {
 		return auth.StdTx{}, DecodeErr
 	}
-	return toStdTx(txInterface)
+	return txInterface, nil
 }
 
 // Decode accept tx bytes and transforms them to cosmos std tx
 func toStdTx(tx sdk.Tx) (sdk.Tx, error) {
 	stdTx, ok := tx.(sdk.Tx)
+
+	log.Println(stdTx)
+	if !ok {
+		return nil, DecodeErr
+	}
+	return stdTx, nil
+}
+
+// Decode accept tx bytes and transforms them to cosmos sign tx
+func toSignTx(tx sdk.Tx) (sign.Tx, error) {
+	stdTx, ok := tx.(sign.Tx)
+
 	log.Println(stdTx)
 	if !ok {
 		return nil, DecodeErr
