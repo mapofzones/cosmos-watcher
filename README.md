@@ -22,6 +22,7 @@ and listens to the given zone starting from the given block number.
 | crypto-org        | `crypto-org-chain-mainnet-1 (crypto.org)` | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=crypto-org">  |
 | starname          | `iov-mainnet-ibc (starname)`              | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=starname">    |
 | sifchain          | `sifchain-1 (sifchain)`                   | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=sifchain">    |
+| microtick         | `microtick-1 (microtick)`                 | <img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=microtick">   |
 | wasm              | `bostromdev-1 (cyber)`                    |  |
 | wasm              | `musslenet-4 (wasm)`                      |  |
 
