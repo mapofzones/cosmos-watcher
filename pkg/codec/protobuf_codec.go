@@ -11,18 +11,18 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
-	cosmosapp "github.com/cosmos/gaia/v5/app"
+	impactapp "github.com/ixofoundation/ixo-blockchain/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	cosmosRegisterInterfaces(interfaceRegistry)
+	impactRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func impactRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	impactapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code

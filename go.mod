@@ -8,8 +8,8 @@ replace github.com/cosmos/cosmos-sdk v0.42.6 => github.com/mapofzones/cosmos-sdk
 
 require (
 	github.com/cosmos/cosmos-sdk v0.42.6
-	github.com/cosmos/gaia/v5 v5.0.0
 	github.com/gogo/protobuf v1.3.3
+	github.com/ixofoundation/ixo-blockchain v1.6.0
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
