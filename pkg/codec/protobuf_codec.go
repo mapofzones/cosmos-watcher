@@ -3,7 +3,6 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
-	injectiveapp "github.com/InjectiveLabs/injective-oracle-scaffold/injective-chain/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -12,17 +11,18 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
+	likechainapp "github.com/likecoin/likechain/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	injectiveRegisterInterfaces(interfaceRegistry)
+	likechainRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	injectiveapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func likechainRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	likechainapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
