@@ -3,6 +3,7 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
+	bitsongapp "github.com/bitsongofficial/go-bitsong/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -11,18 +12,17 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
-	cosmosapp "github.com/cosmos/gaia/v5/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	cosmosRegisterInterfaces(interfaceRegistry)
+	bitsongRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func bitsongRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	bitsongapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
