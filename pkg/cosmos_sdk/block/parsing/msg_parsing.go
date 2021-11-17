@@ -7,21 +7,17 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
-	types5 "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
-	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
-	types2 "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
-	connectiontypes "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
-	types3 "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
-	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
-	types4 "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
-	types7 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
+	transfer "github.com/cosmos/ibc-go/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
+	types7 "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
 )
 
 type attributeFiler struct {
-	key string
+	key   string
 	value string
 }
 
@@ -33,14 +29,14 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 	case *types.MsgSend:
 		return []watcher.Message{
 			watcher.Transfer{
-				Sender: (*msg).FromAddress,
+				Sender:    (*msg).FromAddress,
 				Recipient: (*msg).ToAddress,
-				Amount: sdkCoinsToStruct((*msg).Amount),
+				Amount:    sdkCoinsToStruct((*msg).Amount),
 			},
 		}, nil
 
 	// client creation
-	case *types2.MsgCreateClient:
+	case *clienttypes.MsgCreateClient:
 		value := msg.ClientState.GetCachedValue()
 		chainId := value.(*types7.ClientState).ChainId
 		clientId := ""
@@ -58,7 +54,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		return messages, nil
 
 	// connection creation
-	case *types3.MsgConnectionOpenInit:
+	case *connectiontypes.MsgConnectionOpenInit:
 		if errCode != 0 {
 			return []watcher.Message{}, nil
 		}
@@ -66,7 +62,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
-		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0)  && errCode == 0{
+		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("connectionID not found")
 		}
 		return []watcher.Message{
@@ -76,7 +72,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 			},
 		}, nil
 
-	case *types3.MsgConnectionOpenTry:
+	case *connectiontypes.MsgConnectionOpenTry:
 		if errCode != 0 {
 			return []watcher.Message{}, nil
 		}
@@ -95,7 +91,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	// channel creation
-	case *types4.MsgChannelOpenInit:
+	case *channeltypes.MsgChannelOpenInit:
 		if errCode != 0 {
 			return []watcher.Message{}, nil
 		}
@@ -114,7 +110,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 			},
 		}, nil
 
-	case *types4.MsgChannelOpenTry:
+	case *channeltypes.MsgChannelOpenTry:
 		if errCode != 0 {
 			return []watcher.Message{}, nil
 		}
@@ -134,28 +130,28 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	// channel opening/closing
-	case *types4.MsgChannelOpenAck:
+	case *channeltypes.MsgChannelOpenAck:
 		return []watcher.Message{
 			watcher.OpenChannel{
 				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
-	case *types4.MsgChannelOpenConfirm:
+	case *channeltypes.MsgChannelOpenConfirm:
 		return []watcher.Message{
 			watcher.OpenChannel{
 				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
-	case *types4.MsgChannelCloseInit:
+	case *channeltypes.MsgChannelCloseInit:
 		return []watcher.Message{
 			watcher.CloseChannel{
 				ChannelID: msg.ChannelId,
 			},
 		}, nil
 
-	case *types4.MsgChannelCloseConfirm:
+	case *channeltypes.MsgChannelCloseConfirm:
 		return []watcher.Message{
 			watcher.CloseChannel{
 				ChannelID: msg.ChannelId,
@@ -163,7 +159,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	// ibc transfer messages
-	case *types5.MsgTransfer:
+	case *transfer.MsgTransfer:
 		return []watcher.Message{
 			watcher.IBCTransfer{
 				ChannelID: msg.SourceChannel,
@@ -174,7 +170,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 			},
 		}, nil
 
-	case *types4.MsgRecvPacket:
+	case *channeltypes.MsgRecvPacket:
 		data := transfer.FungibleTokenPacketData{}
 		err := json.Unmarshal(msg.Packet.Data, &data)
 		if err != nil {
