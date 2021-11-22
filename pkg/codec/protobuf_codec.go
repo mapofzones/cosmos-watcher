@@ -3,7 +3,7 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
-	junoapp "github.com/CosmosContracts/juno/app"
+	bandapp "github.com/bandprotocol/chain/v2/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -17,12 +17,12 @@ import (
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	junoRegisterInterfaces(interfaceRegistry)
+	bandRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func junoRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	junoapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func bandRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	bandapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
