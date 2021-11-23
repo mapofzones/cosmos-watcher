@@ -18,7 +18,7 @@ jobs:
       with:
         go-version: ${{ matrix.go }}
     - name: run tests
-      run: go test -json ./... > test.json
+      run: go test -tags 'secretcli' -json ./... > test.json
     - name: Annotate tests
       if: always()
       uses: guyarb/golang-test-annoations@v0.3.0
