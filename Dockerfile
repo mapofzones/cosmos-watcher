@@ -1,4 +1,4 @@
-FROM bitnami/golang:1.16-debian-10 as build
+FROM bitnami/golang:1.17-debian-10 as build
 
 WORKDIR /app
 
@@ -17,5 +17,6 @@ RUN apt-get update && apt-get install -y curl jq
 #COPY --from=build /app/libwasmvm.so /usr/lib/libwasmvm.so
 COPY --from=build /app/watcher  /app/watcher
 COPY --from=build /app/scripts/run.sh /run.sh
+COPY --from=build /app/libgo_owasm.so /usr/lib/libgo_owasm.so
 
 CMD ["/run.sh"]
