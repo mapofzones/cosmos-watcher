@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ regen ]
+    branches: [ panacea ]
 
 jobs:
 
@@ -30,7 +30,7 @@ jobs:
         # Version of doctl to install
 #         version: # optional, default is latest
         # DigitalOcean API Token
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_PANACEA }}
     # Build docker image and publish
     - name: DigitalOcean Docker Image Publish
       # You may pin to the exact commit or the version.
