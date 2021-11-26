@@ -30,7 +30,7 @@ jobs:
         # Version of doctl to install
 #         version: # optional, default is latest
         # DigitalOcean API Token
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_PANACEA }}
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     # Build docker image and publish
     - name: DigitalOcean Docker Image Publish
       # You may pin to the exact commit or the version.
@@ -38,7 +38,7 @@ jobs:
       uses: ripplr-io/docr-docker-publish@v1
       with:
         # Image path in the format registry-name/image-name
-        image_path: ${{ secrets.IMAGE_PATH_REGEN }}
+        image_path: ${{ secrets.IMAGE_PATH_PANACEA }}
         # Number of characters from the commit SHA
         sha_size: 8 # optional, default is 8
     - name: Notify Telegram
