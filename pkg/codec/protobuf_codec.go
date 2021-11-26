@@ -12,18 +12,18 @@ import (
 	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 
-	regenapp "github.com/regen-network/regen-ledger/app"
+	panaceaapp "github.com/medibloc/panacea-core/v2/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	regenRegisterInterfaces(interfaceRegistry)
+	panaceaRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func regenRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	regenapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func panaceaRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	panaceaapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
