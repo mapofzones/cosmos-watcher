@@ -1,12 +1,14 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.14
+go 1.17
 
 replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 
-replace github.com/cosmos/cosmos-sdk => github.com/mapofzones/cosmos-sdk v0.42.6-unmarshal-fix
+replace github.com/cosmos/ibc-go => github.com/mapofzones/ibc-go v1.1.0-unmarshal-fix
 
 require (
+	github.com/cosmos/cosmos-sdk v0.44.0
+	github.com/cosmos/ibc-go v1.1.0
 	github.com/cosmos/cosmos-sdk v0.42.9
 	github.com/crypto-org-chain/chain-main/v2 v2.1.2
 	github.com/gogo/protobuf v1.3.3
