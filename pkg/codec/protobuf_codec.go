@@ -9,12 +9,10 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	cosmosibcexported "github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
-	cosmosibcclients "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 
-	cryptoorgapp "github.com/crypto-org-chain/chain-main/v2/app"
-	ibcexported "github.com/cosmos/ibc-go/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	cryptoorgapp "github.com/crypto-org-chain/chain-main/v3/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
