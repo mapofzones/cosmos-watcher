@@ -82,9 +82,10 @@ func (t CreateConnection) Type() string {
 
 // this message covers openInit and openTry
 type CreateChannel struct {
-	ChannelID    string
-	ConnectionID string
-	PortID       string
+	ChannelID             string
+	ConnectionID          string
+	PortID                string
+	CounterpartyChannelID string
 }
 
 func (t CreateChannel) Type() string {
@@ -93,7 +94,8 @@ func (t CreateChannel) Type() string {
 
 // this message covers openAck and openConfirm
 type OpenChannel struct {
-	ChannelID string
+	ChannelID             string
+	CounterpartyChannelID string
 }
 
 func (t OpenChannel) Type() string {

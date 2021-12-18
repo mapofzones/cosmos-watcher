@@ -98,15 +98,17 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenInit}
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
+		log.Println("MsgChannelOpenInit counterparty channel id: ", msg.Channel.Counterparty.ChannelId)
 		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if (len(channelIDs) != 1 || len(channelIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("channelID not found")
 		}
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    channelIDs[0],
-				PortID:       msg.PortId,
-				ConnectionID: msg.Channel.ConnectionHops[0],
+				ChannelID:             channelIDs[0],
+				PortID:                msg.PortId,
+				ConnectionID:          msg.Channel.ConnectionHops[0],
+				CounterpartyChannelID: msg.Channel.Counterparty.ChannelId,
 			},
 		}, nil
 
@@ -117,23 +119,27 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenTry}
 		attributeKeys := []string{channeltypes.AttributeKeyChannelID}
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
+		log.Println("MsgChannelOpenTry counterparty channel id: ", msg.Channel.Counterparty.ChannelId)
 		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
 			return nil, errors.New("channelID not found")
 		}
 		return []watcher.Message{
 			watcher.CreateChannel{
-				ChannelID:    channelIDs[0],
-				PortID:       msg.PortId,
-				ConnectionID: msg.Channel.ConnectionHops[0],
+				ChannelID:             channelIDs[0],
+				PortID:                msg.PortId,
+				ConnectionID:          msg.Channel.ConnectionHops[0],
+				CounterpartyChannelID: msg.Channel.Counterparty.ChannelId,
 			},
 		}, nil
 
 	// channel opening/closing
 	case *channeltypes.MsgChannelOpenAck:
+		log.Println("MsgChannelOpenAck counterparty channel id: ", msg.CounterpartyChannelId)
 		return []watcher.Message{
 			watcher.OpenChannel{
-				ChannelID: msg.ChannelId,
+				ChannelID:             msg.ChannelId,
+				CounterpartyChannelID: msg.CounterpartyChannelId,
 			},
 		}, nil
 
