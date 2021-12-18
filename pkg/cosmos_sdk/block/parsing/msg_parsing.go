@@ -23,7 +23,6 @@ type attributeFiler struct {
 }
 
 func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) ([]watcher.Message, error) {
-	log.Println("parseMsg")
 	switch msg := msg.(type) {
 
 	// send creation
