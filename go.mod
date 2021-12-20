@@ -8,7 +8,7 @@ replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alp
 
 replace github.com/99designs/keyring => github.com/crypto-org-chain/keyring v1.1.6-fixes
 
-replace github.com/cosmos/ibc-go => github.com/crypto-org-chain/ibc-go v1.2.1-hooks
+replace github.com/cosmos/ibc-go => github.com/mapofzones/ibc-go v1.2.1-hooks-unmarshal-fix
 
 //replace github.com/cosmos/ibc-go => github.com/mapofzones/ibc-go v1.1.0-unmarshal-fix
 
@@ -29,6 +29,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tendermint v0.34.14
+	github.com/tharsis/ethermint v0.7.2
 )
 
 require (
@@ -130,7 +131,6 @@ require (
 	github.com/tendermint/btcd v0.1.1 // indirect
 	github.com/tendermint/crypto v0.0.0-20191022145703-50d29ede1e15 // indirect
 	github.com/tendermint/tm-db v0.6.4 // indirect
-	github.com/tharsis/ethermint v0.7.2 // indirect
 	github.com/tklauser/go-sysconf v0.3.7 // indirect
 	github.com/tklauser/numcpus v0.2.3 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect

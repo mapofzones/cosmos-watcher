@@ -261,8 +261,6 @@ github.com/crypto-org-chain/ethermint v0.7.2-cronos-4 h1:NaCc0L5zN2u7B9WofmhJfur
 github.com/crypto-org-chain/ethermint v0.7.2-cronos-4/go.mod h1:J96LX4KvLyl+5jV6+mt/4l6srtGX/mdDTuqQQuYrdDk=
 github.com/crypto-org-chain/go-ethereum v1.10.3-patched h1:kr6oQIYOi2VC8SZwkhlUDZE1Omit/YHVysKMgCB2nes=
 github.com/crypto-org-chain/go-ethereum v1.10.3-patched/go.mod h1:99onQmSd1GRGOziyGldI41YQb7EESX3Q4H41IfJgIQQ=
-github.com/crypto-org-chain/ibc-go v1.2.1-hooks h1:wuWaQqm/TFKJQwuFgjCPiPumQio+Yik5Z1DObDExrrU=
-github.com/crypto-org-chain/ibc-go v1.2.1-hooks/go.mod h1:YieSs25Y0TSFR67qg6Elge34yJNEOjYhYB+HNQQLoSQ=
 github.com/crypto-org-chain/keyring v1.1.6-fixes h1:AUFSu56NY6XobY6XfRoDx6v3loiOrHK5MNUm32GEjwA=
 github.com/crypto-org-chain/keyring v1.1.6-fixes/go.mod h1:0mkLWIoZuQ7uBoospo5Q9zIpqq6rYCPJDSUdeCJvPM8=
 github.com/cyphar/filepath-securejoin v0.2.2/go.mod h1:FpkQEhXnPnOthhzymB7CGsFk2G9VLXONKD9G7QGMM+4=
@@ -741,6 +739,8 @@ github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czP
 github.com/magiconair/properties v1.8.1/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/magiconair/properties v1.8.5 h1:b6kJs+EmPFMYGkow9GiUyCyOvIwYetYJ3fSaWak/Gls=
 github.com/magiconair/properties v1.8.5/go.mod h1:y3VJvCyxH9uVvJTWEGAELF3aiYNyPKd5NZ3oSwXrF60=
+github.com/mapofzones/ibc-go v1.2.1-hooks-unmarshal-fix h1:pVOGLtBvSfwlSmHKOMNs4WptiP+XmGRHrmMSl9N7NBo=
+github.com/mapofzones/ibc-go v1.2.1-hooks-unmarshal-fix/go.mod h1:YieSs25Y0TSFR67qg6Elge34yJNEOjYhYB+HNQQLoSQ=
 github.com/maratori/testpackage v1.0.1/go.mod h1:ddKdw+XG0Phzhx8BFDTKgpWP4i7MpApTE5fXSKAqwDU=
 github.com/matoous/godox v0.0.0-20210227103229-6504466cf951/go.mod h1:1BELzlh859Sh1c6+90blK8lbYy0kwQf1bYlBhBysy1s=
 github.com/mattn/go-colorable v0.0.9/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaOChaDxuIBZU=
