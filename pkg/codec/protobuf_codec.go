@@ -12,6 +12,7 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
 	cronosapp "github.com/crypto-org-chain/cronos/app"
+	ethercodec "github.com/tharsis/ethermint/crypto/codec"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -23,6 +24,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func cronosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	cronosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	ethercodec.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code

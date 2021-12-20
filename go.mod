@@ -2,13 +2,14 @@ module github.com/mapofzones/cosmos-watcher
 
 go 1.17
 
-replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-
 replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
+
+replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 
 replace github.com/99designs/keyring => github.com/crypto-org-chain/keyring v1.1.6-fixes
 
-replace github.com/cosmos/ibc-go => github.com/crypto-org-chain/ibc-go v1.2.1-hooks
+replace github.com/cosmos/ibc-go => github.com/mapofzones/ibc-go v1.2.1-hooks-unmarshal-fix
+
 //replace github.com/cosmos/ibc-go => github.com/mapofzones/ibc-go v1.1.0-unmarshal-fix
 
 replace github.com/cosmos/iavl => github.com/cosmos/iavl v0.17.1
@@ -17,17 +18,18 @@ replace github.com/ethereum/go-ethereum => github.com/crypto-org-chain/go-ethere
 
 replace github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.44.2
 
-replace github.com/tharsis/ethermint => github.com/crypto-org-chain/ethermint v0.7.2-cronos
+replace github.com/tharsis/ethermint => github.com/crypto-org-chain/ethermint v0.7.2-cronos-4
 
 require (
 	github.com/cosmos/cosmos-sdk v0.44.3
 	github.com/cosmos/ibc-go v1.2.2
-	github.com/crypto-org-chain/cronos v0.6.1
+	github.com/crypto-org-chain/cronos v0.6.4
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tendermint v0.34.14
+	github.com/tharsis/ethermint v0.7.2
 )
 
 require (
@@ -129,7 +131,6 @@ require (
 	github.com/tendermint/btcd v0.1.1 // indirect
 	github.com/tendermint/crypto v0.0.0-20191022145703-50d29ede1e15 // indirect
 	github.com/tendermint/tm-db v0.6.4 // indirect
-	github.com/tharsis/ethermint v0.7.2 // indirect
 	github.com/tklauser/go-sysconf v0.3.7 // indirect
 	github.com/tklauser/numcpus v0.2.3 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
