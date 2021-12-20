@@ -44,10 +44,10 @@ jobs:
         image_path: ${{ secrets.IMAGE_PATH_CHIHUAHUA }}
         # Number of characters from the commit SHA
         sha_size: 8 # optional, default is 8
-    - name: Notify Telegram
-      uses: yanzay/notify-telegram@v0.1.0
-      if: always()
-      with:
-        chat: ${{ secrets.chat }} # user id or channel name secret
-        token: ${{ secrets.token }} # token secret
-        status: ${{ job.status }} # do not modify this line
+#     - name: Notify Telegram
+#       uses: yanzay/notify-telegram@v0.1.0
+#       if: always()
+#       with:
+#         chat: ${{ secrets.chat }} # user id or channel name secret
+#         token: ${{ secrets.token }} # token secret
+#         status: ${{ job.status }} # do not modify this line
