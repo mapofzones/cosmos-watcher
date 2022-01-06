@@ -4,7 +4,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/gogo/protobuf/proto"
 
-	//injectiveapp "github.com/InjectiveLabs/injective-oracle-scaffold/injective-chain/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -24,12 +23,13 @@ import (
 	peggy "github.com/InjectiveLabs/sdk-go/chain/peggy/types"
 	chaintypes "github.com/InjectiveLabs/sdk-go/chain/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	//authztypes "github.com/cosmos/cosmos-sdk/x/authz"
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
+	authztypes "github.com/cosmos/cosmos-sdk/x/authz"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	crisistypes "github.com/cosmos/cosmos-sdk/x/crisis/types"
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
+	feegranttypes "github.com/cosmos/cosmos-sdk/x/feegrant"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	paramproposaltypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
@@ -37,7 +37,6 @@ import (
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	ibcapplicationtypes "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
 	ibccoretypes "github.com/cosmos/ibc-go/v2/modules/core/types"
-	//feegranttypes "github.com/cosmos/cosmos-sdk/x/feegrant"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -49,6 +48,8 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	//injectiveapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+
+	//source to upgrade codec: https://github.com/InjectiveLabs/sdk-go/blob/9f6b7221a84f87c49c80ec6223284c2240bc4d00/chain/client/context.go#L82
 
 	//interfaceRegistry := types.NewInterfaceRegistry()
 	keyscodec.RegisterInterfaces(interfaceRegistry)
@@ -64,7 +65,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 
 	// more cosmos types
 	authtypes.RegisterInterfaces(interfaceRegistry)
-	//authztypes.RegisterInterfaces(interfaceRegistry)
+	authztypes.RegisterInterfaces(interfaceRegistry)
 	vestingtypes.RegisterInterfaces(interfaceRegistry)
 	banktypes.RegisterInterfaces(interfaceRegistry)
 	crisistypes.RegisterInterfaces(interfaceRegistry)
@@ -77,7 +78,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	slashingtypes.RegisterInterfaces(interfaceRegistry)
 	stakingtypes.RegisterInterfaces(interfaceRegistry)
 	upgradetypes.RegisterInterfaces(interfaceRegistry)
-	//feegranttypes.RegisterInterfaces(interfaceRegistry)
+	feegranttypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
