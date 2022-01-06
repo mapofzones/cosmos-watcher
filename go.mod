@@ -14,6 +14,7 @@ require (
 	//github.com/InjectiveLabs/injective-oracle-scaffold v0.0.0-20210325223014-ea6fe570b530
 	//github.com/InjectiveLabs/sdk-go v1.29.0
 	github.com/InjectiveLabs/sdk-go v1.29.0
+	github.com/cosmos/ibc-go/v2 v2.0.0
 	github.com/cosmos/cosmos-sdk v0.44.5
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
