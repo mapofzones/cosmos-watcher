@@ -12,7 +12,7 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
 
-	regenapp "github.com/regen-network/regen-ledger/app"
+	regenapp "github.com/regen-network/regen-ledger/v2/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
