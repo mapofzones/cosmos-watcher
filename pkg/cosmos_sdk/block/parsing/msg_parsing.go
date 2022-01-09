@@ -3,9 +3,6 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	types6 "github.com/tendermint/tendermint/abci/types"
-	"strconv"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
 	transfer "github.com/cosmos/ibc-go/modules/apps/transfer/types"
@@ -14,6 +11,7 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
 	types7 "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	types6 "github.com/tendermint/tendermint/abci/types"
 	"log"
 )
 
@@ -280,13 +278,14 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 		Coin   string
 	}, 1)
 
-	number, _ := strconv.ParseUint(string(data.Amount), 10, 64)
+	//number, _ := strconv.ParseUint(string(data.Amount), 10, 64)
 	transformed[0] = struct {
 		Amount uint64
 		Coin   string
 	}{
 		Coin:   data.Denom,
-		Amount: number,
+		Amount: data.Amount,
+		//Amount: number,
 	}
 	return transformed
 }
