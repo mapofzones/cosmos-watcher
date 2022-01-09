@@ -1,13 +1,15 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.14
+go 1.17
 
-replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-
-replace github.com/cosmos/cosmos-sdk => github.com/mapofzones/cosmos-sdk v0.42.4-regen-1-fix
+replace (
+	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+	google.golang.org/grpc => google.golang.org/grpc v1.33.2
+)
 
 require (
-	github.com/cosmos/cosmos-sdk v0.42.5
+	github.com/cosmos/cosmos-sdk v0.44.3
+	github.com/cosmos/ibc-go/v2 v2.0.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/regen-network/regen-ledger v1.0.0
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
