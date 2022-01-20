@@ -1,7 +1,7 @@
 # cosmos-watcher
 
 Status of Last Deployment:<br>
-<img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=cosmoshub"><br>
+<img src="https://github.com/mapofzones/cosmos-watcher/actions/workflows/docker-image.yml/badge.svg?branch=kava"><br>
 
 # General
 The cosmos-watcher is a standalone process that takes 2 input arguments: 
