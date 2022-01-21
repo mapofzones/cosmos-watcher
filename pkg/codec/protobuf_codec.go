@@ -11,18 +11,18 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
-	kavaapp "github.com/kava-labs/kava/app"
+	desmosapp "github.com/desmos-labs/desmos/v2/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	kavaRegisterInterfaces(interfaceRegistry)
+	desmosRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func kavaRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	kavaapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func desmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	desmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
