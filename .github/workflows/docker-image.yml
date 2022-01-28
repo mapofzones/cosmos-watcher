@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ cosmoshub ]
+    branches: [ gravity-bridge ]
 
 jobs:
 
@@ -41,7 +41,7 @@ jobs:
       uses: ripplr-io/docr-docker-publish@v1
       with:
         # Image path in the format registry-name/image-name
-        image_path: ${{ secrets.IMAGE_PATH_COSMOSHUB }}
+        image_path: ${{ secrets.IMAGE_PATH_GRAVITYBRIDGE }}
         # Number of characters from the commit SHA
         sha_size: 8 # optional, default is 8
     - name: Notify Telegram
