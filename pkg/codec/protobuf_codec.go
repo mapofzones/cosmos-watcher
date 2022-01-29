@@ -3,26 +3,26 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
+	axelarapp "github.com/axelarnetwork/axelar-core/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	cosmosapp "github.com/cosmos/gaia/v6/app"
-	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	cosmosRegisterInterfaces(interfaceRegistry)
+	axelarRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func axelarRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	axelarapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
