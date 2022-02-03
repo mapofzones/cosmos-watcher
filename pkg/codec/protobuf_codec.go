@@ -3,6 +3,7 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
+	sifchainapp "github.com/Sifchain/sifnode/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -11,7 +12,6 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
-	sifchainapp "github.com/Sifchain/sifnode/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
