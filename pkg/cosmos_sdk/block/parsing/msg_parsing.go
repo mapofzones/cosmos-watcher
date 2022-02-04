@@ -12,6 +12,7 @@ import (
 	clienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
 	connectiontypes "github.com/cosmos/ibc-go/v2/modules/core/03-connection/types"
 	channeltypes "github.com/cosmos/ibc-go/v2/modules/core/04-channel/types"
+	solomachine "github.com/cosmos/ibc-go/v2/modules/light-clients/06-solomachine/types"
 	types7 "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
@@ -38,7 +39,13 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 	// client creation
 	case *clienttypes.MsgCreateClient:
 		value := msg.ClientState.GetCachedValue()
-		chainId := value.(*types7.ClientState).ChainId
+		var chainId string
+		switch client := value.(type) {
+		case *types7.ClientState:
+			chainId = client.ChainId
+		case *solomachine.ClientState:
+			chainId = ""
+		}
 		clientId := ""
 		clientId = ParseClientIDFromResults(txResult, clientId)
 		messages := []watcher.Message{
