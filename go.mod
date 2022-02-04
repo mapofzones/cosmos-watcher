@@ -2,25 +2,18 @@ module github.com/mapofzones/cosmos-watcher
 
 go 1.17
 
-replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-
-replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
-
-replace github.com/cosmos/ledger-cosmos-go => github.com/crypto-com/ledger-cosmos-go v0.9.10-0.20200929055312-01e1d341de0f
-
-replace github.com/99designs/keyring => github.com/crypto-org-chain/keyring v1.1.6-fixes
-
-replace github.com/dgrijalva/jwt-go => github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
-
-replace github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.7.0
-
-replace github.com/opencontainers/image-spec => github.com/opencontainers/image-spec v1.0.2
-
-replace github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.44.5
-
-replace github.com/tendermint/tendermint => github.com/tendermint/tendermint v0.34.15
-
-replace github.com/cosmos/iavl => github.com/cosmos/iavl v0.17.3
+replace (
+	github.com/99designs/keyring => github.com/crypto-org-chain/keyring v1.1.6-fixes
+	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.44.5
+	github.com/cosmos/iavl => github.com/cosmos/iavl v0.17.3
+	github.com/cosmos/ledger-cosmos-go => github.com/crypto-com/ledger-cosmos-go v0.9.10-0.20200929055312-01e1d341de0f
+	github.com/dgrijalva/jwt-go => github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
+	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.7.0
+	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+	github.com/opencontainers/image-spec => github.com/opencontainers/image-spec v1.0.2
+	github.com/tendermint/tendermint => github.com/tendermint/tendermint v0.34.15
+	google.golang.org/grpc => google.golang.org/grpc v1.33.2
+)
 
 require (
 	github.com/cosmos/cosmos-sdk v0.44.5
