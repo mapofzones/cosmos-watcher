@@ -25,7 +25,7 @@ export height
 if [ "$chain_id" != "" ]; then
     resp=$(curl -H 'Content-Type: application/json' \
      -X POST -ss -H "x-hasura-admin-secret: $hasura_secret" \
-     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}, tx_index: {_eq: \"on\"}, last_block_height: {_gt: '"$new_height"'}, earliest_block_height: {_lte: '"$new_height"'}}, order_by: {last_checked_at: desc}) {rpc_addr}}"}' $graphql \
+     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}, tx_index: {_eq: \"on\"}, last_block_height: {_gt: '"$height"'}, earliest_block_height: {_lte: '"$height"'}}, order_by: {last_checked_at: desc}) {rpc_addr}}"}' $graphql \
       | jq .data.zone_nodes[].rpc_addr)
 
     x=0
