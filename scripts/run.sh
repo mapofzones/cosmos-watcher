@@ -23,10 +23,22 @@ export height
 
 
 if [ "$chain_id" != "" ]; then
+    setTimeOffset() {
+      timeOffset=$(date -v-15M "+%Y-%m-%dT%H:%M:%S") #add %3N as we want millisecond too
+    }
+    setTimeOffset
+
     resp=$(curl -H 'Content-Type: application/json' \
      -X POST -ss -H "x-hasura-admin-secret: $hasura_secret" \
-     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}, tx_index: {_eq: \"on\"}, last_block_height: {_gt: '"$height"'}, earliest_block_height: {_lte: '"$height"'}}, order_by: {last_checked_at: desc}) {rpc_addr}}"}' $graphql \
+     --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}, tx_index: {_eq: \"on\"}, _or: [{last_checked_at: {_lt: \"'"$timeOffset"'\"}}, {last_block_height: {_gt: '"$height"'}}], earliest_block_height: {_lte: '"$height"'}}, order_by: {last_checked_at: desc}) {rpc_addr}}"}' $graphql \
       | jq .data.zone_nodes[].rpc_addr)
+
+    if [ ${#resp[@]} -eq 0 ] || [ ${#resp[@]} -eq 1 ] && [ ${#resp[0]} -eq 0 ] ; then
+      resp=$(curl -H 'Content-Type: application/json' \
+           -X POST -ss -H "x-hasura-admin-secret: $hasura_secret" \
+           --data '{"query":"{zone_nodes(where: {zone: {_eq: \"'"$chain_id"'\"}, is_alive: {_eq: true}}, order_by: {last_checked_at: desc}) {rpc_addr}}"}' $graphql \
+            | jq .data.zone_nodes[].rpc_addr)
+    fi
 
     x=0
     declare -a rpcs
