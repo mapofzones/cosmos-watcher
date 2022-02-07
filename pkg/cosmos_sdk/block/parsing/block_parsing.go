@@ -7,12 +7,12 @@ import (
 	types3 "github.com/tendermint/tendermint/abci/types"
 	"log"
 
-	types2 "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	types2 "github.com/cosmos/cosmos-sdk/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx) (watcher.Message, error) {
+func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, ) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
