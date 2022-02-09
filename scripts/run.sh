@@ -24,7 +24,22 @@ export height
 
 if [ "$chain_id" != "" ]; then
     setTimeOffset() {
-      timeOffset=$(date -v-15M "+%Y-%m-%dT%H:%M:%S") #add %3N as we want millisecond too
+      case "$OSTYPE" in
+        solaris*)
+          echo "SOLARIS" ;;
+        darwin*)
+          echo "OSX"
+          timeOffset=$(date -v-15M "+%Y-%m-%dT%H:%M:%S") #add %3N as we want millisecond too
+          ;;
+        linux*)
+          echo "LINUX"
+          timeOffset=$(date -d '0 days 15 mins ago' +%Y-%m-%dT%H:%M:%S)
+          ;;
+        bsd*)     echo "BSD" ;;
+        msys*)    echo "WINDOWS" ;;
+        cygwin*)  echo "ALSO WINDOWS" ;;
+        *)        echo "unknown: $OSTYPE" ;;
+      esac
     }
     setTimeOffset
 
