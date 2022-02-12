@@ -3,12 +3,13 @@ module github.com/mapofzones/cosmos-watcher
 go 1.17
 
 replace (
+	github.com/gogo/grpc => google.golang.org/grpc v1.33.2
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
 
 require (
-	github.com/Gravity-Bridge/Gravity-Bridge/module v1.3.5
+	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.1
 	github.com/cosmos/cosmos-sdk v0.44.5
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
