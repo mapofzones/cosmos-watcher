@@ -88,9 +88,8 @@ github.com/CosmWasm/wasmd v0.16.0/go.mod h1:EmtH0lN3ZlHyU5Sn1VzbZ9guf0BMBSPifzod
 github.com/CosmWasm/wasmd v0.21.1-0.20220105132732-3d2affb31f82 h1:bJzh3hNViSTQk699W9BwPtBVUGzDjjd6dFHyGoNIBjg=
 github.com/CosmWasm/wasmd v0.21.1-0.20220105132732-3d2affb31f82/go.mod h1:zmg1FhN9ShqhuyfsTb4m+oPyTmG/823sx/DePqj2Uv4=
 github.com/CosmWasm/wasmvm v0.14.0/go.mod h1:Id107qllDJyJjVQQsKMOy2YYF98sqPJ2t+jX1QES40A=
+github.com/CosmWasm/wasmvm v1.0.0-beta5 h1:38M8z89LB5cFMYB5vfjewMzz9Pr8TB1QBHdjnrWnkas=
 github.com/CosmWasm/wasmvm v1.0.0-beta5/go.mod h1:mtwKxbmsko1zdwpaKiRkRwxijMmIAtnLaX5/UT2nPFk=
-github.com/CosmWasm/wasmvm v1.0.0-soon2.0.20211209162446-b96c92d21aaf h1:g20n0Bb6X+ngJc5FkvBi6CiHh3vP/2G9WXZTe1F71qM=
-github.com/CosmWasm/wasmvm v1.0.0-soon2.0.20211209162446-b96c92d21aaf/go.mod h1:vOrzLSxgD620zElgB5bMDQyR9eNjHV8yQSwYxN2iPc4=
 github.com/DATA-DOG/go-sqlmock v1.3.3/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/DataDog/zstd v1.4.1/go.mod h1:1jcaCB/ufaK+sKp1NBhlGmpz41jOoPQ35bpF36t7BBo=
@@ -1392,9 +1391,8 @@ golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2/go.mod h1:T9bdIzuCu7OtxOm
 golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a/go.mod h1:P+XmwS30IXTQdn5tA2iutPOUgjI07+tq3H3K9MVA1s8=
 golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
 golang.org/x/crypto v0.0.0-20210817164053-32db794688a5/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
+golang.org/x/crypto v0.0.0-20210915214749-c084706c2272 h1:3erb+vDS8lU1sxfDHF4/hhWyaXnhIaO+7RgL4fDZORA=
 golang.org/x/crypto v0.0.0-20210915214749-c084706c2272/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
-golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 h1:7I4JAnoQBe7ZtJcBaYHi5UtiO8tQHbUSXxL+pnGRANg=
-golang.org/x/crypto v0.0.0-20210921155107-089bfa567519/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
 golang.org/x/exp v0.0.0-20180321215751-8460e604b9de/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20180807140117-3d87b88a115f/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
