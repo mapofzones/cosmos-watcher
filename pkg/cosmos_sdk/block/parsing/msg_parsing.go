@@ -44,7 +44,8 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		case *types7.ClientState:
 			chainId = client.ChainId
 		case *solomachine.ClientState:
-			chainId = ""
+			pubKey, _ := client.ConsensusState.GetPubKey()
+			chainId = pubKey.String()
 		}
 		clientId := ""
 		clientId = ParseClientIDFromResults(txResult, clientId)
