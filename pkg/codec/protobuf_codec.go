@@ -9,8 +9,8 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
 	cronosapp "github.com/crypto-org-chain/cronos/app"
 	ethercodec "github.com/tharsis/ethermint/crypto/codec"
 )
