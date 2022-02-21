@@ -290,7 +290,11 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 
 	n := new(big.Int)
 	base := 10
-	amount, ok := n.SetString(strconv.FormatUint(data.Amount, 10), base)
+	amountString := "0"
+	if len(strconv.FormatUint(data.Amount, 10)) > 0 {
+		amountString = strconv.FormatUint(data.Amount, 10)
+	}
+	amount, ok := n.SetString(amountString, base)
 	if !ok {
 		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
 	}
