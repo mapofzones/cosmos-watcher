@@ -12,7 +12,7 @@ The cosmos-watcher is a standalone process that takes
 * rabbitmq - connection string to rabbitMQ message broker,
 * queue - queue name for rabbitMQ message broker,
 
-5 env var running directly:
+5 env var running directly & without run.sh script:
 * rpc - a zone RPC address,
 * height - a starting block number,
 * rabbitmq - connection string to rabbitMQ message broker,
