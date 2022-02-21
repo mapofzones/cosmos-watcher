@@ -7,18 +7,17 @@ import (
 	types3 "github.com/tendermint/tendermint/abci/types"
 	"log"
 
+	types2 "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	types2 "github.com/cosmos/cosmos-sdk/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, ) (watcher.Message, error) {
+func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
 	}
 	for _, msg := range tx.GetMsgs() {
-		log.Println(msg)
 		msgs, err := parseMsg(msg, txResult, errCode)
 		if err != nil {
 			return Tx, err
@@ -47,11 +46,10 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 		T:                b.T,
 	}
 
-	log.Println("height:", b.Height, " txs:", b.Txs)
+	log.Println("height:", b.Height, " txs:", len(b.Txs))
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
 	txResults := b.BlockResults.TxsResults
 	for i, tx := range b.Txs {
-		log.Println("here!")
 		decoded, err := decodeTx(cdc, tx)
 		if err != nil {
 			return block, err
