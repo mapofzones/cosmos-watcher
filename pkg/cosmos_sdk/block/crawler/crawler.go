@@ -27,9 +27,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 
 	s := []block.TxStatus{}
 	for _, tx := range Block.Block.Txs {
-		log.Println("here")
 		res, err := client.Tx(ctx, tx.Hash(), false)
-		log.Println(err)
 		if errors.Is(err, errors.New("Tx")) {
 			return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
 		} else if err != nil {
@@ -43,11 +41,11 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 	}
 
 	return block.Block{
-		ChainID: Block.Block.ChainID,
-		Height:  Block.Block.Height,
-		T:       Block.Block.Time,
-		Txs:     Block.Block.Txs,
-		Results: s,
+		ChainID:      Block.Block.ChainID,
+		Height:       Block.Block.Height,
+		T:            Block.Block.Time,
+		Txs:          Block.Block.Txs,
+		Results:      s,
 		BlockResults: results,
 	}, nil
 }
@@ -73,7 +71,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 			select {
 			case blockStream <- block:
 				timer.Reset(duration)
-			case <- timer.C:
+			case <-timer.C:
 				log.Println("Timer finished exit")
 				os.Exit(1)
 			case <-ctx.Done():
