@@ -8,7 +8,7 @@ RUN CGO_ENABLED=0 go build -o watcher ./cmd/watcher/main.go
 
 FROM alpine:latest as production
 
-RUN apk add curl jq
+RUN apk add curl jq coreutils
 RUN apk add --no-cache bash
 WORKDIR /app
 
