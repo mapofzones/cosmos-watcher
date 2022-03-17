@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"math/big"
+	"strconv"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -292,12 +293,12 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 	n := new(big.Int)
 	base := 10
 	amountString := "0"
-	if len(string(data.Amount)) > 0 {
-		amountString = string(data.Amount)
+	if len(strconv.FormatUint(data.Amount, 10)) > 0 {
+		amountString = strconv.FormatUint(data.Amount, 10)
 	}
 	amount, ok := n.SetString(amountString, base)
 	if !ok {
-		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
+		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
 	}
 
 	transformed[0] = struct {
