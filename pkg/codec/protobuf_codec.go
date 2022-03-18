@@ -2,6 +2,10 @@ package watcher
 
 import (
 	"github.com/gogo/protobuf/proto"
+	etherapp "github.com/tharsis/ethermint/app"
+	ethercodec "github.com/tharsis/ethermint/crypto/codec"
+	ethertypes "github.com/tharsis/ethermint/types"
+	evmosapp "github.com/tharsis/evmos/v2/app"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -11,8 +15,6 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
-	ethercodec "github.com/tharsis/ethermint/crypto/codec"
-	evmosapp "github.com/tharsis/evmos/v2/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -25,6 +27,8 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 func evmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	evmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 	ethercodec.RegisterInterfaces(interfaceRegistry)
+	etherapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	ethertypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
