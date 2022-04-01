@@ -4,8 +4,8 @@ go 1.17
 
 replace (
 	github.com/CosmWasm/wasmd => github.com/osmosis-labs/wasmd v0.22.0-osmo-v7.2
-	github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.45.1-0.20220221115656-75545ea8cb2d
-	github.com/cosmos/iavl => github.com/osmosis-labs/iavl v0.17.3-osmo-v3
+	github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.45.1-0.20220327212402-9f71a993afdc
+	github.com/cosmos/iavl => github.com/osmosis-labs/iavl v0.17.3-osmo-v7
 	github.com/cosmos/ibc-go/v2 => github.com/osmosis-labs/ibc-go/v2 v2.0.2-osmo
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/tecbot/gorocksdb => github.com/cosmos/gorocksdb v1.2.0
@@ -16,7 +16,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.1
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
-	github.com/osmosis-labs/osmosis/v7 v7.0.2
+	github.com/osmosis-labs/osmosis/v7 v7.1.0
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
