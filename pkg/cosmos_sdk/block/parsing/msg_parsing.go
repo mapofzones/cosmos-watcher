@@ -5,22 +5,14 @@ import (
 	"errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
+	transfer "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/v2/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/v2/modules/core/04-channel/types"
+	solomachine "github.com/cosmos/ibc-go/v2/modules/light-clients/06-solomachine/types"
+	types7 "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
 	types6 "github.com/tendermint/tendermint/abci/types"
 	"math/big"
-	"strconv"
-
-	//transfer "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
-	//clienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
-	//connectiontypes "github.com/cosmos/ibc-go/v2/modules/core/03-connection/types"
-	//channeltypes "github.com/cosmos/ibc-go/v2/modules/core/04-channel/types"
-	//types7 "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
-	//solomachine "github.com/cosmos/ibc-go/v2/modules/light-clients/06-solomachine/types"
-
-	transfer "github.com/cosmos/cosmos-sdk/x/ibc/applications/transfer/types"
-	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
-	connectiontypes "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
-	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
-	types7 "github.com/cosmos/cosmos-sdk/x/ibc/light-clients/07-tendermint/types"
 
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
@@ -51,9 +43,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		switch client := value.(type) {
 		case *types7.ClientState:
 			chainId = client.ChainId
-			//case *solomachine.ClientState://todo: need to add if ibc-go exists
-			//	pubKey, _ := client.ConsensusState.GetPubKey()
-			//	chainId = pubKey.String()
+		case *solomachine.ClientState:
+			pubKey, _ := client.ConsensusState.GetPubKey()
+			chainId = pubKey.String()
 		}
 		clientId := ""
 		clientId = ParseClientIDFromResults(txResult, clientId)
@@ -299,12 +291,12 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 	n := new(big.Int)
 	base := 10
 	amountString := "0"
-	if len(strconv.FormatUint(data.Amount, 10)) > 0 {
-		amountString = strconv.FormatUint(data.Amount, 10)
+	if len(data.Amount) > 0 {
+		amountString = data.Amount
 	}
 	amount, ok := n.SetString(amountString, base)
 	if !ok {
-		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
+		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
 	}
 
 	transformed[0] = struct {
