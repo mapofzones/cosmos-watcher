@@ -12,7 +12,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
-	digapp "github.com/notional-labs/dig/app"
+	digapp "github.com/notional-labs/dig/v2/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
