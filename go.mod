@@ -3,7 +3,7 @@ module github.com/mapofzones/cosmos-watcher
 go 1.17
 
 replace (
-	github.com/CosmWasm/wasmvm => github.com/CosmWasm/wasmvm v1.0.0-beta7 //indirect fix
+	github.com/CosmWasm/wasmvm => github.com/CosmWasm/wasmvm v1.0.0-beta10 //indirect fix
 	github.com/cosmos/iavl => github.com/cosmos/iavl v0.17.3
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
