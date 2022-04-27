@@ -5,7 +5,7 @@ import (
 	etherapp "github.com/tharsis/ethermint/app"
 	ethercodec "github.com/tharsis/ethermint/crypto/codec"
 	ethertypes "github.com/tharsis/ethermint/types"
-	evmosapp "github.com/tharsis/evmos/v2/app"
+	evmosapp "github.com/tharsis/evmos/v3/app"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
