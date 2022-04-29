@@ -9,20 +9,20 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	cosmosapp "github.com/cosmos/gaia/v7/app"
-	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	crescentapp "github.com/crescent-network/crescent/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	cosmosRegisterInterfaces(interfaceRegistry)
+	crescentRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func crescentRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	crescentapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
