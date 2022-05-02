@@ -183,7 +183,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		data := transfer.FungibleTokenPacketData{}
 		err := json.Unmarshal(msg.Packet.Data, &data)
 		if err != nil {
-			return nil, err
+			log.Println("Hotfixed error! Cannot unmarshal FungibleTokenPacketData")
+			return []watcher.Message{}, nil
+			//return nil, err
 		}
 		return []watcher.Message{
 			watcher.IBCTransfer{
@@ -297,7 +299,7 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 	}
 	amount, ok := n.SetString(amountString, base)
 	if !ok {
-		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
+		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
 	}
 
 	transformed[0] = struct {
