@@ -9,7 +9,7 @@ replace (
 )
 
 require (
-	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20220317234142-1c674cbc83ff
+	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20220502164045-e6fba8cfebfb
 	github.com/cosmos/cosmos-sdk v0.44.6
 	github.com/cosmos/ibc-go/v2 v2.1.0
 	github.com/gogo/protobuf v1.3.3
@@ -108,7 +108,7 @@ require (
 	golang.org/x/sys v0.0.0-20211004093028-2c5d950f24ef // indirect
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
 	golang.org/x/text v0.3.6 // indirect
-	google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71 // indirect
+	google.golang.org/genproto v0.0.0-20210917145530-b395a37504d4 // indirect
 	google.golang.org/grpc v1.42.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect
