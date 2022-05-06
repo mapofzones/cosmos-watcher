@@ -50,6 +50,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	//injectiveapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 
+	//source to upgrade codec: https://github.com/InjectiveLabs/sdk-go/blob/962c8f3e7ea5e72ae351b05951cf0d8eb0886115/client/chain/context.go#84
 	//source to upgrade codec: https://github.com/InjectiveLabs/sdk-go/blob/9f6b7221a84f87c49c80ec6223284c2240bc4d00/chain/client/context.go#L82
 
 	//interfaceRegistry := types.NewInterfaceRegistry()
