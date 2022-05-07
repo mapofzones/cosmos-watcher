@@ -615,6 +615,9 @@ updates:
       - "Raumo0"
     allow:
       - dependency-name: "github.com/iov-one/starnamed"
+    ignore:
+      - dependency-name: "github.com/mapofzones/cosmos-sdk"
+        versions: [ "v0.42.6-unmarshal-fix" ]
 
   - package-ecosystem: "gomod"
     directory: "/"
