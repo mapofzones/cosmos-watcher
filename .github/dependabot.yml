@@ -8,9 +8,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
 
   - package-ecosystem: "gomod"
     directory: "/"
@@ -34,9 +34,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/ovrclk/akash"
 
@@ -48,9 +48,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/pariah140/alteredcarbon"
 
@@ -62,9 +62,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/axelarnetwork/axelar-core"
 
@@ -76,9 +76,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/bandprotocol/chain/v2"
 
@@ -90,9 +90,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/BitCannaGlobal/bcna"
 
@@ -104,9 +104,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/bitsongofficial/go-bitsong"
 
@@ -118,9 +118,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/certikfoundation/shentu/v2"
 
@@ -132,9 +132,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/ChihuahuaChain/chihuahua"
 
@@ -146,9 +146,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/comdex-official/comdex"
 
@@ -160,9 +160,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/cosmos/cosmos-sdk"
 
@@ -174,9 +174,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/crescent-network/crescent"
 
@@ -188,9 +188,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/crypto-org-chain/cronos"
 
@@ -202,9 +202,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/crypto-org-chain/chain-main/v3"
 
@@ -216,9 +216,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/cybercongress/go-cyber"
 
@@ -230,9 +230,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/Decentr-net/decentr"
 
@@ -244,9 +244,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/desmos-labs/desmos/v2"
 
@@ -258,9 +258,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/notional-labs/dig/v2"
 
@@ -272,9 +272,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/e-money/em-ledger"
 
@@ -286,9 +286,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/tharsis/evmos/v3"
 
@@ -300,9 +300,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/fetchai/fetchd"
 
@@ -314,9 +314,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/Gravity-Bridge/Gravity-Bridge/module"
 
@@ -328,9 +328,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/ixofoundation/ixo-blockchain"
 
@@ -342,9 +342,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/irisnet/irishub"
 
@@ -356,9 +356,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/CosmosContracts/juno"
 
@@ -370,9 +370,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/kava-labs/kava"
 
@@ -384,9 +384,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/KiFoundation/ki-tools"
 
@@ -398,9 +398,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/konstellation/konstellation"
 
@@ -412,9 +412,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/likecoin/likechain"
 
@@ -426,9 +426,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/lum-network/chain"
 
@@ -440,9 +440,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/microtick/mtzone"
 
@@ -454,9 +454,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/OmniFlix/omniflixhub"
 
@@ -468,9 +468,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/osmosis-labs/osmosis/v7"
 
@@ -482,9 +482,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/medibloc/panacea-core/v2"
 
@@ -496,9 +496,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/persistenceOne/persistenceCore"
 
@@ -510,9 +510,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/regen-network/regen-ledger/v2"
 
@@ -524,9 +524,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/rizon-world/rizon"
 
@@ -538,9 +538,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/enigmampc/SecretNetwork"
 
@@ -552,9 +552,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/sentinel-official/hub"
 
@@ -566,9 +566,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/Sifchain/sifnode"
 
@@ -580,9 +580,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/peggyjv/sommelier"
 
@@ -594,9 +594,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/public-awesome/stargaze/v3"
 
@@ -608,9 +608,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/iov-one/starnamed"
 
@@ -622,9 +622,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/terra-money/core"
 
@@ -636,9 +636,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/umee-network/umee"
 
@@ -650,9 +650,9 @@ updates:
     commit-message:
       prefix: "Update"
       include: "scope"
-      reviewers:
-        - "wolthrax"
-        - "Raumo0"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
     allow:
       - dependency-name: "github.com/vidulum/vidulum"
 
