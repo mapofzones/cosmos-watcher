@@ -377,6 +377,8 @@ updates:
       - "Raumo0"
     allow:
       - dependency-name: "github.com/kava-labs/kava"
+    ignore:
+      - dependency-name: "github.com/tecbot/gorocksdb"
 
   - package-ecosystem: "gomod"
     directory: "/"
