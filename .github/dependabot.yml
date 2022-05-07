@@ -11,6 +11,8 @@ updates:
     reviewers:
       - "wolthrax"
       - "Raumo0"
+    allow:
+      - dependency-name: "github.com/cosmos/cosmos-sdk"
 
   - package-ecosystem: "gomod"
     directory: "/"
@@ -310,7 +312,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "gravity-bridg"
+    target-branch: "gravity-bridge"
     commit-message:
       prefix: "Update"
       include: "scope"
