@@ -13,7 +13,7 @@ replace (
 )
 
 require (
-	github.com/axelarnetwork/axelar-core v0.17.1
+	github.com/axelarnetwork/axelar-core v0.17.3
 	github.com/cosmos/cosmos-sdk v0.45.1
 	github.com/cosmos/ibc-go/v2 v2.2.0
 	github.com/gogo/protobuf v1.3.3
