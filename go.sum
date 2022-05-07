@@ -93,8 +93,8 @@ github.com/Microsoft/go-winio v0.5.0/go.mod h1:JPGBdM1cNvN/6ISo+n8V5iA4v8pBzdOpz
 github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8D7ML55dXQrVaamCz2vxCfdQBasLZfHKk=
 github.com/OmniFlix/marketplace v0.2.0 h1:VvPk9MkM3OUUbikR8jDLMdfdgKcXunlY+OXJkPH0ZII=
 github.com/OmniFlix/marketplace v0.2.0/go.mod h1:z/u3ndafrxT1k6O2dxoogD2C1gjrnS+t5wet7316ruA=
-github.com/OmniFlix/omniflixhub v0.4.0 h1:cUjkaciZ7ID0DPKiJPsVP7O1DMLzJTOL11qgkoaklXM=
-github.com/OmniFlix/omniflixhub v0.4.0/go.mod h1:+23DfknnvY5bZExKijZ8L/dPv60mWja9zMRn8FeEuKM=
+github.com/OmniFlix/omniflixhub v0.4.1 h1:NbbJCZusoSmPSl51v6iZBllzW1H0eQijC5uBbXwiuWQ=
+github.com/OmniFlix/omniflixhub v0.4.1/go.mod h1:+23DfknnvY5bZExKijZ8L/dPv60mWja9zMRn8FeEuKM=
 github.com/OmniFlix/onft v0.3.0-alpha.1/go.mod h1:y1RknOuWIm2FhShS8Cb03mgyryYu7xZa+PzG5lN3O3A=
 github.com/OmniFlix/onft v0.3.0 h1:VDMFJuBEI+OyvcPCBXph+sS6OY7i1uQ9H0I0ZpleU8Q=
 github.com/OmniFlix/onft v0.3.0/go.mod h1:y1RknOuWIm2FhShS8Cb03mgyryYu7xZa+PzG5lN3O3A=

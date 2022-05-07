@@ -8,7 +8,7 @@ replace (
 )
 
 require (
-	github.com/OmniFlix/omniflixhub v0.4.0
+	github.com/OmniFlix/omniflixhub v0.4.1
 	github.com/cosmos/cosmos-sdk v0.45.1
 	github.com/cosmos/ibc-go/v2 v2.0.3
 	github.com/gogo/protobuf v1.3.3
