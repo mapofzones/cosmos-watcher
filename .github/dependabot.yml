@@ -379,6 +379,8 @@ updates:
       - dependency-name: "github.com/kava-labs/kava"
     ignore:
       - dependency-name: "github.com/tecbot/gorocksdb"
+        versions:
+          - "v0.0.0-20191217155057-f0fad39f321"
 
   - package-ecosystem: "gomod"
     directory: "/"
