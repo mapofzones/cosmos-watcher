@@ -1,0 +1,660 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "master"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "injective"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+    reviewers:
+      - "wolthrax"
+      - "Raumo0"
+    allow:
+      - dependency-name: "github.com/InjectiveLabs/sdk-go"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "akash"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/ovrclk/akash"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "alteredcarbon"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/pariah140/alteredcarbon"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "axelar"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/axelarnetwork/axelar-core"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "band"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/bandprotocol/chain/v2"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "bitcanna"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/BitCannaGlobal/bcna"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "bitsong"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/bitsongofficial/go-bitsong"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "certik"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/certikfoundation/shentu/v2"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "chihuahua"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/ChihuahuaChain/chihuahua"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "comdex"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/comdex-official/comdex"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "cosmoshub"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/cosmos/cosmos-sdk"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "crescent"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/crescent-network/crescent"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "cronos"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/crypto-org-chain/cronos"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "crypto-org"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/crypto-org-chain/chain-main/v3"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "cyber"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/cybercongress/go-cyber"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "decentr"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/Decentr-net/decentr"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "desmos"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/desmos-labs/desmos/v2"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "dig"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/notional-labs/dig/v2"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "emoney"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/e-money/em-ledger"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "evmos"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/tharsis/evmos/v3"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "fetchai"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/fetchai/fetchd"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "gravity-bridg"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/Gravity-Bridge/Gravity-Bridge/module"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "impacthub"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/ixofoundation/ixo-blockchain"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "irishub"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/irisnet/irishub"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "juno"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/CosmosContracts/juno"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "kava"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/kava-labs/kava"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "kichain"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/KiFoundation/ki-tools"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "konstellation"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/konstellation/konstellation"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "likecoin"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/likecoin/likechain"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "lum"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/lum-network/chain"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "microtick"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/microtick/mtzone"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "omniflix"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/OmniFlix/omniflixhub"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "osmosis"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/osmosis-labs/osmosis/v7"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "panacea"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/medibloc/panacea-core/v2"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "persistence"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/persistenceOne/persistenceCore"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "regen"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/regen-network/regen-ledger/v2"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "rizon"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/rizon-world/rizon"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "secret"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/enigmampc/SecretNetwork"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "sentinelhub"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/sentinel-official/hub"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "sifchain"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/Sifchain/sifnode"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "sommelier"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/peggyjv/sommelier"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "stargaze"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/public-awesome/stargaze/v3"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "starname"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/iov-one/starnamed"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "terra"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/terra-money/core"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "umee"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/umee-network/umee"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "vidulum"
+    commit-message:
+      prefix: "Update"
+      include: "scope"
+      reviewers:
+        - "wolthrax"
+        - "Raumo0"
+    allow:
+      - dependency-name: "github.com/vidulum/vidulum"
+
+
+
