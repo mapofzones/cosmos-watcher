@@ -80,8 +80,8 @@ github.com/HdrHistogram/hdrhistogram-go v1.1.0/go.mod h1:yDgFjdqOqDEKOvasDdhWNXY
 github.com/HdrHistogram/hdrhistogram-go v1.1.2/go.mod h1:yDgFjdqOqDEKOvasDdhWNXYg9BVp4O+o5f6V/ehm6Oo=
 github.com/InjectiveLabs/cosmos-sdk v0.45.2-inj h1:GtdqT+aHzm0hZ5gpLSdZkgxLSDhDQIkqPGVkzCDXdJc=
 github.com/InjectiveLabs/cosmos-sdk v0.45.2-inj/go.mod h1:DhSVBqJkhjB694w99FudptzPhU0XHd/qcyiNCLOjkds=
-github.com/InjectiveLabs/sdk-go v1.38.1 h1:W7oGX923oLo3z89gYUJEUgTfroSS2+AIpeZ4FMQ+pz0=
-github.com/InjectiveLabs/sdk-go v1.38.1/go.mod h1:tP3acZ6EPZh0/F9gfKyvNUdxuAFsWCYN0EyZVjhs2ww=
+github.com/InjectiveLabs/sdk-go v1.38.2 h1:cakOb0KidOTj+PYAA8UzQwlpziTF9xKUR4DgZ2NIkbw=
+github.com/InjectiveLabs/sdk-go v1.38.2/go.mod h1:tP3acZ6EPZh0/F9gfKyvNUdxuAFsWCYN0EyZVjhs2ww=
 github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/Microsoft/go-winio v0.4.14/go.mod h1:qXqCSQ3Xa7+6tgxaGTIe4Kpcdsi+P8jBhyzoq1bpyYA=
 github.com/Microsoft/go-winio v0.5.0/go.mod h1:JPGBdM1cNvN/6ISo+n8V5iA4v8pBzdOpzfwIujj1a84=
