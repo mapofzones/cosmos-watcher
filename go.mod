@@ -9,8 +9,8 @@ replace (
 )
 
 require (
+	github.com/AssetMantle/node v0.3.0
 	github.com/cosmos/cosmos-sdk v0.45.1
-	github.com/cosmos/gaia/v7 v7.0.0
 	github.com/cosmos/ibc-go/v3 v3.0.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
