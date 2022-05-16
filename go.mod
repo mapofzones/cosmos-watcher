@@ -16,7 +16,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.3
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
-	github.com/osmosis-labs/osmosis/v7 v7.2.1-0.20220503160004-44791eb821a7
+	github.com/osmosis-labs/osmosis/v7 v7.3.1-0.20220515061958-16e3b51f19a5
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.1
 	github.com/tendermint/go-amino v0.16.0
