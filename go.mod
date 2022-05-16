@@ -10,7 +10,7 @@ replace (
 )
 
 require (
-	github.com/InjectiveLabs/sdk-go v1.38.1
+	github.com/InjectiveLabs/sdk-go v1.38.3
 	github.com/cosmos/cosmos-sdk v0.45.2
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
