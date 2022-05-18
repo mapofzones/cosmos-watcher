@@ -2,7 +2,6 @@ package cosmos
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -26,18 +25,17 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 	}
 
 	s := []block.TxStatus{}
-	for _, tx := range Block.Block.Txs {
-		res, err := client.Tx(ctx, tx.Hash(), false)
-		if errors.Is(err, errors.New("Tx")) {
-			return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
-		} else if err != nil {
-			return block.Block{}, err
+
+	if len(results.TxsResults) != len(Block.Block.Txs) {
+		return block.Block{}, fmt.Errorf("wrong number of block txs & block txs result: %w", err)
+	} else {
+		for i := 0; i < len(results.TxsResults); i++ {
+			s = append(s, block.TxStatus{
+				ResultCode: results.TxsResults[i].Code,
+				Hash:       Block.Block.Txs[i].Hash(),
+				Height:     N,
+			})
 		}
-		s = append(s, block.TxStatus{
-			ResultCode: res.TxResult.Code,
-			Hash:       tx.Hash(),
-			Height:     res.Height,
-		})
 	}
 
 	return block.Block{
