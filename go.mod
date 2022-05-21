@@ -9,9 +9,9 @@ replace (
 )
 
 require (
-	github.com/bandprotocol/chain/v2 v2.3.2
+	github.com/bandprotocol/chain/v2 v2.3.3
 	github.com/cosmos/cosmos-sdk v0.44.5
-	github.com/cosmos/ibc-go v1.1.0
+	github.com/cosmos/ibc-go v1.1.5
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
