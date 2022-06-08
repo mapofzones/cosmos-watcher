@@ -16,7 +16,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.4
 	github.com/cosmos/ibc-go/v3 v3.0.0
 	github.com/gogo/protobuf v1.3.3
-	github.com/kava-labs/kava v0.17.3
+	github.com/kava-labs/kava v0.17.5
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.1
 	github.com/tendermint/go-amino v0.16.0
