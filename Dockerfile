@@ -15,6 +15,7 @@ FROM ubuntu:latest as production
 RUN apt-get update && apt-get install -y curl jq coreutils
 
 COPY --from=build /app/libwasmvm.so /usr/lib/libwasmvm.so
+COPY --from=build /app/libwasmvm.x86_64.so /usr/lib/libwasmvm.x86_64.so
 COPY --from=build /app/watcher  /app/watcher
 COPY --from=build /app/scripts/run.sh /run.sh
 
