@@ -4,6 +4,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 
 	axelarapp "github.com/axelarnetwork/axelar-core/app"
+	codec "github.com/axelarnetwork/axelar-core/app/codec"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -23,6 +24,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func axelarRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	axelarapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	codec.RegisterLegacyMsgInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
