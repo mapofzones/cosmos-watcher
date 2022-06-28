@@ -14,7 +14,7 @@ replace (
 )
 
 require (
-	github.com/axelarnetwork/axelar-core v0.19.3
+	github.com/axelarnetwork/axelar-core v0.19.4
 	//github.com/axelarnetwork/axelar-core v0.19.1-0.20220615191808-7682a0768161
 	github.com/cosmos/cosmos-sdk v0.45.4
 	github.com/cosmos/ibc-go/v2 v2.2.0
