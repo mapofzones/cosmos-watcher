@@ -90,8 +90,8 @@ github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWX
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/Sifchain/ibc-go/v2 v2.0.3-issue.850 h1:kPBosFNW1ysUuMD31RqneZzJSpcs6xVYRPCUG/Nxh64=
 github.com/Sifchain/ibc-go/v2 v2.0.3-issue.850/go.mod h1:XUmW7wmubCRhIEAGtMGS+5IjiSSmcAwihoN/yPGd6Kk=
-github.com/Sifchain/sifnode v0.13.2 h1:6e++MGYkkOZC6/Wo0tAKLFiyQsidyjLehARfXrfCThg=
-github.com/Sifchain/sifnode v0.13.2/go.mod h1:2pdnhy9V0b1XXJ3TqstFlvURfe0qzaeP+GGd0YedUXM=
+github.com/Sifchain/sifnode v0.13.4 h1:ia+qPfu1jiM/Ubeln3kn8bIjrNJAyVT0Q9W4rglDtxE=
+github.com/Sifchain/sifnode v0.13.4/go.mod h1:2pdnhy9V0b1XXJ3TqstFlvURfe0qzaeP+GGd0YedUXM=
 github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6/go.mod h1:3eOhrUMpNV+6aFIbp5/iudMxNCF27Vw2OZgy4xEx0Fg=
 github.com/StackExchange/wmi v1.2.1/go.mod h1:rcmrprowKIVzvc+NUiLncP2uuArMWLCbu9SBzvHz7e8=
 github.com/VictoriaMetrics/fastcache v1.5.7/go.mod h1:ptDBkNMQI4RtmVo8VS/XwRY6RoTu1dAWCbrk+6WsEM8=
