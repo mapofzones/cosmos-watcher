@@ -11,18 +11,18 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
-	osmosisapp "github.com/osmosis-labs/osmosis/v9/app"
+	kujirasapp "kujira/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	osmosisRegisterInterfaces(interfaceRegistry)
+	kujiraRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func osmosisRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	osmosisapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func kujiraRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	kujirasapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
