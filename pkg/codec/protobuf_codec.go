@@ -4,15 +4,17 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/gogo/protobuf/proto"
 
+	wasmx "github.com/InjectiveLabs/sdk-go/chain/wasmx/types"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 
+	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	auction "github.com/InjectiveLabs/sdk-go/chain/auction/types"
 	keyscodec "github.com/InjectiveLabs/sdk-go/chain/crypto/codec"
 	evm "github.com/InjectiveLabs/sdk-go/chain/evm/types"
@@ -22,7 +24,6 @@ import (
 	oracle "github.com/InjectiveLabs/sdk-go/chain/oracle/types"
 	peggy "github.com/InjectiveLabs/sdk-go/chain/peggy/types"
 	chaintypes "github.com/InjectiveLabs/sdk-go/chain/types"
-	wasmtypes "github.com/InjectiveLabs/sdk-go/wasm/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 	authztypes "github.com/cosmos/cosmos-sdk/x/authz"
@@ -36,8 +37,9 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	ibcapplicationtypes "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
-	ibccoretypes "github.com/cosmos/ibc-go/v2/modules/core/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
+	ibcapplicationtypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibccoretypes "github.com/cosmos/ibc-go/v3/modules/core/types"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -64,6 +66,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	peggy.RegisterInterfaces(interfaceRegistry)
 	ocr.RegisterInterfaces(interfaceRegistry)
 	chaintypes.RegisterInterfaces(interfaceRegistry)
+	wasmx.RegisterInterfaces(interfaceRegistry)
 
 	// more cosmos types
 	authtypes.RegisterInterfaces(interfaceRegistry)
@@ -82,6 +85,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	upgradetypes.RegisterInterfaces(interfaceRegistry)
 	feegranttypes.RegisterInterfaces(interfaceRegistry)
 	wasmtypes.RegisterInterfaces(interfaceRegistry)
+	icatypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
