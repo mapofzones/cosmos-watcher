@@ -24,10 +24,12 @@ type attributeFiler struct {
 }
 
 func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) ([]watcher.Message, error) {
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 1")
 	switch msg := msg.(type) {
 
 	// send creation
 	case *types.MsgSend:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 2")
 		return []watcher.Message{
 			watcher.Transfer{
 				Sender:    (*msg).FromAddress,
@@ -38,6 +40,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// client creation
 	case *clienttypes.MsgCreateClient:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 3")
 		value := msg.ClientState.GetCachedValue()
 		var chainId string
 		switch client := value.(type) {
@@ -57,22 +60,28 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 			},
 		}
 		if clientId == "" && errCode == 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 4")
 			return messages, errors.New("clientID not found")
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 5")
 		return messages, nil
 
 	// connection creation
 	case *connectiontypes.MsgConnectionOpenInit:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 6")
 		if errCode != 0 {
 			return []watcher.Message{}, nil
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 7")
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenInit}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 8")
 			return nil, errors.New("connectionID not found")
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 9")
 		return []watcher.Message{
 			watcher.CreateConnection{
 				ConnectionID: connectionIDs[0],
@@ -81,16 +90,20 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	case *connectiontypes.MsgConnectionOpenTry:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 10")
 		if errCode != 0 {
 			return []watcher.Message{}, nil
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 11")
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenTry}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 12")
 			return nil, errors.New("connectionID not found")
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 13")
 		return []watcher.Message{
 			watcher.CreateConnection{
 				ConnectionID: connectionIDs[0],
@@ -100,7 +113,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// channel creation
 	case *channeltypes.MsgChannelOpenInit:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 14")
 		if errCode != 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 15")
 			return []watcher.Message{}, nil
 		}
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenInit}
@@ -108,8 +123,10 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
 		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if (len(channelIDs) != 1 || len(channelIDs[0]) == 0) && errCode == 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 16")
 			return nil, errors.New("channelID not found")
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 17")
 		return []watcher.Message{
 			watcher.CreateChannel{
 				ChannelID:    channelIDs[0],
@@ -119,7 +136,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	case *channeltypes.MsgChannelOpenTry:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 18")
 		if errCode != 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 19")
 			return []watcher.Message{}, nil
 		}
 		expectedEvents := []string{channeltypes.EventTypeChannelOpenTry}
@@ -127,8 +146,10 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attrFiler := attributeFiler{connectiontypes.AttributeKeyConnectionID, msg.Channel.ConnectionHops[0]}
 		channelIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
 		if len(channelIDs) != 1 || len(channelIDs[0]) == 0 {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 20")
 			return nil, errors.New("channelID not found")
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 21")
 		return []watcher.Message{
 			watcher.CreateChannel{
 				ChannelID:    channelIDs[0],
@@ -139,6 +160,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// channel opening/closing
 	case *channeltypes.MsgChannelOpenAck:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 22")
 		return []watcher.Message{
 			watcher.OpenChannel{
 				ChannelID: msg.ChannelId,
@@ -146,6 +168,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	case *channeltypes.MsgChannelOpenConfirm:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 23")
 		return []watcher.Message{
 			watcher.OpenChannel{
 				ChannelID: msg.ChannelId,
@@ -153,6 +176,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	case *channeltypes.MsgChannelCloseInit:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 24")
 		return []watcher.Message{
 			watcher.CloseChannel{
 				ChannelID: msg.ChannelId,
@@ -160,6 +184,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	case *channeltypes.MsgChannelCloseConfirm:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 25")
 		return []watcher.Message{
 			watcher.CloseChannel{
 				ChannelID: msg.ChannelId,
@@ -168,6 +193,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// ibc transfer messages
 	case *transfer.MsgTransfer:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 26")
 		return []watcher.Message{
 			watcher.IBCTransfer{
 				ChannelID: msg.SourceChannel,
@@ -179,11 +205,14 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 
 	case *channeltypes.MsgRecvPacket:
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 27")
 		data := transfer.FungibleTokenPacketData{}
 		err := json.Unmarshal(msg.Packet.Data, &data)
 		if err != nil {
+			log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 28")
 			return nil, err
 		}
+		log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 29")
 		return []watcher.Message{
 			watcher.IBCTransfer{
 				ChannelID: msg.Packet.DestinationChannel,
@@ -195,10 +224,12 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}, nil
 	}
 
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 30")
 	return []watcher.Message{}, nil
 }
 
 func ParseClientIDFromResults(txResult *types6.ResponseDeliverTx, clientId string) string {
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 31")
 	if txResult != nil {
 		for _, event := range txResult.Events {
 			if event.Type == clienttypes.EventTypeCreateClient {
@@ -211,10 +242,12 @@ func ParseClientIDFromResults(txResult *types6.ResponseDeliverTx, clientId strin
 			}
 		}
 	}
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 32")
 	return clientId
 }
 
 func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []string, attributeKeys []string, attrFiler attributeFiler) []string {
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 33")
 	var attributesValues []string
 	if txResult != nil {
 		for _, event := range txResult.Events {
@@ -248,6 +281,7 @@ func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []st
 			}
 		}
 	}
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 34")
 	return attributesValues
 }
 
@@ -255,6 +289,7 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 	Amount *big.Int
 	Coin   string
 } {
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 35")
 	transformed := make([]struct {
 		Amount *big.Int
 		Coin   string
@@ -276,6 +311,7 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 			Amount: amount,
 		}
 	}
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 36")
 	return transformed
 }
 
@@ -283,6 +319,7 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 	Amount *big.Int
 	Coin   string
 } {
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 37")
 	transformed := make([]struct {
 		Amount *big.Int
 		Coin   string
@@ -306,5 +343,6 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 		Coin:   data.Denom,
 		Amount: amount,
 	}
+	log.Println("pkg.cosmos_sdk.block.parsing.mag_parsing.go - 38")
 	return transformed
 }

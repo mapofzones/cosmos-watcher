@@ -37,9 +37,11 @@ func main() {
 		log.Println(err)
 	}
 
+	log.Println("cmd.watcher.main.go - 1")
 	// initiate context for our app
 	ctx, cancel := context.WithCancel(context.Background())
 
+	log.Println("cmd.watcher.main.go - 2")
 	// validate fullnode address
 	info, err := client.Status(ctx)
 	if err != nil {
@@ -48,19 +50,25 @@ func main() {
 		log.Fatalf("Required chain_id(%s) is not equal to network_id(%s) in current blockchain fullnode", blockchainNetworkId, info.NodeInfo.Network)
 	}
 
+	log.Println("cmd.watcher.main.go - 3")
 	// create block fetching pipeline
 	blocks := cosmos.BlockStream(ctx, client, height)
 
+	log.Println("cmd.watcher.main.go - 4")
 	// initiate rabbitmq queue for watcher
 	queue, err := rabbitmq.BlockQueue(ctx, messageBrokerConnectionString, rabbitmqQueueName)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	log.Println("cmd.watcher.main.go - 5")
 	watcher := watcher.NewWatcher(ctx, blocks, queue)
 
+	log.Println("cmd.watcher.main.go - 6")
 	// run watcher
 	err = watcher.WatchWithTimeout(ctx, time.Minute*10)
+
+	log.Println("cmd.watcher.main.go - 7")
 	cancel()
 	log.Fatal(err)
 }

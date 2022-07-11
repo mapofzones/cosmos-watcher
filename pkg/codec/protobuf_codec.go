@@ -3,6 +3,7 @@ package watcher
 import (
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/gogo/protobuf/proto"
+	"log"
 
 	wasmx "github.com/InjectiveLabs/sdk-go/chain/wasmx/types"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -43,10 +44,15 @@ import (
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	log.Println("pkg.codec.protobuf_codec.go - 1")
 	impls := getMessageImplementations()
+	log.Println("pkg.codec.protobuf_codec.go - 2")
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
+	log.Println("pkg.codec.protobuf_codec.go - 3")
 	injectiveRegisterInterfaces(interfaceRegistry)
+	log.Println("pkg.codec.protobuf_codec.go - 4")
 	registerTypes(interfaceRegistry)
+	log.Println("pkg.codec.protobuf_codec.go - 5")
 }
 
 func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {

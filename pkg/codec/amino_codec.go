@@ -4,11 +4,15 @@ import (
 	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"github.com/tendermint/go-amino"
+	"log"
 )
 
 func RegisterTypes(codec *amino.Codec) {
+	log.Println("pkg.codec.amino_codec.go - 1")
 	registerBlocks(codec)
+	log.Println("pkg.codec.amino_codec.go - 2")
 	registerMessages(codec)
+	log.Println("pkg.codec.amino_codec.go - 3")
 }
 
 func registerBlocks(codec *amino.Codec) {

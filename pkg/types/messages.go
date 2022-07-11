@@ -1,6 +1,9 @@
 package watcher
 
-import "math/big"
+import (
+	"log"
+	"math/big"
+)
 
 // interface compile-time checks
 var (
@@ -26,6 +29,7 @@ type Transaction struct {
 }
 
 func (t Transaction) Type() string {
+	log.Println("pkg.types.messages.go - 1")
 	return "transaction"
 }
 
@@ -38,6 +42,7 @@ type Transfer struct {
 }
 
 func (t Transfer) Type() string {
+	log.Println("pkg.types.messages.go - 2")
 	return "transfer"
 }
 
@@ -56,6 +61,7 @@ type CreateClient struct {
 }
 
 func (t CreateClient) Type() string {
+	log.Println("pkg.types.messages.go - 3")
 	return "create_client"
 }
 
@@ -72,6 +78,7 @@ type CreateConnection struct {
 }
 
 func (t CreateConnection) Type() string {
+	log.Println("pkg.types.messages.go - 4")
 	return "create_connection"
 }
 
@@ -90,6 +97,7 @@ type CreateChannel struct {
 }
 
 func (t CreateChannel) Type() string {
+	log.Println("pkg.types.messages.go - 5")
 	return "create_channel"
 }
 
@@ -99,6 +107,7 @@ type OpenChannel struct {
 }
 
 func (t OpenChannel) Type() string {
+	log.Println("pkg.types.messages.go - 6")
 	return "open_channel"
 }
 
@@ -108,6 +117,7 @@ type CloseChannel struct {
 }
 
 func (t CloseChannel) Type() string {
+	log.Println("pkg.types.messages.go - 7")
 	return "close_channel"
 }
 
@@ -130,5 +140,6 @@ type IBCTransfer struct {
 }
 
 func (t IBCTransfer) Type() string {
+	log.Println("pkg.types.messages.go - 8")
 	return "ibc_transfer"
 }
