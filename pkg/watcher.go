@@ -31,7 +31,7 @@ func NewWatcher(ctx context.Context, blockStream <-chan watcher.Block, rabbitQue
 // and send them to Queue
 func (w *Watcher) WatchWithTimeout(ctx context.Context, timeout time.Duration) error {
 	log.Println("pkg.watcher.go - 2")
-	duration := time.Second * 1500
+	duration := time.Second * 150
 	timer := time.NewTimer(duration)
 	for {
 		log.Println("pkg.watcher.go - 3")

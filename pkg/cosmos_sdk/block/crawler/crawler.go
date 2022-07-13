@@ -97,7 +97,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 	go func() {
 		log.Println("pkg.cosmos_sdk.block.crawler.crawler.go - 21")
 		defer close(blockStream)
-		duration := time.Second * 1500
+		duration := time.Second * 150
 		timer := time.NewTimer(duration)
 		log.Println("pkg.cosmos_sdk.block.crawler.crawler.go - 22")
 		for N := first; N <= last; N++ {
