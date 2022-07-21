@@ -14,7 +14,7 @@ replace (
 require (
 	github.com/cosmos/cosmos-sdk v0.45.5
 	github.com/cosmos/ibc-go/v3 v3.1.0
-	github.com/functionx/fx-core v1.2.0-dhobyghaut.0.20220629101316-6cbbe741828a
+	github.com/functionx/fx-core/v2 v2.1.2
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.5
