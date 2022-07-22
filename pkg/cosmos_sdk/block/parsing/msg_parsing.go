@@ -3,20 +3,18 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	"math/big"
-	"strconv"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
-	solomachine "github.com/cosmos/ibc-go/modules/light-clients/06-solomachine/types"
-	types7 "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
+	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	solomachine "github.com/cosmos/ibc-go/v3/modules/light-clients/06-solomachine/types"
+	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	types6 "github.com/tendermint/tendermint/abci/types"
 	"log"
+	"math/big"
 )
 
 type attributeFiler struct {
@@ -292,12 +290,12 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 	n := new(big.Int)
 	base := 10
 	amountString := "0"
-	if len(strconv.FormatUint(data.Amount, 10)) > 0 {
-		amountString = strconv.FormatUint(data.Amount, 10)
+	if len(data.Amount) > 0 {
+		amountString = data.Amount
 	}
 	amount, ok := n.SetString(amountString, base)
 	if !ok {
-		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
+		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
 	}
 
 	transformed[0] = struct {
