@@ -422,7 +422,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/likecoin/likechain"
+      - dependency-name: "github.com/likecoin/likecoin-chain/v3"
 
   - package-ecosystem: "gomod"
     directory: "/"
