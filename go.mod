@@ -1,6 +1,6 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.17
+go 1.18
 
 replace (
 	github.com/cosmos/cosmos-sdk => github.com/pomifer/cosmos-sdk v0.45.5-chihuahua
