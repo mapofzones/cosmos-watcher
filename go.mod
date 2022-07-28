@@ -11,7 +11,7 @@ replace (
 )
 
 require (
-	github.com/Sifchain/sifnode v0.13.2
+	github.com/Sifchain/sifnode v0.13.6
 	github.com/cosmos/cosmos-sdk v0.44.5
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
