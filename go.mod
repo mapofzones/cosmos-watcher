@@ -7,9 +7,9 @@ replace (
 	github.com/cosmos/ledger-cosmos-go => github.com/ovrclk/ledger-cosmos-go v0.13.2
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/keybase/go-keychain => github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4
-	github.com/tendermint/tendermint => github.com/ovrclk/tendermint v0.34.19-patches-20220426
-	github.com/zondax/hid => github.com/troian/hid v0.9.9
-	github.com/zondax/ledger-go => github.com/ovrclk/ledger-go v0.13.4
+	github.com/tendermint/tendermint => github.com/ovrclk/tendermint v0.34.19-patches
+	github.com/zondax/hid => github.com/troian/hid v0.11.0
+	github.com/zondax/ledger-go => github.com/ovrclk/ledger-go v0.13.6
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
 
@@ -17,7 +17,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.1
 	github.com/cosmos/ibc-go/v2 v2.0.3
 	github.com/gogo/protobuf v1.3.3
-	github.com/ovrclk/akash v0.16.3
+	github.com/ovrclk/akash v0.16.4
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.1
 	github.com/tendermint/go-amino v0.16.0
@@ -128,7 +128,7 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb // indirect
 	google.golang.org/grpc v1.45.0 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
