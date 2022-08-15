@@ -7,17 +7,17 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
-	types7 "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
+	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
 )
 
 type attributeFiler struct {
-	key string
+	key   string
 	value string
 }
 
@@ -29,9 +29,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 	case *types.MsgSend:
 		return []watcher.Message{
 			watcher.Transfer{
-				Sender: (*msg).FromAddress,
+				Sender:    (*msg).FromAddress,
 				Recipient: (*msg).ToAddress,
-				Amount: sdkCoinsToStruct((*msg).Amount),
+				Amount:    sdkCoinsToStruct((*msg).Amount),
 			},
 		}, nil
 
@@ -62,7 +62,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys, attrFiler)
-		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0)  && errCode == 0{
+		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("connectionID not found")
 		}
 		return []watcher.Message{
