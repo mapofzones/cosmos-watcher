@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	watcher "github.com/mapofzones/cosmos-watcher/pkg"
@@ -14,14 +15,20 @@ import (
 )
 
 func main() {
+	startWithBlockchainHeight := os.Getenv("height")
+	fullNodeJsonRpcAddress := os.Getenv("rpc")
+	messageBrokerConnectionString := os.Getenv("rabbitmq")
+	rabbitmqQueueName := os.Getenv("queue")
+	blockchainNetworkId := os.Getenv("chain_id")
+
 	// get height from which we should process blocks
-	height, err := strconv.ParseInt(os.Getenv("height"), 10, 64)
+	height, err := strconv.ParseInt(startWithBlockchainHeight, 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// initiate tendermint client for fetching blocks
-	client, err := http.New(os.Getenv("rpc"), "/websocket")
+	client, err := http.New(fullNodeJsonRpcAddress, "/websocket")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,17 +40,19 @@ func main() {
 	// initiate context for our app
 	ctx, cancel := context.WithCancel(context.Background())
 
-	//info, err := client.NetInfo(ctx)
-	//for _, p := range info.Peers {
-	//	log.Println("RPCAddress", p.NodeInfo.Other.RPCAddress)
-	//	log.Println("RemoteIP", p.RemoteIP)
-	//}
-	//log.Fatal("Finish")
+	// validate fullnode address
+	info, err := client.Status(ctx)
+	if err != nil {
+		log.Fatal(err)
+	} else if !strings.EqualFold(info.NodeInfo.Network, blockchainNetworkId) {
+		log.Fatalf("Required chain_id(%s) is not equal to network_id(%s) in current blockchain fullnode", blockchainNetworkId, info.NodeInfo.Network)
+	}
+
 	// create block fetching pipeline
 	blocks := cosmos.BlockStream(ctx, client, height)
 
 	// initiate rabbitmq queue for watcher
-	queue, err := rabbitmq.BlockQueue(ctx, os.Getenv("rabbitmq"), "blocks_v2")
+	queue, err := rabbitmq.BlockQueue(ctx, messageBrokerConnectionString, rabbitmqQueueName)
 	if err != nil {
 		log.Fatal(err)
 	}
