@@ -8,20 +8,19 @@ import (
 	"log"
 
 	types2 "github.com/cosmos/cosmos-sdk/types"
+	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 )
 
 func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
-		Sender: signTx.GetSigners()[0].String(),
+		Sender:   signTx.GetSigners()[0].String(),
 	}
 
 	for _, msg := range tx.GetMsgs() {
-		log.Println(msg)
 		msgs, err := parseMsg(msg, txResult, errCode)
 		if err != nil {
 			return Tx, err
@@ -50,11 +49,9 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 		T:                b.T,
 	}
 
-	log.Println("height:", b.Height, " txs:", b.Txs)
+	log.Println("height:", b.Height, " txs:", len(b.Txs))
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
-	txResults := b.BlockResults.TxsResults
 	for i, tx := range b.Txs {
-		log.Println("here!")
 		decoded, err := decodeTx(cdc, tx)
 		if err != nil {
 			return block, err
@@ -68,7 +65,7 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 			return block, err
 		}
 
-		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), txResults[i], signTx)
+		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.TxsResults[i], signTx)
 		if err != nil {
 			return block, err
 		}
