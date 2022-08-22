@@ -9,7 +9,7 @@ replace (
 )
 
 require (
-	github.com/bandprotocol/chain/v2 v2.3.3
+	github.com/bandprotocol/chain/v2 v2.3.4
 	github.com/cosmos/cosmos-sdk v0.44.5
 	github.com/cosmos/ibc-go v1.1.5
 	github.com/gogo/protobuf v1.3.3
