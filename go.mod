@@ -11,9 +11,9 @@ replace (
 )
 
 require (
-	github.com/CosmWasm/wasmd v0.0.0-00010101000000-000000000000
-	github.com/InjectiveLabs/sdk-go v1.40.0 //also codec configured directly in protobuf_codec.go
-	github.com/cosmos/cosmos-sdk v0.45.4
+	github.com/CosmWasm/wasmd v0.27.0
+	github.com/InjectiveLabs/sdk-go v1.40.10 //also codec configured directly in protobuf_codec.go
+	github.com/cosmos/cosmos-sdk v0.45.5
 	github.com/cosmos/ibc-go/v3 v3.0.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
