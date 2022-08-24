@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	abci "github.com/tendermint/tendermint/abci/types"
 	"log"
 	"os"
 	"time"
@@ -20,35 +21,48 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 		return block.Block{}, err
 	}
 
+	s := []block.TxStatus{}
+	txRes := []*abci.ResponseDeliverTx{}
 	results, err := client.BlockResults(ctx, &N)
 	if err != nil {
-		return block.Block{}, err
-	}
-
-	s := []block.TxStatus{}
-	for _, tx := range Block.Block.Txs {
-		log.Println("here")
-		res, err := client.Tx(ctx, tx.Hash(), false)
-		log.Println(err)
-		if errors.Is(err, errors.New("Tx")) {
-			return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
-		} else if err != nil {
-			return block.Block{}, err
+		for _, tx := range Block.Block.Txs {
+			res, err := client.Tx(ctx, tx.Hash(), false)
+			if errors.Is(err, errors.New("Tx")) {
+				return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
+			} else if err != nil {
+				return block.Block{}, err
+			}
+			s = append(s, block.TxStatus{
+				ResultCode: res.TxResult.Code,
+				Hash:       tx.Hash(),
+				Height:     res.Height,
+			})
+			txRes = append(txRes, &res.TxResult)
 		}
-		s = append(s, block.TxStatus{
-			ResultCode: res.TxResult.Code,
-			Hash:       tx.Hash(),
-			Height:     res.Height,
-		})
+	} else {
+		if len(results.TxsResults) != len(Block.Block.Txs) {
+			return block.Block{}, fmt.Errorf("wrong number of block txs & block txs result: %w", err)
+		} else {
+			for i := 0; i < len(results.TxsResults); i++ {
+				s = append(s, block.TxStatus{
+					ResultCode: results.TxsResults[i].Code,
+					Hash:       Block.Block.Txs[i].Hash(),
+					Height:     N,
+				})
+				txRes = append(txRes, results.TxsResults[i])
+			}
+		}
+
 	}
 
 	return block.Block{
-		ChainID: Block.Block.ChainID,
-		Height:  Block.Block.Height,
-		T:       Block.Block.Time,
-		Txs:     Block.Block.Txs,
-		Results: s,
+		ChainID:      Block.Block.ChainID,
+		Height:       Block.Block.Height,
+		T:            Block.Block.Time,
+		Txs:          Block.Block.Txs,
+		Results:      s,
 		BlockResults: results,
+		TxsResults:   txRes,
 	}, nil
 }
 
@@ -73,7 +87,7 @@ func BlockRange(ctx context.Context, client *http.HTTP, first, last int64) <-cha
 			select {
 			case blockStream <- block:
 				timer.Reset(duration)
-			case <- timer.C:
+			case <-timer.C:
 				log.Println("Timer finished exit")
 				os.Exit(1)
 			case <-ctx.Done():
