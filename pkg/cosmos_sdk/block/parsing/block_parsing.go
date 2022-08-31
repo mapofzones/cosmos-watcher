@@ -48,14 +48,13 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 
 	log.Println("height:", b.Height, " txs:", len(b.Txs))
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
-	txResults := b.BlockResults.TxsResults
 	for i, tx := range b.Txs {
 		decoded, err := decodeTx(cdc, tx)
 		if err != nil {
 			return block, err
 		}
 
-		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), txResults[i])
+		txMessage, err := txToMessage(decoded, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.TxsResults[i])
 		if err != nil {
 			return block, err
 		}
