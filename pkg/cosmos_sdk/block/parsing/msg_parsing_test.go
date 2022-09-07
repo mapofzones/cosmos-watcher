@@ -1,7 +1,7 @@
 package cosmos
 
 import (
-	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
+	connectiontypes "github.com/cosmos/ibc-go/v2/modules/core/03-connection/types"
 	"github.com/stretchr/testify/assert"
 	types6 "github.com/tendermint/tendermint/abci/types"
 	"testing"
