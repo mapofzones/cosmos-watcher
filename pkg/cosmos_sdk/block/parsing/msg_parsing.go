@@ -3,9 +3,6 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	types6 "github.com/tendermint/tendermint/abci/types"
-	"math/big"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
 	transfer "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
@@ -14,6 +11,9 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v2/modules/core/04-channel/types"
 	solomachine "github.com/cosmos/ibc-go/v2/modules/light-clients/06-solomachine/types"
 	types7 "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	types6 "github.com/tendermint/tendermint/abci/types"
+	"math/big"
+
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
 )
