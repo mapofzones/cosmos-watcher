@@ -7,7 +7,7 @@ import (
 	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	types "github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/cosmos/cosmos-sdk/x/bank/types"
 	transfer "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
 	clienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
 	connectiontypes "github.com/cosmos/ibc-go/v2/modules/core/03-connection/types"

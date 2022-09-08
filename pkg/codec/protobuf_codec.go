@@ -14,11 +14,32 @@ import (
 	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
 )
 
+const (
+	AccountAddressPrefix = "gravity"
+)
+
+var (
+	AccountPubKeyPrefix    = AccountAddressPrefix + "pub"
+	ValidatorAddressPrefix = AccountAddressPrefix + "valoper"
+	ValidatorPubKeyPrefix  = AccountAddressPrefix + "valoperpub"
+	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
+	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
+)
+
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	gravityRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
+}
+
+func SetConfig() {
+	config := cosmostypes.GetConfig()
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+	config.Seal()
 }
 
 func gravityRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
