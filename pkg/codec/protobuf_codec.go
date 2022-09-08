@@ -15,11 +15,29 @@ import (
 	cryptoorgapp "github.com/crypto-org-chain/chain-main/v3/app"
 )
 
+var (
+	AccountAddressPrefix   = "cro"
+	AccountPubKeyPrefix    = "cropub"
+	ValidatorAddressPrefix = "crocncl"
+	ValidatorPubKeyPrefix  = "crocnclpub"
+	ConsNodeAddressPrefix  = "crocnclcons"
+	ConsNodePubKeyPrefix   = "crocnclconspub"
+)
+
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	cryptoorgRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
+}
+
+func SetConfig() {
+	config := cosmostypes.GetConfig()
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+	config.Seal()
 }
 
 func cryptoorgRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
