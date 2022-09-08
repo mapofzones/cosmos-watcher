@@ -6,18 +6,20 @@ import (
 	"time"
 
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	"github.com/tendermint/tendermint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
 	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 // Block is a unit of data being sent over in order to be processed
 type Block struct {
-	ChainID   string `json:"chain_id"`
-	Height    int64  `json:"height"`
-	types.Txs `json:"txs"`
-	Results   []TxStatus `json:"tx_results"`
-	T         time.Time  `json:"block_time"`
+	ChainID      string `json:"chain_id"`
+	Height       int64  `json:"height"`
+	types.Txs    `json:"txs"`
+	Results      []TxStatus `json:"tx_results"`
+	T            time.Time  `json:"block_time"`
 	BlockResults *ctypes.ResultBlockResults
+	TxsResults   []*abci.ResponseDeliverTx `json:"txs_results"`
 }
 
 // JSON returns byte slice which represents block in json from
