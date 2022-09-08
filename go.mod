@@ -14,7 +14,7 @@ replace (
 )
 
 require (
-	github.com/axelarnetwork/axelar-core v0.24.0
+	github.com/axelarnetwork/axelar-core v0.26.0
 	//github.com/axelarnetwork/axelar-core v0.19.1-0.20220615191808-7682a0768161
 	github.com/cosmos/cosmos-sdk v0.45.6
 	github.com/cosmos/ibc-go/v2 v2.2.0
@@ -120,7 +120,7 @@ require (
 	golang.org/x/exp v0.0.0-20220713135740-79cabaa25d75 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
-	golang.org/x/sys v0.0.0-20220818161305-2296e01440c6 // indirect
+	golang.org/x/sys v0.0.0-20220907062415-87db552b00fd // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20220720214146-176da50484ac // indirect
