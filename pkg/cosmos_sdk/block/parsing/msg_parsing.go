@@ -14,6 +14,8 @@ import (
 	types7 "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
+	"math/big"
+	"strconv"
 )
 
 type attributeFiler struct {
@@ -244,23 +246,24 @@ func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []st
 }
 
 func sdkCoinsToStruct(data []sdk.Coin) []struct {
-	Amount uint64
+	Amount *big.Int
 	Coin   string
 } {
 	transformed := make([]struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}, len(data))
 
 	for i, sdkCoin := range data {
-		var amount uint64
-		if sdkCoin.Amount.IsUint64() {
-			amount = sdkCoin.Amount.Uint64()
-		} else {
-			amount = 0
+		n := new(big.Int)
+		base := 10
+		amount, ok := n.SetString(sdkCoin.Amount.String(), base)
+		if !ok {
+			log.Fatalf("Cannot unmarshal %s to bigint: error", sdkCoin.Amount)
 		}
+
 		transformed[i] = struct {
-			Amount uint64
+			Amount *big.Int
 			Coin   string
 		}{
 			Coin:   sdkCoin.Denom,
@@ -271,20 +274,27 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 }
 
 func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
-	Amount uint64
+	Amount *big.Int
 	Coin   string
 } {
 	transformed := make([]struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}, 1)
 
+	n := new(big.Int)
+	base := 10
+	amount, ok := n.SetString(strconv.FormatUint(data.Amount, 10), base)
+	if !ok {
+		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
+	}
+
 	transformed[0] = struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}{
 		Coin:   data.Denom,
-		Amount: data.Amount,
+		Amount: amount,
 	}
 	return transformed
 }
