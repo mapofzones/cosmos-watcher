@@ -21,7 +21,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tendermint v0.34.14
-	github.com/terra-money/core v0.5.18
+	github.com/terra-money/core v0.5.20
 )
 
 require (
