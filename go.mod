@@ -16,7 +16,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tendermint v0.34.14
-	github.com/umee-network/umee v1.0.3
+	github.com/umee-network/umee v1.1.0
 )
 
 require (
