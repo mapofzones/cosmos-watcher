@@ -1,5 +1,7 @@
 package watcher
 
+import "math/big"
+
 // interface compile-time checks
 var (
 	_ Message = Transaction{}
@@ -30,7 +32,7 @@ func (t Transaction) Type() string {
 type Transfer struct {
 	Sender, Recipient string
 	Amount            []struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}
 }
@@ -119,7 +121,7 @@ type IBCTransfer struct {
 	ChannelID         string
 	Sender, Recipient string
 	Amount            []struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}
 	// source must be true if this blockchain initiated the transfer
