@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	types6 "github.com/tendermint/tendermint/abci/types"
+	"math/big"
+	"strconv"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -244,23 +246,24 @@ func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []st
 }
 
 func sdkCoinsToStruct(data []sdk.Coin) []struct {
-	Amount uint64
+	Amount *big.Int
 	Coin   string
 } {
 	transformed := make([]struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}, len(data))
 
 	for i, sdkCoin := range data {
-		var amount uint64
-		if sdkCoin.Amount.IsUint64() {
-			amount = sdkCoin.Amount.Uint64()
-		} else {
-			amount = 0
+		n := new(big.Int)
+		base := 10
+		amount, ok := n.SetString(sdkCoin.Amount.String(), base)
+		if !ok {
+			log.Fatalf("Cannot unmarshal %s to bigint: error", sdkCoin.Amount)
 		}
+
 		transformed[i] = struct {
-			Amount uint64
+			Amount *big.Int
 			Coin   string
 		}{
 			Coin:   sdkCoin.Denom,
@@ -271,20 +274,31 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 }
 
 func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
-	Amount uint64
+	Amount *big.Int
 	Coin   string
 } {
 	transformed := make([]struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}, 1)
 
+	n := new(big.Int)
+	base := 10
+	amountString := "0"
+	if len(strconv.FormatUint(data.Amount, 10)) > 0 {
+		amountString = strconv.FormatUint(data.Amount, 10)
+	}
+	amount, ok := n.SetString(amountString, base)
+	if !ok {
+		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
+	}
+
 	transformed[0] = struct {
-		Amount uint64
+		Amount *big.Int
 		Coin   string
 	}{
 		Coin:   data.Denom,
-		Amount: data.Amount,
+		Amount: amount,
 	}
 	return transformed
 }
