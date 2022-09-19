@@ -11,7 +11,7 @@ replace (
 )
 
 require (
-	github.com/Sifchain/sifnode v0.17.0
+	github.com/Sifchain/sifnode v0.17.1-0.20220917172954-cfbc1a579ed2
 	github.com/cosmos/cosmos-sdk v0.45.6
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
@@ -45,7 +45,7 @@ require (
 	github.com/dgryski/go-farm v0.0.0-20200201041132-a6ae2369ad13 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/dvsekhvalnov/jose2go v0.0.0-20200901110807-248326c1351b // indirect
-	github.com/ethereum/go-ethereum v1.10.11 // indirect
+	github.com/ethereum/go-ethereum v1.10.13 // indirect
 	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-kit/kit v0.12.0 // indirect
