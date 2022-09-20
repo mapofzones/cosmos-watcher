@@ -17,7 +17,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.1
 	github.com/cosmos/ibc-go/v2 v2.0.3
 	github.com/gogo/protobuf v1.3.3
-	github.com/ovrclk/akash v0.16.4
+	github.com/ovrclk/akash v0.16.6
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.1
 	github.com/tendermint/go-amino v0.16.0
