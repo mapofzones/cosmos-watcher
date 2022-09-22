@@ -14,7 +14,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.44.6
 	github.com/cosmos/ibc-go/v2 v2.0.2
 	github.com/gogo/protobuf v1.3.3
-	github.com/persistenceOne/persistenceCore v0.2.3
+	github.com/persistenceOne/persistenceCore v0.2.4
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
 	github.com/tendermint/go-amino v0.16.0
