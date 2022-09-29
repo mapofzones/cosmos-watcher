@@ -1,11 +1,11 @@
 package watcher
 
 import (
+	etherapp "github.com/evmos/ethermint/app"
+	ethercodec "github.com/evmos/ethermint/crypto/codec"
+	ethertypes "github.com/evmos/ethermint/types"
+	evmosapp "github.com/evmos/evmos/v8/app"
 	"github.com/gogo/protobuf/proto"
-	etherapp "github.com/tharsis/ethermint/app"
-	ethercodec "github.com/tharsis/ethermint/crypto/codec"
-	ethertypes "github.com/tharsis/ethermint/types"
-	evmosapp "github.com/tharsis/evmos/v3/app"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
