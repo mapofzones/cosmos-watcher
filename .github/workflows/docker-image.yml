@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ cyber ]
+    branches: [ space-pussy ]
 
 jobs:
 
@@ -40,8 +40,8 @@ jobs:
       # uses: ripplr-io/docr-docker-publish@4b4d57000d6e16fe589b3cea2d491830b9d7da87
       uses: ripplr-io/docr-docker-publish@v1
       with:
-        # Image path in the format registry-name/image-name
-        image_path: ${{ secrets.IMAGE_PATH_CYBER }}
+        # Image path in the format registry-name/image-name space-pussy
+        image_path: ${{ secrets.IMAGE_PATH_SPACEPUSSY }}
         # Number of characters from the commit SHA
         sha_size: 8 # optional, default is 8
     - name: Notify Telegram

@@ -9,9 +9,9 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
-	cyberapp "github.com/cybercongress/go-cyber/app"
+	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	pussyapp "github.com/joinresistance/space-pussy/app"
 )
 
 const (
@@ -43,7 +43,7 @@ func SetConfig() {
 }
 
 func cyberRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cyberapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	pussyapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
