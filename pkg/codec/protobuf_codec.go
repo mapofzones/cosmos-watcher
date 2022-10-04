@@ -9,6 +9,7 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
+	cosmosgovtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 	lumapp "github.com/lum-network/chain/app"
@@ -62,6 +63,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &lumapp2.MsgDeposit{})
+	interfaceRegistry.RegisterImplementations((*cosmosgovtypes.Content)(nil), &lumapp2.WithdrawAndMintProposal{})
 }
 
 func getMessageImplementations() []proto.Message {
