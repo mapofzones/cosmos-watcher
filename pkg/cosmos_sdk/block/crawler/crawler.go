@@ -4,13 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	abci "github.com/okex/exchain/libs/tendermint/abci/types"
 	"log"
 	"os"
 	"time"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
-	"github.com/tendermint/tendermint/rpc/client/http"
+	//"github.com/tendermint/tendermint/rpc/client/http"
+	"github.com/okex/exchain/libs/tendermint/rpc/client/http"
 )
 
 // GetBlock queries tendermint rpc at provided height and formats block

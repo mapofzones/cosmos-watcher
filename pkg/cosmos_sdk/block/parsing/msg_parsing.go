@@ -3,18 +3,34 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	types6 "github.com/tendermint/tendermint/abci/types"
+	//types6 "github.com/tendermint/tendermint/abci/types"
+	types6 "github.com/okex/exchain/libs/tendermint/abci/types"
 	"math/big"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	solomachine "github.com/cosmos/ibc-go/v3/modules/light-clients/06-solomachine/types"
-	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	//sdk "github.com/cosmos/cosmos-sdk/types"
+	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
+
+	//types "github.com/cosmos/cosmos-sdk/x/bank/types"
+	//types "github.com/okex/exchain/libs/cosmos-sdk/x/bank/types"
+
+	//types "github.com/okex/exchain/libs/cosmos-sdk/x/bank/typesadapter"
+	types "github.com/okex/exchain/libs/cosmos-sdk/x/bank"
+	//"github.com/okex/exchain/libs/cosmos-sdk/types"
+	//"github.com/okex/exchain/libs/cosmos-sdk/types"
+
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	//transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	transfer "github.com/okex/exchain/libs/ibc-go/modules/apps/transfer/types"
+	//clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	clienttypes "github.com/okex/exchain/libs/ibc-go/modules/core/02-client/types"
+	//connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
+	connectiontypes "github.com/okex/exchain/libs/ibc-go/modules/core/03-connection/types"
+	//channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	channeltypes "github.com/okex/exchain/libs/ibc-go/modules/core/04-channel/types"
+	//solomachine "github.com/cosmos/ibc-go/v3/modules/light-clients/06-solomachine/types"
+	solomachine "github.com/okex/exchain/libs/ibc-go/modules/light-clients/06-solomachine/types"
+	//types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	types7 "github.com/okex/exchain/libs/ibc-go/modules/light-clients/07-tendermint/types"
 	"log"
 )
 
@@ -28,10 +44,11 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// send creation
 	case *types.MsgSend:
+		//log.Fatal(string((*msg).FromAddress)) // todo: just 4 test
 		return []watcher.Message{
 			watcher.Transfer{
-				Sender:    (*msg).FromAddress,
-				Recipient: (*msg).ToAddress,
+				Sender:    string((*msg).FromAddress),
+				Recipient: string((*msg).ToAddress),
 				Amount:    sdkCoinsToStruct((*msg).Amount),
 			},
 		}, nil
@@ -168,15 +185,22 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// ibc transfer messages
 	case *transfer.MsgTransfer:
-		return []watcher.Message{
+		messages := []watcher.Message{
 			watcher.IBCTransfer{
 				ChannelID: msg.SourceChannel,
 				Sender:    msg.Sender,
 				Recipient: msg.Receiver,
-				Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
-				Source:    true,
+				Amount: sdkCoinsToStruct([]sdk.Coin{{
+					Denom: msg.Token.Denom,
+					Amount: sdk.Dec{
+						Int: msg.Token.Amount.BigInt(),
+					},
+				}}),
+				Source: true,
 			},
-		}, nil
+		}
+		//log.Fatal(messages) // todo: just 4 test
+		return messages, nil
 
 	case *channeltypes.MsgRecvPacket:
 		data := transfer.FungibleTokenPacketData{}

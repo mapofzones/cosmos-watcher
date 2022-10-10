@@ -4,9 +4,12 @@ import (
 	"context"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
-	"github.com/tendermint/tendermint/rpc/client/http"
-	coretypes "github.com/tendermint/tendermint/rpc/core/types"
-	"github.com/tendermint/tendermint/types"
+	//"github.com/tendermint/tendermint/rpc/client/http"
+	"github.com/okex/exchain/libs/tendermint/rpc/client/http"
+	//coretypes "github.com/tendermint/tendermint/rpc/core/types"
+	coretypes "github.com/okex/exchain/libs/tendermint/rpc/core/types"
+	//"github.com/tendermint/tendermint/types"
+	"github.com/okex/exchain/libs/tendermint/types"
 )
 
 // Subscribe dials tendermint rpc and returns two streams, one for committed blocks, one for transactions that occurred

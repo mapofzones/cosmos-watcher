@@ -3,14 +3,18 @@ package cosmos
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/cosmos/cosmos-sdk/codec"
-	types3 "github.com/tendermint/tendermint/abci/types"
+	//"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/okex/exchain/libs/cosmos-sdk/codec"
+	//types3 "github.com/tendermint/tendermint/abci/types"
+	types3 "github.com/okex/exchain/libs/tendermint/abci/types"
 	"log"
 
-	types2 "github.com/cosmos/cosmos-sdk/types"
-	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
+	//types2 "github.com/cosmos/cosmos-sdk/types"
+	types2 "github.com/okex/exchain/libs/cosmos-sdk/types"
+	//sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	sign "github.com/okex/exchain/libs/cosmos-sdk/x/auth/signing"
 )
 
 func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {

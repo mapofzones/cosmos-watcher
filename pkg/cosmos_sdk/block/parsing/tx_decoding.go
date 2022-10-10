@@ -2,15 +2,21 @@ package cosmos
 
 import (
 	"errors"
-	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
+	//sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
+	sign "github.com/okex/exchain/libs/cosmos-sdk/x/auth/signing"
 	"log"
 
-	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/tendermint/tendermint/types"
+	//"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/okex/exchain/libs/cosmos-sdk/codec"
+	//"github.com/tendermint/tendermint/types"
+	"github.com/okex/exchain/libs/tendermint/types"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
-	auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
+	//sdk "github.com/cosmos/cosmos-sdk/types"
+	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
+	//auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
+	auth "github.com/okex/exchain/libs/cosmos-sdk/x/auth/legacy/legacytx"
+	//auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
+	auth2 "github.com/okex/exchain/libs/cosmos-sdk/x/auth/tx"
 )
 
 var DecodeErr = errors.New("could not decode tx")

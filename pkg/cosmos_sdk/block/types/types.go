@@ -6,9 +6,12 @@ import (
 	"time"
 
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	abci "github.com/tendermint/tendermint/abci/types"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
-	"github.com/tendermint/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	abci "github.com/okex/exchain/libs/tendermint/abci/types"
+	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	ctypes "github.com/okex/exchain/libs/tendermint/rpc/core/types"
+	//"github.com/tendermint/tendermint/types"
+	"github.com/okex/exchain/libs/tendermint/types"
 )
 
 // Block is a unit of data being sent over in order to be processed
