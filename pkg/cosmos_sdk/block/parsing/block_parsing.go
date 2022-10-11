@@ -3,21 +3,43 @@ package cosmos
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/cosmos/cosmos-sdk/codec"
-	types3 "github.com/tendermint/tendermint/abci/types"
+	"fmt"
+	types3 "github.com/okex/exchain/libs/tendermint/abci/types"
+	evmtypes "github.com/okex/exchain/x/evm/types"
 	"log"
 
-	types2 "github.com/cosmos/cosmos-sdk/types"
-	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+
+	_ "github.com/okex/exchain/app/codec"
+	ethermint "github.com/okex/exchain/app/types"
+	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
+	_ "github.com/okex/exchain/x/evm/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {
+func txToMessage(tx sdk.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, height int64) (watcher.Message, error) {
+	switch tx.GetType() {
+	case sdk.EvmTxType:
+		msgEthTx, ok := tx.(*evmtypes.MsgEthereumTx)
+		if !ok {
+
+		}
+		chainId, err := ethermint.ParseChainID("exchain-66")
+		if err != nil {
+			return watcher.Transaction{}, fmt.Errorf("txToMessage ParseChainID error: %v", err)
+		}
+		err = msgEthTx.VerifySig(chainId, height)
+		if err != nil {
+			return watcher.Transaction{}, fmt.Errorf("txToMessage VerifySig error: %v", err)
+		}
+	case sdk.StdTxType:
+	default:
+		return watcher.Transaction{}, fmt.Errorf("invalid transaction type: %T", tx)
+	}
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
-		Sender:   signTx.GetSigners()[0].String(),
+		Sender:   tx.GetSigners()[0].String(),
 	}
 
 	for _, msg := range tx.GetMsgs() {
@@ -40,7 +62,7 @@ func txErrCode(b types.Block, hash []byte) uint32 {
 	panic("could not find tx status for given tx hash")
 }
 
-func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, error) {
+func DecodeBlock(b types.Block) (types.ProcessedBlock, error) {
 	block := types.ProcessedBlock{
 		Height_:          b.Height,
 		ChainID_:         b.ChainID,
@@ -52,7 +74,7 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 	log.Println("height:", b.Height, " txs:", len(b.Txs))
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
 	for i, tx := range b.Txs {
-		decoded, err := decodeTx(cdc, tx)
+		decoded, err := decodeTx(tx)
 		if err != nil {
 			return block, err
 		}
@@ -60,12 +82,8 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 		if err != nil {
 			return block, err
 		}
-		signTx, err := toSignTx(decoded)
-		if err != nil {
-			return block, err
-		}
 
-		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.TxsResults[i], signTx)
+		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash(b.Height)), txErrCode(b, tx.Hash(b.Height)), b.TxsResults[i], b.Height)
 		if err != nil {
 			return block, err
 		}

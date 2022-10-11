@@ -5,7 +5,7 @@ import (
 	"log"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
-	"github.com/tendermint/tendermint/rpc/client/http"
+	"github.com/okex/exchain/libs/tendermint/rpc/client/http"
 )
 
 func init() {

@@ -2,15 +2,14 @@ package cosmos
 
 import (
 	"context"
-	codec "github.com/cosmos/cosmos-sdk/codec"
-	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	blockcodec "github.com/mapofzones/cosmos-watcher/pkg/codec"
+	//codec "github.com/cosmos/cosmos-sdk/codec"
+	//codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	crawler "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/crawler"
 	parsing "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/parsing"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	websocket "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/websocket"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	"github.com/tendermint/tendermint/rpc/client/http"
+	"github.com/okex/exchain/libs/tendermint/rpc/client/http"
 	"log"
 )
 
@@ -27,16 +26,13 @@ func BlockStream(ctx context.Context, client *http.HTTP, startHeight int64) <-ch
 // as well as to convert the data in blocks to messages specified by the app
 func decodedStream(ctx context.Context, stream <-chan block.Block) <-chan block.ProcessedBlock {
 	processedStream := make(chan block.ProcessedBlock)
-	interfaceRegistry := codectypes.NewInterfaceRegistry()
-	cdc := codec.NewProtoCodec(interfaceRegistry)
-	blockcodec.RegisterInterfacesAndImpls(interfaceRegistry)
 
 	go func() {
 		defer close(processedStream)
 		for {
 			select {
 			case block := <-stream:
-				decoded, err := parsing.DecodeBlock(cdc, block)
+				decoded, err := parsing.DecodeBlock(block)
 				if err != nil {
 					log.Fatal(err)
 					return
@@ -172,7 +168,7 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 
 	go func() {
 		defer close(blockStream)
-		status, err := client.Status(ctx)
+		status, err := client.Status()
 		if err != nil {
 			log.Println(err)
 			return
@@ -191,7 +187,7 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 			}
 
 			// update current latest blockchain height to know if we need another iteration of this loop
-			status, err := client.Status(ctx)
+			status, err := client.Status()
 			if err != nil {
 				log.Println(err)
 				return

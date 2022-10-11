@@ -3,18 +3,19 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	types6 "github.com/tendermint/tendermint/abci/types"
+	types6 "github.com/okex/exchain/libs/tendermint/abci/types"
 	"math/big"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	solomachine "github.com/cosmos/ibc-go/v3/modules/light-clients/06-solomachine/types"
-	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	//types "github.com/cosmos/cosmos-sdk/x/bank/types"
+	connectiontypes "github.com/okex/exchain/libs/ibc-go/modules/core/03-connection/types"
+	channeltypes "github.com/okex/exchain/libs/ibc-go/modules/core/04-channel/types"
+	//solomachine "github.com/okex/exchain/libs/ibc-go/light-clients/06-solomachine/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
+	"github.com/okex/exchain/libs/cosmos-sdk/x/bank"
+	transfer "github.com/okex/exchain/libs/ibc-go/modules/apps/transfer/types"
+	clienttypes "github.com/okex/exchain/libs/ibc-go/modules/core/02-client/types"
+	types7 "github.com/okex/exchain/libs/ibc-go/modules/light-clients/07-tendermint/types"
 	"log"
 )
 
@@ -27,7 +28,8 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 	switch msg := msg.(type) {
 
 	// send creation
-	case *types.MsgSend:
+
+	case *bank.AdapterMsgSend:
 		return []watcher.Message{
 			watcher.Transfer{
 				Sender:    (*msg).FromAddress,
@@ -43,9 +45,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		switch client := value.(type) {
 		case *types7.ClientState:
 			chainId = client.ChainId
-		case *solomachine.ClientState:
-			pubKey, _ := client.ConsensusState.GetPubKey()
-			chainId = pubKey.String()
+			//case *solomachine.ClientState:
+			//	pubKey, _ := client.ConsensusState.GetPubKey()
+			//	chainId = pubKey.String()
 		}
 		clientId := ""
 		clientId = ParseClientIDFromResults(txResult, clientId)
@@ -173,7 +175,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 				ChannelID: msg.SourceChannel,
 				Sender:    msg.Sender,
 				Recipient: msg.Receiver,
-				Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
+				Amount:    sdkCoinsToStruct([]sdk.CoinAdapter{msg.Token}),
 				Source:    true,
 			},
 		}, nil
@@ -251,7 +253,7 @@ func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []st
 	return attributesValues
 }
 
-func sdkCoinsToStruct(data []sdk.Coin) []struct {
+func sdkCoinsToStruct(data []sdk.CoinAdapter) []struct {
 	Amount *big.Int
 	Coin   string
 } {

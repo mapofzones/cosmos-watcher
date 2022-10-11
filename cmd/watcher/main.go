@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -11,15 +10,16 @@ import (
 	watcher "github.com/mapofzones/cosmos-watcher/pkg"
 	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block"
 	"github.com/mapofzones/cosmos-watcher/pkg/rabbitmq"
-	"github.com/tendermint/tendermint/rpc/client/http"
+	"github.com/okex/exchain/libs/tendermint/rpc/client/http"
 )
 
 func main() {
-	startWithBlockchainHeight := os.Getenv("height")
-	fullNodeJsonRpcAddress := os.Getenv("rpc")
-	messageBrokerConnectionString := os.Getenv("rabbitmq")
-	rabbitmqQueueName := os.Getenv("queue")
-	blockchainNetworkId := os.Getenv("chain_id")
+	startWithBlockchainHeight := "14572137" //os.Getenv("height")
+	//fullNodeJsonRpcAddress := "http://35.73.150.207:26657"                //os.Getenv("rpc")
+	fullNodeJsonRpcAddress := "https://exchaintmrpc.okex.org"             //os.Getenv("rpc")
+	messageBrokerConnectionString := "amqp://guest:guest@localhost:5672/" //os.Getenv("rabbitmq")
+	rabbitmqQueueName := "watcher"                                        //os.Getenv("queue")
+	blockchainNetworkId := "exchain-66"                                   //os.Getenv("chain_id")
 
 	// get height from which we should process blocks
 	height, err := strconv.ParseInt(startWithBlockchainHeight, 10, 64)
@@ -28,6 +28,7 @@ func main() {
 	}
 
 	// initiate tendermint client for fetching blocks
+
 	client, err := http.New(fullNodeJsonRpcAddress, "/websocket")
 	if err != nil {
 		log.Fatal(err)
@@ -41,7 +42,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	// validate fullnode address
-	info, err := client.Status(ctx)
+	info, err := client.Status()
 	if err != nil {
 		log.Fatal(err)
 	} else if !strings.EqualFold(info.NodeInfo.Network, blockchainNetworkId) {
