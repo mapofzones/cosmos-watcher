@@ -7,7 +7,7 @@ import (
 	"github.com/okex/exchain/libs/tendermint/types"
 
 	"github.com/okex/exchain/app"
-	oeccodec "github.com/okex/exchain/app/codec"
+	okexchaincodec "github.com/okex/exchain/app/codec"
 	//auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
 	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
 	//auth2 "github.com/okex/exchain/libs/cosmos-sdk/x/auth"
@@ -16,10 +16,10 @@ import (
 )
 
 var DecodeErr = errors.New("could not decode tx")
-var cdc = oeccodec.MakeCodec(app.ModuleBasics)
+var codecProxy, interfaceReg = okexchaincodec.MakeCodecSuit(app.ModuleBasics)
 
 func decodeTx(tx types.Tx) (sdk.Tx, error) {
-	txInterface, err := evmtypes.TxDecoder(cdc)(tx, evmtypes.IGNORE_HEIGHT_CHECKING)
+	txInterface, err := evmtypes.TxDecoder(codecProxy)(tx, evmtypes.IGNORE_HEIGHT_CHECKING)
 	if err != nil {
 		log.Println(err)
 		return &auth.StdTx{}, DecodeErr
