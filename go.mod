@@ -14,10 +14,10 @@ replace (
 require (
 	github.com/cosmos/cosmos-sdk v0.45.5
 	github.com/cosmos/ibc-go/v3 v3.1.0
-	github.com/functionx/fx-core/v2 v2.1.2
+	github.com/functionx/fx-core/v2 v2.4.1-0.20221016020639-cadd77ad5da0
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
-	github.com/stretchr/testify v1.7.5
+	github.com/stretchr/testify v1.8.0
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tendermint v0.34.20-0.20220517115723-e6f071164839
 )
