@@ -14,6 +14,7 @@ replace (
 require (
 	github.com/cosmos/cosmos-sdk v0.45.5
 	github.com/cosmos/ibc-go/v3 v3.1.0
+	github.com/evmos/ethermint v0.16.0
 	github.com/functionx/fx-core/v2 v2.4.1-0.20221016020639-cadd77ad5da0
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
@@ -52,7 +53,6 @@ require (
 	github.com/dvsekhvalnov/jose2go v0.0.0-20200901110807-248326c1351b // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/ethereum/go-ethereum v1.10.16 // indirect
-	github.com/evmos/ethermint v0.16.0 // indirect
 	github.com/fbsobreira/gotron-sdk v0.0.0-20211012084317-763989224068 // indirect
 	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect

@@ -1,6 +1,8 @@
 package watcher
 
 import (
+	ethercodec "github.com/evmos/ethermint/crypto/codec"
+	ethertypes "github.com/evmos/ethermint/types"
 	"github.com/gogo/protobuf/proto"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -23,6 +25,8 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func functionxRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	functionxapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	ethercodec.RegisterInterfaces(interfaceRegistry)
+	ethertypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
