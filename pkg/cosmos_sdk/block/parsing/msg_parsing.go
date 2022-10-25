@@ -44,7 +44,6 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// send creation
 	case *types.MsgSend:
-		//log.Fatal(string((*msg).FromAddress)) // todo: just 4 test
 		return []watcher.Message{
 			watcher.Transfer{
 				Sender:    string((*msg).FromAddress),
@@ -199,7 +198,6 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 				Source: true,
 			},
 		}
-		//log.Fatal(messages) // todo: just 4 test
 		return messages, nil
 
 	case *channeltypes.MsgRecvPacket:

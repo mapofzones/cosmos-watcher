@@ -93,7 +93,7 @@ func (w WithTxs) Full() bool {
 	}
 
 	for _, tx := range w.B.Txs {
-		if !present(tx.Hash(), w.Txs) {
+		if !present(tx.Hash(w.B.Height), w.Txs) {
 			return false
 		}
 	}

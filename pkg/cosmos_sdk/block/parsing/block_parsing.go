@@ -3,26 +3,43 @@ package cosmos
 import (
 	"bytes"
 	"encoding/hex"
-	//"github.com/cosmos/cosmos-sdk/codec"
+	"fmt"
+
 	"github.com/okex/exchain/libs/cosmos-sdk/codec"
-	//types3 "github.com/tendermint/tendermint/abci/types"
 	types3 "github.com/okex/exchain/libs/tendermint/abci/types"
 	"log"
 
-	//types2 "github.com/cosmos/cosmos-sdk/types"
-	types2 "github.com/okex/exchain/libs/cosmos-sdk/types"
-	//sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	types "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	sign "github.com/okex/exchain/libs/cosmos-sdk/x/auth/signing"
+	types2 "github.com/okex/exchain/libs/cosmos-sdk/types"
+
+	ethermint "github.com/okex/exchain/app/types"
+	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
+	evmtypes "github.com/okex/exchain/x/evm/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {
-	log.Println(signTx.GetSigners()[0].String())
+func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, height int64) (watcher.Message, error) {
+	switch tx.GetType() {
+	case sdk.EvmTxType:
+		msgEthTx, ok := tx.(*evmtypes.MsgEthereumTx)
+		if !ok {
+		}
+		chainId, err := ethermint.ParseChainID("exchain-66")
+		if err != nil {
+			return watcher.Transaction{}, fmt.Errorf("txToMessage ParseChainID error: %v", err)
+		}
+		err = msgEthTx.VerifySig(chainId, height)
+		if err != nil {
+			return watcher.Transaction{}, fmt.Errorf("txToMessage VerifySig error: %v", err)
+		}
+	case sdk.StdTxType:
+	default:
+		return watcher.Transaction{}, fmt.Errorf("invalid transaction type: %T", tx)
+	}
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
-		Sender:   signTx.GetSigners()[0].String(),
+		Sender:   tx.GetSigners()[0].String(),
 	}
 
 	for _, msg := range tx.GetMsgs() {
@@ -65,12 +82,8 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 		if err != nil {
 			return block, err
 		}
-		signTx, err := toSignTx(decoded)
-		if err != nil {
-			return block, err
-		}
 
-		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.TxsResults[i], signTx)
+		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash(b.Height)), txErrCode(b, tx.Hash(b.Height)), b.TxsResults[i], b.Height)
 		if err != nil {
 			return block, err
 		}

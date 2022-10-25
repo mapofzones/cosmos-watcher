@@ -4,31 +4,30 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	//abci "github.com/tendermint/tendermint/abci/types"
+
 	abci "github.com/okex/exchain/libs/tendermint/abci/types"
 	"log"
 	"os"
 	"time"
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
-	//"github.com/tendermint/tendermint/rpc/client/http"
 	"github.com/okex/exchain/libs/tendermint/rpc/client/http"
 )
 
 // GetBlock queries tendermint rpc at provided height and formats block
 // it does that by fetching the block itself and then querying each tx in the block
 func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, error) {
-	Block, err := client.Block(ctx, &N)
+	Block, err := client.Block(&N)
 	if err != nil {
 		return block.Block{}, err
 	}
 
 	s := []block.TxStatus{}
 	txRes := []*abci.ResponseDeliverTx{}
-	results, err := client.BlockResults(ctx, &N)
+	results, err := client.BlockResults(&N)
 	if err != nil {
 		for _, tx := range Block.Block.Txs {
-			res, err := client.Tx(ctx, tx.Hash(), false)
+			res, err := client.Tx(tx.Hash(N), false)
 			if errors.Is(err, errors.New("Tx")) {
 				return block.Block{}, fmt.Errorf("Transaction does not exist: %w", err)
 			} else if err != nil {
@@ -36,7 +35,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 			}
 			s = append(s, block.TxStatus{
 				ResultCode: res.TxResult.Code,
-				Hash:       tx.Hash(),
+				Hash:       tx.Hash(N),
 				Height:     res.Height,
 			})
 			txRes = append(txRes, &res.TxResult)
@@ -48,7 +47,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 			for i := 0; i < len(results.TxsResults); i++ {
 				s = append(s, block.TxStatus{
 					ResultCode: results.TxsResults[i].Code,
-					Hash:       Block.Block.Txs[i].Hash(),
+					Hash:       Block.Block.Txs[i].Hash(N),
 					Height:     N,
 				})
 				txRes = append(txRes, results.TxsResults[i])

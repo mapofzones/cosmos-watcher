@@ -175,7 +175,7 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 
 	go func() {
 		defer close(blockStream)
-		status, err := client.Status(ctx)
+		status, err := client.Status()
 		if err != nil {
 			log.Println(err)
 			return
@@ -194,7 +194,7 @@ func crawlerToWebsocket(ctx context.Context, client *http.HTTP, startHeight int6
 			}
 
 			// update current latest blockchain height to know if we need another iteration of this loop
-			status, err := client.Status(ctx)
+			status, err := client.Status()
 			if err != nil {
 				log.Println(err)
 				return
