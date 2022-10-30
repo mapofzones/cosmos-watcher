@@ -12,6 +12,10 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 	kavaapp "github.com/kava-labs/kava/app"
+
+	ethermintapp "github.com/tharsis/ethermint/app"
+	ethermintcodec "github.com/tharsis/ethermint/crypto/codec"
+	etherminttypes "github.com/tharsis/ethermint/types"
 )
 
 const (
@@ -44,6 +48,9 @@ func SetConfig() {
 
 func kavaRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	kavaapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	ethermintapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	ethermintcodec.RegisterInterfaces(interfaceRegistry)
+	etherminttypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
