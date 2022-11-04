@@ -14,7 +14,6 @@ import (
 )
 
 func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {
-	log.Println(signTx.GetSigners()[0].String())
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
