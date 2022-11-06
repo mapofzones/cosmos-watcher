@@ -362,7 +362,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/CosmosContracts/juno"
+      - dependency-name: "github.com/CosmosContracts/juno/v11"
 
   - package-ecosystem: "gomod"
     directory: "/"
