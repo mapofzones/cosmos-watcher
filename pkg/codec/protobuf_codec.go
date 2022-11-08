@@ -2,6 +2,7 @@ package watcher
 
 import (
 	"github.com/gogo/protobuf/proto"
+	jackalapp "github.com/jackalLabs/canine-chain/app"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -9,20 +10,40 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	cosmosapp "github.com/cosmos/gaia/v7/app"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 )
 
+const (
+	AccountAddressPrefix = "jkl"
+)
+
+var (
+	AccountPubKeyPrefix    = AccountAddressPrefix + "pub"
+	ValidatorAddressPrefix = AccountAddressPrefix + "valoper"
+	ValidatorPubKeyPrefix  = AccountAddressPrefix + "valoperpub"
+	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
+	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
+)
+
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	cosmosRegisterInterfaces(interfaceRegistry)
+	jackalRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func jackalRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	jackalapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+}
+
+func SetConfig() {
+	config := cosmostypes.GetConfig()
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+	config.Seal()
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
