@@ -58,6 +58,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &jackaltypes.MsgInitProvider{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &jackaltypes.MsgPostContract{})
 }
 
 func getMessageImplementations() []proto.Message {
