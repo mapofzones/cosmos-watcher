@@ -12,6 +12,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	jackaltypes "github.com/jackalLabs/canine-chain/x/storage/types"
 )
 
 const (
@@ -56,6 +57,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &jackaltypes.MsgInitProvider{})
 }
 
 func getMessageImplementations() []proto.Message {

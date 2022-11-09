@@ -21,7 +21,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.10
 	github.com/cosmos/ibc-go/v3 v3.3.1
 	github.com/gogo/protobuf v1.3.3
-	github.com/jackalLabs/canine-chain v1.1.2
+	github.com/jackalLabs/canine-chain v1.1.3-0.20221109040146-5016971193af
 	github.com/streadway/amqp v1.0.0
 	github.com/tendermint/go-amino v0.16.0
 )
