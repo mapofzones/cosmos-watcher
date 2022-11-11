@@ -87,9 +87,10 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		}
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenTry}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
-		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
+		attrFiler1 := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
+
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys,
-			attrFiler, attributeFiler{}, attributeFiler{}, attributeFiler{})
+			attrFiler1, attributeFiler{}, attributeFiler{}, attributeFiler{})
 		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("connectionID not found")
 		}
@@ -233,7 +234,7 @@ func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []st
 			for _, expected := range expectedEvents {
 				if event.Type == expected {
 					isCorrect := false
-					if attrFiler1 == (attributeFiler{}) {
+					if attrFiler1 == (attributeFiler{}) && attrFiler2 == (attributeFiler{}) && attrFiler3 == (attributeFiler{}) && attrFiler4 == (attributeFiler{}) {
 						isCorrect = true
 					} else {
 						isCorrect1 := false
@@ -241,24 +242,24 @@ func ParseIDsFromResults(txResult *types6.ResponseDeliverTx, expectedEvents []st
 						isCorrect3 := false
 						isCorrect4 := false
 						for _, attr := range event.Attributes {
-							if attrFiler1 != (attributeFiler{}) &&
-								attrFiler1.key == string(attr.Key) &&
-								attrFiler1.value == string(attr.Value) {
+							if attrFiler1 == (attributeFiler{}) ||
+								(attrFiler1.key == string(attr.Key) &&
+									attrFiler1.value == string(attr.Value)) {
 								isCorrect1 = true
 							}
-							if attrFiler2 != (attributeFiler{}) &&
-								attrFiler2.key == string(attr.Key) &&
-								attrFiler2.value == string(attr.Value) {
+							if attrFiler2 == (attributeFiler{}) ||
+								(attrFiler2.key == string(attr.Key) &&
+									attrFiler2.value == string(attr.Value)) {
 								isCorrect2 = true
 							}
-							if attrFiler3 != (attributeFiler{}) &&
-								attrFiler3.key == string(attr.Key) &&
-								attrFiler3.value == string(attr.Value) {
+							if attrFiler3 == (attributeFiler{}) ||
+								(attrFiler3.key == string(attr.Key) &&
+									attrFiler3.value == string(attr.Value)) {
 								isCorrect3 = true
 							}
-							if attrFiler4 != (attributeFiler{}) &&
-								attrFiler4.key == string(attr.Key) &&
-								attrFiler4.value == string(attr.Value) {
+							if attrFiler4 == (attributeFiler{}) ||
+								(attrFiler4.key == string(attr.Key) &&
+									attrFiler4.value == string(attr.Value)) {
 								isCorrect4 = true
 							}
 							if isCorrect1 == true && isCorrect2 == true && isCorrect3 == true && isCorrect4 == true {
