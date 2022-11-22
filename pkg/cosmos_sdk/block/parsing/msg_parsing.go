@@ -7,15 +7,14 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
-	types7 "github.com/cosmos/ibc-go/modules/light-clients/07-tendermint/types"
+	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
 	"math/big"
-	"strconv"
 )
 
 type attributeFiler struct {
@@ -284,9 +283,9 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 
 	n := new(big.Int)
 	base := 10
-	amount, ok := n.SetString(strconv.FormatUint(data.Amount, 10), base)
+	amount, ok := n.SetString(data.Amount, base)
 	if !ok {
-		log.Fatalf("Cannot unmarshal %s to bigint: error", strconv.FormatUint(data.Amount, 10))
+		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
 	}
 
 	transformed[0] = struct {
