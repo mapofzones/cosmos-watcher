@@ -124,7 +124,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/certikfoundation/shentu/v2"
+      - dependency-name: "github.com/shentufoundation/shentu/v2"
 
   - package-ecosystem: "gomod"
     directory: "/"
