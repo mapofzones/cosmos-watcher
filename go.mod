@@ -13,7 +13,7 @@ require (
 	github.com/cosmos/ibc-go/v3 v3.0.0
 	github.com/gogo/protobuf v1.3.3
 	//github.com/konstellation/konstellation v0.5.1-0.20220914060807-2acacff275ae
-	github.com/konstellation/konstellation v0.6.0
+	github.com/konstellation/konstellation v0.6.1
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.0
 	github.com/tendermint/go-amino v0.16.0
