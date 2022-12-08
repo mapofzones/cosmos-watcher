@@ -11,7 +11,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
-	osmosisapp "github.com/osmosis-labs/osmosis/v9/app"
+	osmosisapp "github.com/osmosis-labs/osmosis/v13/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
