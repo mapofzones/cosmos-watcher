@@ -662,8 +662,8 @@ github.com/klauspost/compress v1.15.9/go.mod h1:PhcZ0MbTNciWF3rruxRgKxI5NkcHHrHU
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/konsorten/go-windows-terminal-sequences v1.0.2/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/konsorten/go-windows-terminal-sequences v1.0.3/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
-github.com/konstellation/konstellation v0.6.0 h1:+11wQ2NMk4mZG/s3ixiCndFo6h8pwrhSD4v0dUm2GO8=
-github.com/konstellation/konstellation v0.6.0/go.mod h1:bheHNOPxmEoQihtL4kYtSiFdm8XRqwzKIaoHDB5e0k4=
+github.com/konstellation/konstellation v0.6.2 h1:XSilbtBh10CgEaY8faldD5feFo6qr3SbJ/+sHwQgE7E=
+github.com/konstellation/konstellation v0.6.2/go.mod h1:bheHNOPxmEoQihtL4kYtSiFdm8XRqwzKIaoHDB5e0k4=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
