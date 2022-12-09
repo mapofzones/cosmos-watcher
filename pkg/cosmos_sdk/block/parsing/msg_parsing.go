@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	types6 "github.com/tendermint/tendermint/abci/types"
+	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -11,10 +12,10 @@ import (
 	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	solomachine "github.com/cosmos/ibc-go/v3/modules/light-clients/06-solomachine/types"
 	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
-	"math/big"
 )
 
 type attributeFiler struct {
@@ -23,7 +24,6 @@ type attributeFiler struct {
 }
 
 func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) ([]watcher.Message, error) {
-	log.Println("parseMsg")
 	switch msg := msg.(type) {
 
 	// send creation
@@ -39,7 +39,14 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 	// client creation
 	case *clienttypes.MsgCreateClient:
 		value := msg.ClientState.GetCachedValue()
-		chainId := value.(*types7.ClientState).ChainId
+		var chainId string
+		switch client := value.(type) {
+		case *types7.ClientState:
+			chainId = client.ChainId
+		case *solomachine.ClientState:
+			pubKey, _ := client.ConsensusState.GetPubKey()
+			chainId = pubKey.String()
+		}
 		clientId := ""
 		clientId = ParseClientIDFromResults(txResult, clientId)
 		messages := []watcher.Message{
@@ -318,7 +325,11 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 
 	n := new(big.Int)
 	base := 10
-	amount, ok := n.SetString(data.Amount, base)
+	amountString := "0"
+	if len(data.Amount) > 0 {
+		amountString = data.Amount
+	}
+	amount, ok := n.SetString(amountString, base)
 	if !ok {
 		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
 	}
