@@ -9,6 +9,7 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/x/authz"
 	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
 	irisapp "github.com/irisnet/irishub/simapp"
@@ -132,6 +133,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &authz.MsgGrant{})
 }
 
 func getMessageImplementations() []proto.Message {
