@@ -1,4 +1,4 @@
-FROM golang:latest as build 
+FROM bitnami/golang:1.19-debian-11 as build
 
 WORKDIR /app
 
