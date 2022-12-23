@@ -134,6 +134,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &authz.MsgGrant{})
+	interfaceRegistry.RegisterImplementations((*authz.Authorization)(nil), &authz.GenericAuthorization{})
 }
 
 func getMessageImplementations() []proto.Message {
