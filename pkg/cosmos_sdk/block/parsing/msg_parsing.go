@@ -285,9 +285,18 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 	for i, sdkCoin := range data {
 		n := new(big.Int)
 		base := 10
-		amount, ok := n.SetString(sdkCoin.Amount.String(), base)
+
+		var amount *big.Int
+		var ok bool
+
+		if sdkCoin.Denom == "wei" && sdkCoin.Amount.LT(sdk.OneDec()) {
+			amount, ok = n.SetString(sdkCoin.Amount.TruncateWithPrec(18).String(), base)
+		} else {
+			amount, ok = n.SetString(sdkCoin.Amount.String(), base)
+		}
+
 		if !ok {
-			log.Fatalf("Cannot unmarshal %s to bigint: error", sdkCoin.Amount)
+			log.Fatalf("sdkCoinsToStruct: Cannot unmarshal %s to bigint: error", sdkCoin.Amount)
 		}
 
 		transformed[i] = struct {
@@ -318,7 +327,7 @@ func packetToStruct(data transfer.FungibleTokenPacketData) []struct {
 	}
 	amount, ok := n.SetString(amountString, base)
 	if !ok {
-		log.Fatalf("Cannot unmarshal %s to bigint: error", data.Amount)
+		log.Fatalf("packetToStruct: Cannot unmarshal %s to bigint: error", data.Amount)
 	}
 
 	transformed[0] = struct {
