@@ -13,7 +13,7 @@ replace (
 
 require (
 	github.com/gogo/protobuf v1.3.3
-	github.com/okex/exchain v1.6.7-0.20221213030915-320ac17d30dd
+	github.com/okex/exchain v1.6.9-0.20230112033958-30958b27a26f
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.0
 	github.com/tendermint/go-amino v0.16.0
