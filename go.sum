@@ -65,8 +65,8 @@ github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3
 github.com/DataDog/zstd v1.4.1/go.mod h1:1jcaCB/ufaK+sKp1NBhlGmpz41jOoPQ35bpF36t7BBo=
 github.com/DataDog/zstd v1.4.8 h1:Rpmta4xZ/MgZnriKNd24iZMhGpP5dvUcs/uqfBapKZY=
 github.com/DataDog/zstd v1.4.8/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
-github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20221201135728-4d14355aa740 h1:64NpkK1Cs9NuX/EIF0S4aj4PtXwZUskYBQu9YciDcY8=
-github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20221201135728-4d14355aa740/go.mod h1:FJhOgjvw/CaxmkWlVthUZhvAccG7QakAx9Gsf3aflfk=
+github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20230106205248-effa75390343 h1:x1I994jx5RBNkP1uVfeRHATSDq4CsnpFjprAPcZPefY=
+github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20230106205248-effa75390343/go.mod h1:FJhOgjvw/CaxmkWlVthUZhvAccG7QakAx9Gsf3aflfk=
 github.com/OneOfOne/xxhash v1.2.2 h1:KMrpdQIwFcEqXDklaen+P1axHaj9BSKzvpUUfnHldSE=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6/go.mod h1:3eOhrUMpNV+6aFIbp5/iudMxNCF27Vw2OZgy4xEx0Fg=

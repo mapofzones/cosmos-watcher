@@ -10,7 +10,7 @@ replace (
 )
 
 require (
-	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20221201135728-4d14355aa740
+	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20230106205248-effa75390343
 	github.com/cosmos/cosmos-sdk v0.45.9
 	github.com/cosmos/ibc-go/v3 v3.2.1
 	github.com/evmos/ethermint v0.17.0
