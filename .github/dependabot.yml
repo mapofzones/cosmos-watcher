@@ -506,7 +506,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/persistenceOne/persistenceCore/v4"
+      - dependency-name: "github.com/persistenceOne/persistenceCore/v6"
 
   - package-ecosystem: "gomod"
     directory: "/"

@@ -12,8 +12,7 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
 
-	//persistenceapp "github.com/persistenceOne/persistenceCore/v4/application"
-	persistenceapp "github.com/persistenceOne/persistenceCore/v4/app"
+	persistenceapp "github.com/persistenceOne/persistenceCore/v6/app"
 )
 
 const (
