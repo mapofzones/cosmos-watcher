@@ -2,27 +2,19 @@ module github.com/mapofzones/cosmos-watcher
 
 go 1.18
 
-//replace (
-//	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.2-alpha.regen.4
-//	google.golang.org/grpc => google.golang.org/grpc v1.33.2
-//)
 replace (
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.2-alpha.regen.4
 )
 
 require (
-	//github.com/cosmos/cosmos-sdk v0.45.7
 	github.com/cosmos/cosmos-sdk v0.46.7
-	//github.com/cosmos/ibc-go/v3 v3.2.0
 	github.com/cosmos/ibc-go/v5 v5.0.1
 	github.com/gogo/protobuf v1.3.3
-	//github.com/lum-network/chain v1.2.1
 	github.com/lum-network/chain v1.3.0
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.1
 	github.com/tendermint/go-amino v0.16.0
-	//github.com/tendermint/tendermint v0.34.20
 	github.com/tendermint/tendermint v0.34.24
 )
 
