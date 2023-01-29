@@ -11,7 +11,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
-	umeeapp "github.com/umee-network/umee/v3/app"
+	umeeapp "github.com/umee-network/umee/v4/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
