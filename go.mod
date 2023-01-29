@@ -11,10 +11,10 @@ replace (
 )
 
 require (
-	github.com/cosmos/cosmos-sdk v0.45.11
-	github.com/cosmos/ibc-go/v3 v3.3.1
+	github.com/cosmos/cosmos-sdk v0.45.9
+	github.com/cosmos/ibc-go/v3 v3.3.0
 	github.com/gogo/protobuf v1.3.3
-	github.com/ixofoundation/ixo-blockchain v0.19.2
+	github.com/ixofoundation/ixo-blockchain v0.19.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.0
 	github.com/tendermint/go-amino v0.16.0
