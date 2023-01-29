@@ -11,8 +11,8 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
 	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	auction "github.com/InjectiveLabs/sdk-go/chain/auction/types"
@@ -32,14 +32,13 @@ import (
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
 	feegranttypes "github.com/cosmos/cosmos-sdk/x/feegrant"
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	paramproposaltypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-	ibcapplicationtypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	ibccoretypes "github.com/cosmos/ibc-go/v3/modules/core/types"
+	icatypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/types"
+	ibcapplicationtypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
+	ibccoretypes "github.com/cosmos/ibc-go/v4/modules/core/types"
 )
 
 const (
@@ -97,7 +96,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	crisistypes.RegisterInterfaces(interfaceRegistry)
 	distributiontypes.RegisterInterfaces(interfaceRegistry)
 	evidencetypes.RegisterInterfaces(interfaceRegistry)
-	govtypes.RegisterInterfaces(interfaceRegistry)
+	//govtypes.RegisterInterfaces(interfaceRegistry)
 	paramproposaltypes.RegisterInterfaces(interfaceRegistry)
 	ibcapplicationtypes.RegisterInterfaces(interfaceRegistry)
 	ibccoretypes.RegisterInterfaces(interfaceRegistry)
