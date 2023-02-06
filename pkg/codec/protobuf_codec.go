@@ -11,18 +11,39 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
-	osmosisapp "github.com/osmosis-labs/osmosis/v13/app"
+	terra "github.com/terra-money/core/v2/app"
+)
+
+const (
+	AccountAddressPrefix = "terra"
+)
+
+var (
+	AccountPubKeyPrefix    = AccountAddressPrefix + "pub"
+	ValidatorAddressPrefix = AccountAddressPrefix + "valoper"
+	ValidatorPubKeyPrefix  = AccountAddressPrefix + "valoperpub"
+	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
+	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	osmosisRegisterInterfaces(interfaceRegistry)
+	terraRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func osmosisRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	osmosisapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func terraRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	terra.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+}
+
+func SetConfig() {
+	config := cosmostypes.GetConfig()
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+	config.Seal()
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
