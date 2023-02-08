@@ -769,8 +769,8 @@ github.com/creack/pty v1.1.7/go.mod h1:lj5s0c3V2DBrqTV7llrYr5NG6My20zk30Fl46Y7Do
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/creack/pty v1.1.11/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/cristalhq/acmd v0.8.1/go.mod h1:LG5oa43pE/BbxtfMoImHCQN++0Su7dzipdgBjMCBVDQ=
-github.com/crypto-org-chain/cronos v1.0.2 h1:lIDD0IfrKkYyNl3cLOeIEmeYH2yqtOrpJTdO9Ok1Rnc=
-github.com/crypto-org-chain/cronos v1.0.2/go.mod h1:E9N+xGYm7PTnBoJ74F+O0Ej1nGzrzmEl8fhUsqnZCP4=
+github.com/crypto-org-chain/cronos v1.0.3 h1:LvBAq28VQlTxRCKFhLC1DmMnLC4H6t7yqa3qipQmUzE=
+github.com/crypto-org-chain/cronos v1.0.3/go.mod h1:SNjMtEJPk6P+oODAqVgMTKvgzwo7TRl5jxRC9YBGLzQ=
 github.com/crypto-org-chain/ethermint v0.20.1-cronos h1:tZpuLhdW40Ue/Gb5yz3wGn2jRIZrwO82bJQWqL2kRP4=
 github.com/crypto-org-chain/ethermint v0.20.1-cronos/go.mod h1:slhuvGjkZaRJCapuHaKVIraxRgI7C70yEznP2YokfkA=
 github.com/crypto-org-chain/go-ethereum v1.10.19-deepcopy-jumptable h1:VQLW0R8t9DcC/HvQZO1i0mIWjJfAezhI8lLUCholP0M=

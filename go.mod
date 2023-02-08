@@ -17,7 +17,7 @@ replace (
 require (
 	github.com/cosmos/cosmos-sdk v0.46.7
 	github.com/cosmos/ibc-go/v5 v5.2.0
-	github.com/crypto-org-chain/cronos v1.0.2
+	github.com/crypto-org-chain/cronos v1.0.3
 	github.com/evmos/ethermint v0.6.1-0.20221101220534-a8ea4eceb6d9
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
