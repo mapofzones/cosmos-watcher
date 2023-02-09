@@ -1,7 +1,7 @@
 package cosmos
 
 import (
-	connectiontypes "github.com/cosmos/ibc-go/v5/modules/core/03-connection/types"
+	connectiontypes "github.com/cosmos/ibc-go/v6/modules/core/03-connection/types"
 	"github.com/stretchr/testify/assert"
 	types6 "github.com/tendermint/tendermint/abci/types"
 	"testing"
@@ -76,7 +76,8 @@ func TestParseIDsFromResults(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			actual := ParseIDsFromResults(tt.args.txResult, tt.args.expectedEvents, tt.args.attributeKeys, attributeFiler{})
+			actual := ParseIDsFromResults(tt.args.txResult, tt.args.expectedEvents, tt.args.attributeKeys,
+				attributeFiler{}, attributeFiler{}, attributeFiler{}, attributeFiler{})
 			assert.Equal(t, tt.expected, actual)
 		})
 	}

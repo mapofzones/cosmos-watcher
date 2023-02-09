@@ -4,7 +4,7 @@ import (
 	etherapp "github.com/evmos/ethermint/app"
 	ethercodec "github.com/evmos/ethermint/crypto/codec"
 	ethertypes "github.com/evmos/ethermint/types"
-	evmosapp "github.com/evmos/evmos/v10/app"
+	evmosapp "github.com/evmos/evmos/v11/app"
 	"github.com/gogo/protobuf/proto"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -13,8 +13,8 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
