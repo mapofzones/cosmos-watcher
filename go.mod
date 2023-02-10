@@ -12,7 +12,7 @@ replace (
 )
 
 require (
-	github.com/comdex-official/comdex v0.1.1-0.20230201071758-1367270b6959 //v8.1.1
+	github.com/comdex-official/comdex v0.1.1-0.20230206183456-454e0638893d //v8.1.1
 	github.com/cosmos/cosmos-sdk v0.45.11
 	github.com/cosmos/ibc-go/v4 v4.2.0
 	github.com/gogo/protobuf v1.3.3

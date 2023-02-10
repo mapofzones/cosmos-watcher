@@ -544,6 +544,8 @@ github.com/comdex-official/comdex v0.1.1-0.20230118110434-011a8bc66745 h1:iz702c
 github.com/comdex-official/comdex v0.1.1-0.20230118110434-011a8bc66745/go.mod h1:wQvQhKGReAYK7RxyaOrMraChcQR+zr1RF/62ehT/9b8=
 github.com/comdex-official/comdex v0.1.1-0.20230201071758-1367270b6959 h1:bdARAQxATfkZrrlMucpskErPjSRURPNsYVpuM+fcY54=
 github.com/comdex-official/comdex v0.1.1-0.20230201071758-1367270b6959/go.mod h1:wQvQhKGReAYK7RxyaOrMraChcQR+zr1RF/62ehT/9b8=
+github.com/comdex-official/comdex v0.1.1-0.20230206183456-454e0638893d h1:ioiapuDiR4/xpR+87ILaREyQUkcQpWdxASmPBItXk1c=
+github.com/comdex-official/comdex v0.1.1-0.20230206183456-454e0638893d/go.mod h1:wQvQhKGReAYK7RxyaOrMraChcQR+zr1RF/62ehT/9b8=
 github.com/comdex-official/cosmos-sdk v0.45.9-comdex.3 h1:sUuE41utl1SKey7+wzCDOvVmLfzX1ildjnhCDXl0xAo=
 github.com/comdex-official/cosmos-sdk v0.45.9-comdex.3/go.mod h1:Z5M4TX7PsHNHlF/1XanI2DIpORQ+Q/st7oaeufEjnvU=
 github.com/containerd/aufs v0.0.0-20200908144142-dab0cbea06f4/go.mod h1:nukgQABAEopAHvB6j7cnP5zJ+/3aVcE7hCYqvIwAHyE=
