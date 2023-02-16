@@ -289,12 +289,15 @@ func sdkCoinsToStruct(data []sdk.Coin) []struct {
 		var amount *big.Int
 		var ok bool
 
-		if sdkCoin.Denom == "wei" && sdkCoin.Amount.LT(sdk.OneDec()) {
-			amount, ok = n.SetString(sdkCoin.Amount.TruncateWithPrec(18).String(), base)
+		log.Println(sdkCoin.Denom)
+		log.Println(sdkCoin.Amount)
+		if sdkCoin.Denom == "wei" {
+			amount, ok = n.SetString(sdkCoin.Amount.TruncateInt().String(), base)
 		} else {
 			amount, ok = n.SetString(sdkCoin.Amount.String(), base)
 		}
 
+		log.Println(amount)
 		if !ok {
 			log.Fatalf("sdkCoinsToStruct: Cannot unmarshal %s to bigint: error", sdkCoin.Amount)
 		}
