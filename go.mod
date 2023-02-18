@@ -12,8 +12,7 @@ replace (
 
 require (
 	github.com/CosmWasm/wasmd v0.30.0
-	//github.com/InjectiveLabs/sdk-go v1.42.3 //also codec configured directly in protobuf_codec.go
-	github.com/InjectiveLabs/sdk-go v1.44.4 // v1.43.3 also codec configured directly in protobuf_codec.go
+	github.com/InjectiveLabs/sdk-go v1.44.4 // also codec configured directly in protobuf_codec.go
 	github.com/cosmos/cosmos-sdk v0.45.11
 	github.com/cosmos/ibc-go/v4 v4.2.0
 	github.com/gogo/protobuf v1.3.3
@@ -22,8 +21,6 @@ require (
 	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tendermint v0.34.23
 )
-
-require github.com/cosmos/ibc-go/v3 v3.4.0
 
 require (
 	filippo.io/edwards25519 v1.0.0-beta.2 // indirect

@@ -23,6 +23,7 @@ import (
 	ocr "github.com/InjectiveLabs/sdk-go/chain/ocr/types"
 	oracle "github.com/InjectiveLabs/sdk-go/chain/oracle/types"
 	peggy "github.com/InjectiveLabs/sdk-go/chain/peggy/types"
+	tokenfactory "github.com/InjectiveLabs/sdk-go/chain/tokenfactory/types"
 	chaintypes "github.com/InjectiveLabs/sdk-go/chain/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
@@ -32,11 +33,13 @@ import (
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
 	feegranttypes "github.com/cosmos/cosmos-sdk/x/feegrant"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	paramproposaltypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	icatypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/types"
+	ibcfeetypes "github.com/cosmos/ibc-go/v4/modules/apps/29-fee/types"
 	ibcapplicationtypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
 	ibccoretypes "github.com/cosmos/ibc-go/v4/modules/core/types"
 )
@@ -87,6 +90,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	ocr.RegisterInterfaces(interfaceRegistry)
 	chaintypes.RegisterInterfaces(interfaceRegistry)
 	wasmx.RegisterInterfaces(interfaceRegistry)
+	tokenfactory.RegisterInterfaces(interfaceRegistry)
 
 	// more cosmos types
 	authtypes.RegisterInterfaces(interfaceRegistry)
@@ -96,7 +100,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	crisistypes.RegisterInterfaces(interfaceRegistry)
 	distributiontypes.RegisterInterfaces(interfaceRegistry)
 	evidencetypes.RegisterInterfaces(interfaceRegistry)
-	//govtypes.RegisterInterfaces(interfaceRegistry)
+	govtypes.RegisterInterfaces(interfaceRegistry)
 	paramproposaltypes.RegisterInterfaces(interfaceRegistry)
 	ibcapplicationtypes.RegisterInterfaces(interfaceRegistry)
 	ibccoretypes.RegisterInterfaces(interfaceRegistry)
@@ -106,6 +110,7 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	feegranttypes.RegisterInterfaces(interfaceRegistry)
 	wasmtypes.RegisterInterfaces(interfaceRegistry)
 	icatypes.RegisterInterfaces(interfaceRegistry)
+	ibcfeetypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
