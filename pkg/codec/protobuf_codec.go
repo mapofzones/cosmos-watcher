@@ -10,9 +10,9 @@ import (
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 
-	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
-	cryptoorgapp "github.com/crypto-org-chain/chain-main/v3/app"
+	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
+	cryptoorgapp "github.com/crypto-org-chain/chain-main/v4/app"
 )
 
 var (
