@@ -305,8 +305,8 @@ github.com/HdrHistogram/hdrhistogram-go v1.1.0/go.mod h1:yDgFjdqOqDEKOvasDdhWNXY
 github.com/HdrHistogram/hdrhistogram-go v1.1.2/go.mod h1:yDgFjdqOqDEKOvasDdhWNXYg9BVp4O+o5f6V/ehm6Oo=
 github.com/InjectiveLabs/cosmos-sdk v0.45.11-inj-3 h1:WGU6mfX2L195zUx8MxUK0DCvi9ro2VhaV+mN8nUzYhw=
 github.com/InjectiveLabs/cosmos-sdk v0.45.11-inj-3/go.mod h1:knmcuR38eVg8I8U+AYhTtSLtcsHzYCROaUCbNcUgfDU=
-github.com/InjectiveLabs/sdk-go v1.44.4 h1:WZ0DIdPxJNPcbk+Y+FH2OTaWV+Y+8jMde9G6X5notZQ=
-github.com/InjectiveLabs/sdk-go v1.44.4/go.mod h1:mYmXl6+ASh2Ovsb3qZKiPChX/srImuUajZRIw94E0I8=
+github.com/InjectiveLabs/sdk-go v1.45.5 h1:KyBDfP1K4mi7IjCdZwjk5Ke1RDZ+6TLwqfxT4qBYGzw=
+github.com/InjectiveLabs/sdk-go v1.45.5/go.mod h1:mYmXl6+ASh2Ovsb3qZKiPChX/srImuUajZRIw94E0I8=
 github.com/InjectiveLabs/suplog v1.3.3 h1:ARIR3lWD9BxcrmqTwgcGBt8t7e10gwOqllUAXa/MfxI=
 github.com/InjectiveLabs/suplog v1.3.3/go.mod h1:+I9WRgUhzmo1V/n7IkW24kFBFB9ZTPAiXXXCogWxmTM=
 github.com/InjectiveLabs/wasmd v0.30.0-inj-1 h1:/+HI1yZydclB+Im2zl6QFjqPDrQBPF3KZAE24LsG9y4=
