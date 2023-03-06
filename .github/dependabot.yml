@@ -548,7 +548,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/enigmampc/SecretNetwork"
+      - dependency-name: "github.com/scrtlabs/SecretNetwork"
 
   - package-ecosystem: "gomod"
     directory: "/"
