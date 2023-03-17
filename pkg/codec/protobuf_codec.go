@@ -3,15 +3,15 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
-	junoapp "github.com/CosmosContracts/juno/v11/app"
+	junoapp "github.com/CosmosContracts/juno/v13/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 )
 
 const (
