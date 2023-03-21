@@ -9,9 +9,9 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	cosmosapp "github.com/cosmos/gaia/v7/app"
-	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
+	planqapp "github.com/planq-network/planq/app"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -22,7 +22,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 }
 
 func cosmosRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	cosmosapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	planqapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
