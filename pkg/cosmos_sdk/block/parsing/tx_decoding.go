@@ -2,14 +2,13 @@ package cosmos
 
 import (
 	"errors"
+	"github.com/cosmos/cosmos-sdk/codec"
 	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
+	"github.com/tendermint/tendermint/types"
 	"log"
 
-	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/tendermint/tendermint/types"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
+	//auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
 	auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
 )
 
@@ -19,7 +18,8 @@ func decodeTx(codec *codec.ProtoCodec, tx types.Tx) (sdk.Tx, error) {
 	txInterface, err := auth2.DefaultTxDecoder(codec)(tx)
 	if err != nil {
 		log.Println(err)
-		return auth.StdTx{}, DecodeErr
+		//return auth.StdTx{}, DecodeErr
+		return nil, err
 	}
 	return txInterface, nil
 }

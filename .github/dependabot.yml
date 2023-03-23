@@ -264,7 +264,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/notional-labs/dig/v2"
+      - dependency-name: "github.com/notional-labs/dig/v3"
 
   - package-ecosystem: "gomod"
     directory: "/"

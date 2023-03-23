@@ -10,9 +10,9 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
-	digapp "github.com/notional-labs/dig/v2/app"
+	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
+	digapp "github.com/notional-labs/dig/v3/app"
 )
 
 const (
