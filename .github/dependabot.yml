@@ -604,7 +604,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/public-awesome/stargaze/v7"
+      - dependency-name: "github.com/public-awesome/stargaze/v9"
 
   - package-ecosystem: "gomod"
     directory: "/"
