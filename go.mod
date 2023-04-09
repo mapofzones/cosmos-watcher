@@ -5,12 +5,13 @@ go 1.18
 replace (
 	github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210622111912-ef00f8ac3d76
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
-	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.9.0
+	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.7.7
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/tendermint/tendermint => github.com/informalsystems/tendermint v0.34.26
 )
 
 require (
+	github.com/evmos/ethermint v0.6.1-0.20220919141022-34226aa7b1fa
 	github.com/cosmos/cosmos-sdk v0.46.3
 	github.com/cosmos/ibc-go/v5 v5.0.0
 	github.com/gogo/protobuf v1.3.3
