@@ -69,8 +69,11 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenInit}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
+		attrFiler2 := attributeFiler{"counterparty_client_id", msg.Counterparty.ClientId}
+		attrFiler3 := attributeFiler{"counterparty_connection_id", msg.Counterparty.ConnectionId} //??????? mb no info
+
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys,
-			attrFiler, attributeFiler{}, attributeFiler{}, attributeFiler{})
+			attrFiler, attrFiler2, attrFiler3, attributeFiler{})
 		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("connectionID not found")
 		}
@@ -88,9 +91,11 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		expectedEvents := []string{connectiontypes.EventTypeConnectionOpenTry}
 		attributeKeys := []string{connectiontypes.AttributeKeyConnectionID}
 		attrFiler1 := attributeFiler{clienttypes.AttributeKeyClientID, msg.ClientId}
+		attrFiler2 := attributeFiler{"counterparty_client_id", msg.Counterparty.ClientId}
+		attrFiler3 := attributeFiler{"counterparty_connection_id", msg.Counterparty.ConnectionId}
 
 		connectionIDs := ParseIDsFromResults(txResult, expectedEvents, attributeKeys,
-			attrFiler1, attributeFiler{}, attributeFiler{}, attributeFiler{})
+			attrFiler1, attrFiler2, attrFiler3, attributeFiler{})
 		if (len(connectionIDs) != 1 || len(connectionIDs[0]) == 0) && errCode == 0 {
 			return nil, errors.New("connectionID not found")
 		}
