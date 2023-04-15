@@ -7,16 +7,16 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	types7 "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	transfer "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v4/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/v4/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/v4/modules/core/04-channel/types"
+	types7 "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	types6 "github.com/tendermint/tendermint/abci/types"
 	"log"
 
-	solomachine "github.com/cosmos/ibc-go/v3/modules/light-clients/06-solomachine/types"
+	solomachine "github.com/cosmos/ibc-go/v4/modules/light-clients/06-solomachine/types"
 )
 
 type attributeFiler struct {
