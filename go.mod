@@ -3,16 +3,27 @@ module github.com/mapofzones/cosmos-watcher
 go 1.19
 
 replace (
+	// Use the keyring specified by the cosmos-sdk
 	github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210622111912-ef00f8ac3d76
+
+	// dragonberry replkace line per: https://github.com/cosmos/cosmos-sdk/releases/tag/v0.45.9
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
+
+	// use cosmos-flavored protobufs
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+
+	// Use a specific version of ignite cli
 	github.com/ignite-hq/cli => github.com/ignite-hq/cli v0.21.0
+
+	// fork cast to add additional error checking
 	github.com/spf13/cast => github.com/Stride-Labs/cast v0.0.3
+
+	// use the version of grpc compatible with the regen networks protobufs.
 	google.golang.org/grpc => google.golang.org/grpc v1.50.1
 )
 
 require (
-	github.com/Stride-Labs/stride/v8 v8.0.0
+	github.com/Stride-Labs/stride/v6 v6.0.0
 	github.com/cosmos/cosmos-sdk v0.46.7
 	github.com/cosmos/ibc-go/v5 v5.1.0
 	github.com/gogo/protobuf v1.3.3
