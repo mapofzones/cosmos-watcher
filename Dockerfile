@@ -4,15 +4,18 @@ WORKDIR /app
 
 COPY . /app
 
+RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev
+
 RUN go build -o watcher ./cmd/watcher/main.go
 
-FROM alpine:latest as production
+RUN ls -la /app
 
-RUN apk add curl jq coreutils
-RUN apk add --no-cache bash
-WORKDIR /app
+FROM ubuntu:latest as production
 
+RUN apt-get update && apt-get install -y curl jq coreutils
+
+#COPY --from=build /app/libwasmvm.so /usr/lib/libwasmvm.so
 COPY --from=build /app/watcher  /app/watcher
-COPY scripts/run.sh /run.sh
+COPY --from=build /app/scripts/run.sh /run.sh
 
-CMD /run.sh
+CMD ["/run.sh"]
