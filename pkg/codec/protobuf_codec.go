@@ -3,7 +3,7 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
-	strideapp "github.com/Stride-Labs/stride/v6/app"
+	strideapp "github.com/Stride-Labs/stride/v8/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"

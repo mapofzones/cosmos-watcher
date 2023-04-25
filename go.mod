@@ -23,7 +23,7 @@ replace (
 )
 
 require (
-	github.com/Stride-Labs/stride/v6 v6.0.0
+	github.com/Stride-Labs/stride/v8 v8.0.0
 	github.com/cosmos/cosmos-sdk v0.46.7
 	github.com/cosmos/ibc-go/v5 v5.1.0
 	github.com/gogo/protobuf v1.3.3
