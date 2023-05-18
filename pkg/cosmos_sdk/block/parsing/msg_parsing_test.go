@@ -76,7 +76,8 @@ func TestParseIDsFromResults(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			actual := ParseIDsFromResults(tt.args.txResult, tt.args.expectedEvents, tt.args.attributeKeys, attributeFiler{})
+			actual := ParseIDsFromResults(tt.args.txResult, tt.args.expectedEvents, tt.args.attributeKeys,
+				attributeFiler{}, attributeFiler{}, attributeFiler{}, attributeFiler{})
 			assert.Equal(t, tt.expected, actual)
 		})
 	}
