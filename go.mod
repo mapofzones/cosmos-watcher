@@ -14,7 +14,7 @@ replace (
 require (
 	github.com/cosmos/cosmos-sdk v0.45.10
 	github.com/cosmos/ibc-go/v3 v3.4.0
-	github.com/crescent-network/crescent/v4 v4.0.0
+	github.com/crescent-network/crescent/v4 v4.1.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.0
