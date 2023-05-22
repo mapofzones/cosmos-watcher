@@ -3,6 +3,7 @@ module github.com/mapofzones/cosmos-watcher
 go 1.18
 
 replace (
+	github.com/buger/jsonparser => github.com/buger/jsonparser v1.0.0 // imported by nacos-go-sdk, upgraded to v1.0.0 in case of a known vulnerable bug
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
 	github.com/cosmos/gorocksdb => github.com/okex/grocksdb v1.6.45-okc2
 	github.com/ethereum/go-ethereum => github.com/okex/go-ethereum v1.10.8-okc1
@@ -12,8 +13,11 @@ replace (
 )
 
 require (
+	//github.com/cosmos/cosmos-sdk located at github.com/okex/exchain/libs
+	//github.com/cosmos/ibc-go located at github.com/okex/exchain/libs
+	//github.com/tendermint/tendermint located at github.com/okex/exchain/libs
 	github.com/gogo/protobuf v1.3.3
-	github.com/okex/exchain v1.6.9-0.20230112033958-30958b27a26f
+	github.com/okex/exchain v1.7.0
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.0
 	github.com/tendermint/go-amino v0.16.0
