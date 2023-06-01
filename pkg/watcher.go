@@ -29,7 +29,7 @@ func NewWatcher(ctx context.Context, blockStream <-chan watcher.Block, rabbitQue
 // WatchWithTimeout is used to receive blocks from Block Stream
 // and send them to Queue
 func (w *Watcher) WatchWithTimeout(ctx context.Context, timeout time.Duration) error {
-	duration := time.Second * 300
+	duration := time.Second * 100
 	timer := time.NewTimer(duration)
 	for {
 		select {

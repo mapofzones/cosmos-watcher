@@ -1,6 +1,7 @@
 package watcher
 
 import (
+	ethercodec "github.com/evmos/ethermint/crypto/codec"
 	ethertypes "github.com/evmos/ethermint/types"
 	"github.com/gogo/protobuf/proto"
 
@@ -12,21 +13,39 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
-	functionxapp "github.com/functionx/fx-core/v2/app"
+	xplaapp "github.com/xpladev/xpla/app"
+)
 
-	//etherapp "github.com/evmos/ethermint/app"
-	ethercodec "github.com/evmos/ethermint/crypto/codec"
+const (
+	AccountAddressPrefix = "xpla"
+)
+
+var (
+	AccountPubKeyPrefix    = AccountAddressPrefix + "pub"
+	ValidatorAddressPrefix = AccountAddressPrefix + "valoper"
+	ValidatorPubKeyPrefix  = AccountAddressPrefix + "valoperpub"
+	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
+	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	functionxRegisterInterfaces(interfaceRegistry)
+	xplaRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-func functionxRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	functionxapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func SetConfig() {
+	config := cosmostypes.GetConfig()
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+	config.Seal()
+}
+
+func xplaRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	xplaapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 	ethercodec.RegisterInterfaces(interfaceRegistry)
 	//etherapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 	ethertypes.RegisterInterfaces(interfaceRegistry)
