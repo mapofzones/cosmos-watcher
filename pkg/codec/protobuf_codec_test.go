@@ -9,6 +9,6 @@ import (
 func Test_functionxRegisterInterfaces(t *testing.T) {
 	assert.NotPanics(t, func() {
 		interfaceRegistry := codectypes.NewInterfaceRegistry()
-		functionxRegisterInterfaces(interfaceRegistry)
+		xplaRegisterInterfaces(interfaceRegistry)
 	})
 }
