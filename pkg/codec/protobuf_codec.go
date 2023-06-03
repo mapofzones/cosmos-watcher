@@ -14,6 +14,7 @@ import (
 	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
 	functionxapp "github.com/functionx/fx-core/v4/app"
 	functionxtypes "github.com/functionx/fx-core/v4/x/crosschain/types"
+	functionxgravitytypes "github.com/functionx/fx-core/v4/x/gravity/types"
 
 	//etherapp "github.com/evmos/ethermint/app"
 	ethercodec "github.com/evmos/ethermint/crypto/codec"
@@ -44,6 +45,8 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxtypes.MsgConfirmBatch{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxtypes.MsgRequestBatch{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxgravitytypes.MsgSendToEth{})
 }
 
 func getMessageImplementations() []proto.Message {
