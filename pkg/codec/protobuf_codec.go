@@ -31,7 +31,7 @@ var (
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	SetConfig()
+	//SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	lumRegisterInterfaces(interfaceRegistry)
