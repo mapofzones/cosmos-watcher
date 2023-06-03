@@ -10,9 +10,10 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
-	functionxapp "github.com/functionx/fx-core/v2/app"
+	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
+	functionxapp "github.com/functionx/fx-core/v4/app"
+	functionxtypes "github.com/functionx/fx-core/v4/x/crosschain/types"
 
 	//etherapp "github.com/evmos/ethermint/app"
 	ethercodec "github.com/evmos/ethermint/crypto/codec"
@@ -42,6 +43,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxtypes.MsgConfirmBatch{})
 }
 
 func getMessageImplementations() []proto.Message {
