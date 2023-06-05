@@ -47,6 +47,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxtypes.MsgConfirmBatch{})
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxtypes.MsgRequestBatch{})
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxgravitytypes.MsgSendToEth{})
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &functionxtypes.MsgSendToExternalClaim{})
 }
 
 func getMessageImplementations() []proto.Message {
