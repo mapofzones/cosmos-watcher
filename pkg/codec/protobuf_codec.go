@@ -11,7 +11,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
-	stargazeapp "github.com/public-awesome/stargaze/v9/app"
+	stargazeapp "github.com/public-awesome/stargaze/v10/app"
 )
 
 const (
