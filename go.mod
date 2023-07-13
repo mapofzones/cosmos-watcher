@@ -12,15 +12,15 @@ replace (
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 	github.com/tendermint/tendermint => github.com/cometbft/cometbft v0.34.27
-	github.com/tendermint/tm-db => github.com/kava-labs/tm-db v0.6.7-kava.1
+	github.com/tendermint/tm-db => github.com/kava-labs/tm-db v0.6.7-kava.3
 )
 
 require (
 	github.com/cosmos/cosmos-sdk v0.46.11
-	github.com/cosmos/ibc-go/v6 v6.1.0
+	github.com/cosmos/ibc-go/v6 v6.1.1
 	github.com/evmos/ethermint v0.21.0
 	github.com/gogo/protobuf v1.3.3
-	github.com/kava-labs/kava v0.23.0
+	github.com/kava-labs/kava v0.24.0
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.2
 	github.com/tendermint/go-amino v0.16.0
@@ -121,7 +121,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.15 // indirect
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
-	github.com/linxGnu/grocksdb v1.7.14 // indirect
+	github.com/linxGnu/grocksdb v1.7.15 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/manifoldco/promptui v0.9.0 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
