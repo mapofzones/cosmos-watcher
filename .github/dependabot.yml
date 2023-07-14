@@ -478,7 +478,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/osmosis-labs/osmosis/v9"
+      - dependency-name: "github.com/osmosis-labs/osmosis/v16"
 
   - package-ecosystem: "gomod"
     directory: "/"
