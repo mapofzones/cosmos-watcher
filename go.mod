@@ -1,6 +1,6 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.18
+go 1.19
 
 replace (
 	github.com/coinbase/rosetta-sdk-go => github.com/coinbase/rosetta-sdk-go v0.7.9
@@ -10,10 +10,8 @@ replace (
 
 require (
 	github.com/cosmos/cosmos-sdk v0.47.3
-	//github.com/cosmos/ibc-go/v5 v5.2.1
 	github.com/cosmos/ibc-go/v7 v7.2.0
 	github.com/gogo/protobuf v1.3.3
-	//github.com/lum-network/chain v1.4.1
 	github.com/lum-network/chain v1.5.0-2
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.4
