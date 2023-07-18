@@ -1,7 +1,7 @@
 package watcher
 
 import (
-	"github.com/gogo/protobuf/proto"
+	"github.com/cosmos/gogoproto/proto"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -10,8 +10,8 @@ import (
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	govtypesv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
-	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 	lumapp "github.com/lum-network/chain/app"
 
 	lumapp2 "github.com/lum-network/chain/x/dfract/types"
@@ -59,8 +59,8 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 
 	interfaceRegistry.RegisterImplementations((*ibcexported.ClientState)(nil), &ibcclients.ClientState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
+	//interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
+	//interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &lumapp2.MsgDeposit{})
 	interfaceRegistry.RegisterImplementations((*govtypesv1beta1.Content)(nil), &lumapp2.WithdrawAndMintProposal{})
