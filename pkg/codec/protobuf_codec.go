@@ -3,7 +3,7 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
-	junoapp "github.com/CosmosContracts/juno/v13/app"
+	junoapp "github.com/CosmosContracts/juno/v15/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
