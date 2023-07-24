@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"io/ioutil"
 	"log"
+	http2 "net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -15,6 +17,20 @@ import (
 )
 
 func main() {
+
+	resp, err := http2.Get("http://ip-api.com/json/")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	//Convert the body to type string
+	sb := string(body)
+	log.Printf(sb)
+
 	startWithBlockchainHeight := os.Getenv("height")
 	fullNodeJsonRpcAddress := os.Getenv("rpc")
 	messageBrokerConnectionString := os.Getenv("rabbitmq")
