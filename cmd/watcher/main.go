@@ -30,6 +30,19 @@ func main() {
 	//Convert the body to type string
 	sb := string(body)
 	log.Printf(sb)
+	log.Printf("\n")
+	resp1, err1 := http2.Get("https://archival.tm.injective.network:443/status")
+	if err1 != nil {
+		log.Fatalln(err1)
+	}
+
+	body1, err1 := ioutil.ReadAll(resp1.Body)
+	if err != nil {
+		log.Fatalln(err1)
+	}
+	//Convert the body to type string
+	sb1 := string(body1)
+	log.Printf(sb1)
 
 	startWithBlockchainHeight := os.Getenv("height")
 	fullNodeJsonRpcAddress := os.Getenv("rpc")
