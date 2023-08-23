@@ -5,7 +5,7 @@ import (
 
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	"github.com/tendermint/tendermint/rpc/client/http"
-	coretypes "github.com/tendermint/tendermint/rpc/core/types"
+	coretypes "github.com/tendermint/tendermint/rpc/coretypes"
 	"github.com/tendermint/tendermint/types"
 )
 
