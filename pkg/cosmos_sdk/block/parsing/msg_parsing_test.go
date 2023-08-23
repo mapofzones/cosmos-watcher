@@ -42,7 +42,7 @@ func TestParseIDsFromResults(t *testing.T) {
 			args{
 				&types6.ResponseDeliverTx{Events: []types6.Event{{
 					connectiontypes.EventTypeConnectionOpenInit,
-					[]types6.EventAttribute{{[]byte(connectiontypes.AttributeKeyConnectionID), []byte("myConnectionID"), true}},
+					[]types6.EventAttribute{{connectiontypes.AttributeKeyConnectionID, "myConnectionID", true}},
 				}}},
 				[]string{connectiontypes.EventTypeConnectionOpenInit},
 				[]string{connectiontypes.AttributeKeyConnectionID},
@@ -56,15 +56,15 @@ func TestParseIDsFromResults(t *testing.T) {
 					{
 						connectiontypes.EventTypeConnectionOpenInit,
 						[]types6.EventAttribute{
-							{[]byte(connectiontypes.AttributeKeyConnectionID), []byte("myConnectionID"), true},
-							{[]byte(connectiontypes.AttributeKeyClientID), []byte("myClientID"), true},
+							{connectiontypes.AttributeKeyConnectionID, "myConnectionID", true},
+							{connectiontypes.AttributeKeyClientID, "myClientID", true},
 						},
 					},
 					{
 						connectiontypes.EventTypeConnectionOpenTry,
 						[]types6.EventAttribute{
-							{[]byte(connectiontypes.AttributeKeyCounterpartyClientID), []byte("myCounterpartyClientID"), true},
-							{[]byte(connectiontypes.AttributeKeyCounterpartyConnectionID), []byte("myCounterpartyConnectionID"), true},
+							{connectiontypes.AttributeKeyCounterpartyClientID, "myCounterpartyClientID", true},
+							{connectiontypes.AttributeKeyCounterpartyConnectionID, "myCounterpartyConnectionID", true},
 						},
 					},
 				}},

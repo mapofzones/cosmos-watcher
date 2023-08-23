@@ -7,7 +7,7 @@ import (
 
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	abci "github.com/tendermint/tendermint/abci/types"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	ctypes "github.com/tendermint/tendermint/rpc/coretypes"
 	"github.com/tendermint/tendermint/types"
 )
 
