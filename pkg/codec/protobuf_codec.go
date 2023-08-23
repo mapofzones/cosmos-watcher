@@ -9,12 +9,9 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	govtypesv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
-	lumapp "github.com/lum-network/chain/app"
-
-	lumapp2 "github.com/lum-network/chain/x/dfract/types"
+	picassoapp "github.com/notional-labs/centauri/v4/app"
 )
 
 const (
@@ -38,17 +35,17 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 	registerTypes(interfaceRegistry)
 }
 
-func SetConfig() {
-	config := cosmostypes.GetConfig()
-	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
-	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
-	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
-	config.SetCoinType(CoinType)
-	config.Seal()
-}
+//func SetConfig() {
+//	config := cosmostypes.GetConfig()
+//	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+//	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+//	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+//	config.SetCoinType(CoinType)
+//	config.Seal()
+//}
 
 func lumRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	lumapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	picassoapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
@@ -59,11 +56,7 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 
 	interfaceRegistry.RegisterImplementations((*ibcexported.ClientState)(nil), &ibcclients.ClientState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
-	//interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
-	//interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 
-	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), &lumapp2.MsgDeposit{})
-	interfaceRegistry.RegisterImplementations((*govtypesv1beta1.Content)(nil), &lumapp2.WithdrawAndMintProposal{})
 }
 
 func getMessageImplementations() []proto.Message {
