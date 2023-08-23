@@ -19,5 +19,5 @@ COPY --from=build /app/libwasmvm.x86_64.so /usr/lib/libwasmvm.x86_64.so
 COPY --from=build /app/watcher  /app/watcher
 COPY --from=build /app/scripts/run.sh /run.sh
 
-#RUN dos2unix /run.sh
+RUN dos2unix /run.sh
 CMD ["/run.sh"]

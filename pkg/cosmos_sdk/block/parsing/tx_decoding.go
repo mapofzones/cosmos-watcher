@@ -9,7 +9,6 @@ import (
 	"github.com/tendermint/tendermint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
 	auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
 )
 
@@ -19,7 +18,7 @@ func decodeTx(codec *codec.ProtoCodec, tx types.Tx) (sdk.Tx, error) {
 	txInterface, err := auth2.DefaultTxDecoder(codec)(tx)
 	if err != nil {
 		log.Println(err)
-		return auth.StdTx{}, DecodeErr
+		return nil, DecodeErr
 	}
 	return txInterface, nil
 }
@@ -28,7 +27,6 @@ func decodeTx(codec *codec.ProtoCodec, tx types.Tx) (sdk.Tx, error) {
 func toStdTx(tx sdk.Tx) (sdk.Tx, error) {
 	stdTx, ok := tx.(sdk.Tx)
 
-	//log.Println(stdTx)
 	if !ok {
 		return nil, DecodeErr
 	}
@@ -39,7 +37,6 @@ func toStdTx(tx sdk.Tx) (sdk.Tx, error) {
 func toSignTx(tx sdk.Tx) (sign.Tx, error) {
 	stdTx, ok := tx.(sign.Tx)
 
-	//log.Println(stdTx)
 	if !ok {
 		return nil, DecodeErr
 	}
