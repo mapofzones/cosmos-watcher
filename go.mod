@@ -15,7 +15,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.46.13
 	github.com/cosmos/ibc-go/v6 v6.1.1
 	github.com/evmos/ethermint v0.22.0
-	github.com/functionx/fx-core/v4 v4.2.1 // also codec configured directly in protobuf_codec.go
+	github.com/functionx/fx-core/v5 v5.0.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.2

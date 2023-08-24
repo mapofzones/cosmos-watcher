@@ -16,7 +16,7 @@ import (
 
 	// custom ibc transfer implementation & fix
 	//transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	transfer "github.com/functionx/fx-core/v4/x/ibc/applications/transfer/types"
+	transfer "github.com/functionx/fx-core/v5/x/ibc/applications/transfer/types"
 
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
