@@ -15,8 +15,7 @@ import (
 )
 
 const (
-	AccountAddressPrefix = "lum"
-	CoinType             = 880
+	AccountAddressPrefix = "centauri"
 )
 
 var (
@@ -28,21 +27,20 @@ var (
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	//SetConfig()
+	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	lumRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
-//func SetConfig() {
-//	config := cosmostypes.GetConfig()
-//	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
-//	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
-//	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
-//	config.SetCoinType(CoinType)
-//	config.Seal()
-//}
+func SetConfig() {
+	config := cosmostypes.GetConfig()
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
+	config.Seal()
+}
 
 func lumRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	picassoapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
