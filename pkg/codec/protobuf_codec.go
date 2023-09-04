@@ -9,25 +9,26 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
-	akashapp "github.com/ovrclk/akash/app"
+	akashapp "github.com/akash-network/node/app"
 )
 
 const (
-	Bech32PrefixAccAddr = "akash"
-	Bech32PrefixAccPub  = "akashpub"
+	AccountAddressPrefix = "akash"
+)
 
-	Bech32PrefixValAddr = "akashvaloper"
-	Bech32PrefixValPub  = "akashvaloperpub"
-
-	Bech32PrefixConsAddr = "akashvalcons"
-	Bech32PrefixConsPub  = "akashvalconspub"
+var (
+	AccountPubKeyPrefix    = AccountAddressPrefix + "pub"
+	ValidatorAddressPrefix = AccountAddressPrefix + "valoper"
+	ValidatorPubKeyPrefix  = AccountAddressPrefix + "valoperpub"
+	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
+	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	addressConfig()
+	//addressConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	akashRegisterInterfaces(interfaceRegistry)
@@ -36,10 +37,9 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func addressConfig() {
 	config := cosmostypes.GetConfig()
-	config.SetBech32PrefixForAccount(Bech32PrefixAccAddr, Bech32PrefixAccPub)
-	config.SetBech32PrefixForValidator(Bech32PrefixValAddr, Bech32PrefixValPub)
-	config.SetBech32PrefixForConsensusNode(Bech32PrefixConsAddr, Bech32PrefixConsPub)
-
+	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
+	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
+	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
 	config.Seal()
 }
 
