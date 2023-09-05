@@ -1,4 +1,4 @@
-FROM bitnami/golang:1.17-debian-10 as build
+FROM bitnami/golang:1.19-debian-11 as build
 
 WORKDIR /app
 
@@ -12,11 +12,11 @@ RUN ls -la /app
 
 FROM ubuntu:latest as production
 
-RUN apt-get update && apt-get install -y curl jq coreutils
+RUN apt-get update && apt-get install -y curl jq coreutils dos2unix
 
-#COPY --from=build /app/libwasmvm.so /usr/lib/libwasmvm.so
+COPY --from=build /app/libgo_owasm.so /usr/lib/libgo_owasm.so
 COPY --from=build /app/watcher  /app/watcher
 COPY --from=build /app/scripts/run.sh /run.sh
-COPY --from=build /app/libgo_owasm.so /usr/lib/libgo_owasm.so
 
+RUN dos2unix /run.sh
 CMD ["/run.sh"]
