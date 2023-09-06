@@ -5,6 +5,7 @@ import (
 	"errors"
 	types6 "github.com/tendermint/tendermint/abci/types"
 	"math/big"
+	"strings"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -168,15 +169,17 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// ibc transfer messages
 	case *transfer.MsgTransfer:
-		return []watcher.Message{
-			watcher.IBCTransfer{
-				ChannelID: msg.SourceChannel,
-				Sender:    msg.Sender,
-				Recipient: msg.Receiver,
-				Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
-				Source:    true,
-			},
-		}, nil
+		if msg.SourceChannel != "channel-1" {
+			return []watcher.Message{
+				watcher.IBCTransfer{
+					ChannelID: msg.SourceChannel,
+					Sender:    msg.Sender,
+					Recipient: msg.Receiver,
+					Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
+					Source:    true,
+				},
+			}, nil
+		}
 
 	case *channeltypes.MsgRecvPacket:
 		data := transfer.FungibleTokenPacketData{}
@@ -204,8 +207,11 @@ func ParseClientIDFromResults(txResult *types6.ResponseDeliverTx, clientId strin
 			if event.Type == clienttypes.EventTypeCreateClient {
 				for _, attr := range event.Attributes {
 					if string(attr.Key) == clienttypes.AttributeKeyClientID {
-						clientId = string(attr.Value)
-						log.Println("client attr.Value:", string(attr.Value))
+
+						if !strings.HasPrefix(attr.Key, "08-wasm") {
+							clientId = attr.Value
+						}
+						log.Println("client attr.Value:", attr.Value)
 					}
 				}
 			}
