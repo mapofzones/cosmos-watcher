@@ -169,7 +169,7 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 
 	// ibc transfer messages
 	case *transfer.MsgTransfer:
-		if msg.SourceChannel != "channel-1" {
+		if msg.SourceChannel != "channel-1" && msg.SourceChannel != "channel-2" {
 			return []watcher.Message{
 				watcher.IBCTransfer{
 					ChannelID: msg.SourceChannel,
