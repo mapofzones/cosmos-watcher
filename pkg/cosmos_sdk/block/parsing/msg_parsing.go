@@ -187,15 +187,17 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		if err != nil {
 			return nil, err
 		}
-		return []watcher.Message{
-			watcher.IBCTransfer{
-				ChannelID: msg.Packet.DestinationChannel,
-				Sender:    data.Sender,
-				Recipient: data.Receiver,
-				Amount:    packetToStruct(data),
-				Source:    false,
-			},
-		}, nil
+		if msg.Packet.DestinationChannel != "channel-1" && msg.Packet.DestinationChannel != "channel-2" {
+			return []watcher.Message{
+				watcher.IBCTransfer{
+					ChannelID: msg.Packet.DestinationChannel,
+					Sender:    data.Sender,
+					Recipient: data.Receiver,
+					Amount:    packetToStruct(data),
+					Source:    false,
+				},
+			}, nil
+		}
 	}
 
 	return []watcher.Message{}, nil
