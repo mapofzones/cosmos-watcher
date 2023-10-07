@@ -11,11 +11,11 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
-	neutronapp "github.com/neutron-org/neutron/app"
+	noisapp "github.com/noislabs/noisd/app"
 )
 
 const (
-	AccountAddressPrefix = "neutron"
+	AccountAddressPrefix = "nois"
 )
 
 var (
@@ -30,7 +30,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 	addressConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	neutronapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	noisapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
