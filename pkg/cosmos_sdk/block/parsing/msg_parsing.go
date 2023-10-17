@@ -3,19 +3,22 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	types6 "github.com/tendermint/tendermint/abci/types"
 	"math/big"
+
+	types6 "github.com/cometbft/cometbft/abci/types"
+
+	"log"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfer "github.com/cosmos/ibc-go/v6/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v6/modules/core/02-client/types"
-	connectiontypes "github.com/cosmos/ibc-go/v6/modules/core/03-connection/types"
-	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
-	solomachine "github.com/cosmos/ibc-go/v6/modules/light-clients/06-solomachine/types"
-	types7 "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
+	transfer "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/v7/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
+	solomachine "github.com/cosmos/ibc-go/v7/modules/light-clients/06-solomachine"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
-	"log"
+
+	types7 "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 )
 
 type attributeFiler struct {
@@ -24,6 +27,7 @@ type attributeFiler struct {
 }
 
 func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) ([]watcher.Message, error) {
+
 	switch msg := msg.(type) {
 
 	// send creation
@@ -184,7 +188,8 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 		if err != nil {
 			return nil, err
 		}
-		return []watcher.Message{
+
+		t := []watcher.Message{
 			watcher.IBCTransfer{
 				ChannelID: msg.Packet.DestinationChannel,
 				Sender:    data.Sender,
@@ -192,7 +197,9 @@ func parseMsg(msg sdk.Msg, txResult *types6.ResponseDeliverTx, errCode uint32) (
 				Amount:    packetToStruct(data),
 				Source:    false,
 			},
-		}, nil
+		}
+		log.Println("t:", t)
+		return t, nil
 	}
 
 	return []watcher.Message{}, nil

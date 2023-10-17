@@ -2,10 +2,11 @@ package cosmos
 
 import (
 	"errors"
+	"log"
+
+	"github.com/cometbft/cometbft/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
-	"github.com/tendermint/tendermint/types"
-	"log"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	//auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
