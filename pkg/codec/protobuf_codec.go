@@ -1,6 +1,8 @@
 package watcher
 
 import (
+	"time"
+
 	"github.com/cosmos/cosmos-sdk/std"
 
 	wasmx "github.com/InjectiveLabs/sdk-go/chain/wasmx/types"
@@ -32,6 +34,8 @@ import (
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
 	feegranttypes "github.com/cosmos/cosmos-sdk/x/feegrant"
+	govtypesv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
+	govtypesv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	paramproposaltypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -53,6 +57,11 @@ var (
 	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
 	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
 )
+
+type Header interface {
+	GetTime() time.Time
+	GetLastCommitHash() []byte
+}
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	SetConfig()
@@ -103,6 +112,8 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	stakingtypes.RegisterInterfaces(interfaceRegistry)
 	upgradetypes.RegisterInterfaces(interfaceRegistry)
 	feegranttypes.RegisterInterfaces(interfaceRegistry)
+	govtypesv1beta1.RegisterInterfaces(interfaceRegistry)
+	govtypesv1.RegisterInterfaces(interfaceRegistry)
 	wasmtypes.RegisterInterfaces(interfaceRegistry)
 	icatypes.RegisterInterfaces(interfaceRegistry)
 	ibcfeetypes.RegisterInterfaces(interfaceRegistry)
@@ -118,9 +129,9 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
 	interfaceRegistry.RegisterImplementations(
 		(*ibcexported.ClientMessage)(nil),
+		&ibcclients.Header{},
 		&solomachine.Header{},
+		&solomachine.Misbehaviour{},
 	)
-	// interfaceRegistry.RegisterImplementations((*solomachine.Header)(nil), &solomachine.Header{})
-	// interfaceRegistry.RegisterImplementations((*ibc.lightclients.tendermint.v1.Header)(nil), &solomachine.Header{})
-	// interfaceRegistry.RegisterImplementations((*ibcclients.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
+
 }
