@@ -2,7 +2,6 @@ package watcher
 
 import (
 	"github.com/cosmos/cosmos-sdk/std"
-	"github.com/gogo/protobuf/proto"
 
 	wasmx "github.com/InjectiveLabs/sdk-go/chain/wasmx/types"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -11,13 +10,13 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
+	solomachine "github.com/cosmos/ibc-go/v7/modules/light-clients/06-solomachine"
+	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 
 	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	auction "github.com/InjectiveLabs/sdk-go/chain/auction/types"
 	keyscodec "github.com/InjectiveLabs/sdk-go/chain/crypto/codec"
-	evm "github.com/InjectiveLabs/sdk-go/chain/evm/types"
 	exchange "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
 	insurance "github.com/InjectiveLabs/sdk-go/chain/insurance/types"
 	ocr "github.com/InjectiveLabs/sdk-go/chain/ocr/types"
@@ -33,15 +32,14 @@ import (
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
 	feegranttypes "github.com/cosmos/cosmos-sdk/x/feegrant"
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	paramproposaltypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	icatypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/types"
-	ibcfeetypes "github.com/cosmos/ibc-go/v4/modules/apps/29-fee/types"
-	ibcapplicationtypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
-	ibccoretypes "github.com/cosmos/ibc-go/v4/modules/core/types"
+	icatypes "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/types"
+	ibcfeetypes "github.com/cosmos/ibc-go/v7/modules/apps/29-fee/types"
+	ibcapplicationtypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
+	ibccoretypes "github.com/cosmos/ibc-go/v7/modules/core/types"
 )
 
 const (
@@ -58,8 +56,7 @@ var (
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	SetConfig()
-	impls := getMessageImplementations()
-	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil))
 	injectiveRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
@@ -85,7 +82,6 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	insurance.RegisterInterfaces(interfaceRegistry)
 	auction.RegisterInterfaces(interfaceRegistry)
 	oracle.RegisterInterfaces(interfaceRegistry)
-	evm.RegisterInterfaces(interfaceRegistry)
 	peggy.RegisterInterfaces(interfaceRegistry)
 	ocr.RegisterInterfaces(interfaceRegistry)
 	chaintypes.RegisterInterfaces(interfaceRegistry)
@@ -100,7 +96,6 @@ func injectiveRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceReg
 	crisistypes.RegisterInterfaces(interfaceRegistry)
 	distributiontypes.RegisterInterfaces(interfaceRegistry)
 	evidencetypes.RegisterInterfaces(interfaceRegistry)
-	govtypes.RegisterInterfaces(interfaceRegistry)
 	paramproposaltypes.RegisterInterfaces(interfaceRegistry)
 	ibcapplicationtypes.RegisterInterfaces(interfaceRegistry)
 	ibccoretypes.RegisterInterfaces(interfaceRegistry)
@@ -121,20 +116,11 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 
 	interfaceRegistry.RegisterImplementations((*ibcexported.ClientState)(nil), &ibcclients.ClientState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
-}
-
-func getMessageImplementations() []proto.Message {
-	var impls []proto.Message
-	cosmosMessages := getCosmosMessages()
-	impls = append(impls, cosmosMessages...)
-	return impls
-}
-
-func getCosmosMessages() []proto.Message {
-	cosmosMessages := []proto.Message{
-		//&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
-	}
-	return cosmosMessages
+	interfaceRegistry.RegisterImplementations(
+		(*ibcexported.ClientMessage)(nil),
+		&solomachine.Header{},
+	)
+	// interfaceRegistry.RegisterImplementations((*solomachine.Header)(nil), &solomachine.Header{})
+	// interfaceRegistry.RegisterImplementations((*ibc.lightclients.tendermint.v1.Header)(nil), &solomachine.Header{})
+	// interfaceRegistry.RegisterImplementations((*ibcclients.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
 }
