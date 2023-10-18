@@ -5,6 +5,7 @@ import (
 
 	axelarapp "github.com/axelarnetwork/axelar-core/app"
 	codec "github.com/axelarnetwork/axelar-core/app/codec"
+	evmtypes "github.com/axelarnetwork/axelar-core/x/evm/types"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -46,6 +47,7 @@ func SetConfig() {
 func axelarRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	axelarapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 	codec.RegisterLegacyMsgInterfaces(interfaceRegistry)
+	evmtypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
