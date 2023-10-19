@@ -11,7 +11,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
-	picassoapp "github.com/notional-labs/centauri/v4/app"
+	picassoapp "github.com/notional-labs/composable/v6/app"
 )
 
 const (
