@@ -3,7 +3,7 @@ package watcher
 import (
 	"github.com/gogo/protobuf/proto"
 
-	cantoapp "github.com/Canto-Network/Canto/v2/app"
+	cantoapp "github.com/Canto-Network/Canto/v7/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
