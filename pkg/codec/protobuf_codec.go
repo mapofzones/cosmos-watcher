@@ -11,7 +11,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
-	desmosapp "github.com/desmos-labs/desmos/v5/app"
+	desmosapp "github.com/desmos-labs/desmos/v6/app"
 )
 
 const (

@@ -250,7 +250,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/desmos-labs/desmos/v5"
+      - dependency-name: "github.com/desmos-labs/desmos/v6"
 
   - package-ecosystem: "gomod"
     directory: "/"
