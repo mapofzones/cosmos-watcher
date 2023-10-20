@@ -3,10 +3,10 @@ package cosmos
 import (
 	"context"
 
+	"github.com/cometbft/cometbft/rpc/client/http"
+	coretypes "github.com/cometbft/cometbft/rpc/core/types"
+	"github.com/cometbft/cometbft/types"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
-	"github.com/tendermint/tendermint/rpc/client/http"
-	coretypes "github.com/tendermint/tendermint/rpc/coretypes"
-	"github.com/tendermint/tendermint/types"
 )
 
 // Subscribe dials tendermint rpc and returns two streams, one for committed blocks, one for transactions that occurred
