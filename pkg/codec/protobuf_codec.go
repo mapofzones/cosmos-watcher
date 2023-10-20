@@ -1,9 +1,8 @@
 package watcher
 
 import (
-	evmosapp "github.com/evmos/evmos/v13/app"
-	evmtypes2 "github.com/evmos/evmos/v13/encoding/codec"
-	"github.com/gogo/protobuf/proto"
+	evmosapp "github.com/evmos/evmos/v14/app"
+	evmtypes2 "github.com/evmos/evmos/v14/encoding/codec"
 
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -11,13 +10,13 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
+	solomachine "github.com/cosmos/ibc-go/v7/modules/light-clients/06-solomachine"
+	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	impls := getMessageImplementations()
-	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil))
 	evmosRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
@@ -35,20 +34,10 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 
 	interfaceRegistry.RegisterImplementations((*ibcexported.ClientState)(nil), &ibcclients.ClientState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
-}
-
-func getMessageImplementations() []proto.Message {
-	var impls []proto.Message
-	cosmosMessages := getCosmosMessages()
-	impls = append(impls, cosmosMessages...)
-	return impls
-}
-
-func getCosmosMessages() []proto.Message {
-	cosmosMessages := []proto.Message{
-		//&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
-	}
-	return cosmosMessages
+	interfaceRegistry.RegisterImplementations(
+		(*ibcexported.ClientMessage)(nil),
+		&ibcclients.Header{},
+		&solomachine.Header{},
+		&solomachine.Misbehaviour{},
+	)
 }
