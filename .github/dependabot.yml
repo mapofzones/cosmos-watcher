@@ -634,7 +634,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/terra-money/core/v2"
+      - dependency-name: "github.com/classic-terra/core/v2"
 
   - package-ecosystem: "gomod"
     directory: "/"
