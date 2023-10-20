@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	AccountAddressPrefix = "certik"
+	AccountAddressPrefix = "shentu"
 )
 
 var (
