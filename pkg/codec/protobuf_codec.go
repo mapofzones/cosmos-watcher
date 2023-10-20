@@ -9,8 +9,8 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v2/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v2/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
 	panaceaapp "github.com/medibloc/panacea-core/v2/app"
 )
