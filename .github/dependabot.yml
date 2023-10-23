@@ -32,7 +32,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "akash"
+    target-branch: "aura"
     commit-message:
       prefix: "Update"
       include: "scope"
@@ -40,7 +40,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/ovrclk/akash"
+      - dependency-name: "github.com/ovrclk/aura"
 
   - package-ecosystem: "gomod"
     directory: "/"

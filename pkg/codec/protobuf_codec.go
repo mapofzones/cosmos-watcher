@@ -12,11 +12,11 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
-	akashapp "github.com/akash-network/node/app"
+	aura "github.com/aura-nw/aura/app"
 )
 
 const (
-	AccountAddressPrefix = "akash"
+	AccountAddressPrefix = "aura"
 )
 
 var (
@@ -28,10 +28,10 @@ var (
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	//addressConfig()
+	addressConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	akashRegisterInterfaces(interfaceRegistry)
+	auraRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -43,8 +43,8 @@ func addressConfig() {
 	config.Seal()
 }
 
-func akashRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	akashapp.ModuleBasics().RegisterInterfaces(interfaceRegistry)
+func auraRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	aura.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
