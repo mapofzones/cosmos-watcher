@@ -12,11 +12,11 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
-	aura "github.com/aura-nw/aura/app"
+	coreum "github.com/CoreumFoundation/coreum/v2/app"
 )
 
 const (
-	AccountAddressPrefix = "aura"
+	AccountAddressPrefix = "core"
 )
 
 var (
@@ -31,7 +31,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 	addressConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	auraRegisterInterfaces(interfaceRegistry)
+	coreumRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -43,8 +43,8 @@ func addressConfig() {
 	config.Seal()
 }
 
-func auraRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	aura.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func coreumRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	coreum.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
