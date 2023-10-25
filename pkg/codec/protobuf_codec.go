@@ -1,7 +1,7 @@
 package watcher
 
 import (
-	strideapp "github.com/Stride-Labs/stride/v15/app"
+	strideapp "github.com/Stride-Labs/stride/v16/app"
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"

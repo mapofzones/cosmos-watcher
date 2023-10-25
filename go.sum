@@ -225,8 +225,8 @@ github.com/Stride-Labs/cosmos-sdk v0.47.4-stride-distribution-fix-1 h1:AFXHtq6Zb
 github.com/Stride-Labs/cosmos-sdk v0.47.4-stride-distribution-fix-1/go.mod h1:R5n+uM7vguVPFap4pgkdvQCT1nVo/OtPwrlAU40rvok=
 github.com/Stride-Labs/interchain-security/v3 v3.1.0-remove-validation-bug-7d3d9d h1:xKJRWjDVuwc9UfkHJ3Xw7Cs4csRnNzyxW3D4lXqMlvA=
 github.com/Stride-Labs/interchain-security/v3 v3.1.0-remove-validation-bug-7d3d9d/go.mod h1:2fILBgypEZcwR3BSzKDw+EsYtMKv9Z6cYXfouh4xTYU=
-github.com/Stride-Labs/stride/v15 v15.0.0 h1:tAWfIQGww0hjATacslQw97aMTTjfeQkOCPiruPj2W8U=
-github.com/Stride-Labs/stride/v15 v15.0.0/go.mod h1:1+hdPzjAsaYzbCkT9rlYd7+Ct8Ji/LUJcvJvL111Nks=
+github.com/Stride-Labs/stride/v16 v16.0.0 h1:MyNxiKRPXYFLKRrPpPjr3KXJYUUl+03oV0GIc6WPkiw=
+github.com/Stride-Labs/stride/v16 v16.0.0/go.mod h1:0I+YGZ6EiuN8XCbeg+KHpo+gge+RG7+v02kvax5wCN4=
 github.com/Stride-Labs/vesting v1.0.0-check-base-account h1:eFlSH1itTVb0y4DKIlukSzawfwi2XidQ8+gcwZJRxnA=
 github.com/Stride-Labs/vesting v1.0.0-check-base-account/go.mod h1:sR5uUxxee8EhXEyqTmq06y5j2Nku1u9l4GJbxeRjlpw=
 github.com/VividCortex/gohistogram v1.0.0 h1:6+hBz+qvs0JOrrNhhmR7lFxo5sINxBCGXrdtl/UvroE=
