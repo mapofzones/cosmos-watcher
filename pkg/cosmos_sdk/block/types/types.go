@@ -19,7 +19,7 @@ type Block struct {
 	Results      []TxStatus `json:"tx_results"`
 	T            time.Time  `json:"block_time"`
 	BlockResults *ctypes.ResultBlockResults
-	TxsResults   []*abci.ResponseDeliverTx `json:"txs_results"`
+	TxsResults   []*abci.ExecTxResult `json:"txs_results"`
 }
 
 // JSON returns byte slice which represents block in json from

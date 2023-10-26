@@ -23,7 +23,7 @@ func GetBlock(ctx context.Context, client *http.HTTP, N int64) (block.Block, err
 	}
 
 	s := []block.TxStatus{}
-	txRes := []*abci.ResponseDeliverTx{}
+	txRes := []*abci.ExecTxResult{}
 	results, err := client.BlockResults(ctx, &N)
 	if err != nil {
 		for _, tx := range Block.Block.Txs {

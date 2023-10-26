@@ -4,13 +4,13 @@ import (
 	"testing"
 
 	types6 "github.com/cometbft/cometbft/abci/types"
-	connectiontypes "github.com/cosmos/ibc-go/v7/modules/core/03-connection/types"
+	connectiontypes "github.com/cosmos/ibc-go/v6/modules/core/03-connection/types"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestParseIDsFromResults(t *testing.T) {
 	type args struct {
-		txResult       *types6.ResponseDeliverTx
+		txResult       *types6.ExecTxResult
 		expectedEvents []string
 		attributeKeys  []string
 	}
@@ -32,7 +32,7 @@ func TestParseIDsFromResults(t *testing.T) {
 		{
 			"empty_arg_tx_result",
 			args{
-				&types6.ResponseDeliverTx{},
+				&types6.ExecTxResult{},
 				[]string{connectiontypes.EventTypeConnectionOpenInit},
 				[]string{connectiontypes.AttributeKeyConnectionID},
 			},
@@ -41,7 +41,7 @@ func TestParseIDsFromResults(t *testing.T) {
 		{
 			"single_result_id",
 			args{
-				&types6.ResponseDeliverTx{
+				&types6.ExecTxResult{
 					Events: []types6.Event{{
 						Type: connectiontypes.EventTypeConnectionOpenInit,
 						Attributes: []types6.EventAttribute{{
@@ -59,7 +59,7 @@ func TestParseIDsFromResults(t *testing.T) {
 		{
 			"multiple_result_id",
 			args{
-				&types6.ResponseDeliverTx{
+				&types6.ExecTxResult{
 					Events: []types6.Event{
 						{
 							Type: connectiontypes.EventTypeConnectionOpenInit,

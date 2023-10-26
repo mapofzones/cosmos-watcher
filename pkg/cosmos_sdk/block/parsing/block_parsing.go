@@ -14,7 +14,7 @@ import (
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 )
 
-func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {
+func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ExecTxResult, signTx sign.Tx) (watcher.Message, error) {
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
