@@ -10,7 +10,7 @@ replace (
 	// ibc-go with wasm client
 	github.com/cosmos/ibc-go/v7 => github.com/notional-labs/ibc-go/v7 v7.2.1-0.20231010040541-6cf43006971f
 
-	github.com/notional-labs/composable/v6 => github.com/notional-labs/composable-centauri/v6 v6.1.0
+	github.com/notional-labs/composable/v6 => github.com/notional-labs/composable-centauri/v6 v6.2.2
 
 	github.com/strangelove-ventures/packet-forward-middleware/v7 => github.com/notional-labs/packet-forward-middleware/v7 v7.0.0-20231012044505-6ccaddcd4038
 

@@ -768,8 +768,8 @@ github.com/nats-io/nuid v1.0.1/go.mod h1:19wcPz3Ph3q0Jbyiqsd0kePYG7A95tJPxeL+1OS
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
 github.com/notional-labs/alliance v1.0.1-0.20230523105704-66dba9499c01 h1:koCsoc1NGpU8TntXwM/s7Z/whsKNDVPiLim35HLBAzA=
 github.com/notional-labs/alliance v1.0.1-0.20230523105704-66dba9499c01/go.mod h1:GFQ8TsXDMTpu7kif0Dwddz6rxazy0ZJQHfN38ZmAodI=
-github.com/notional-labs/composable-centauri/v6 v6.1.0 h1:PtBL5TMjW7yodN8p0n9ox6kCMVNkJC+CgX4sW5+wCLc=
-github.com/notional-labs/composable-centauri/v6 v6.1.0/go.mod h1:7ydfj9vxnevl+/8KpnaoHs4tmQF3mBEZ5jI5lfCYYKY=
+github.com/notional-labs/composable-centauri/v6 v6.2.2 h1:s6eF2PxbjzZn5LwwzI6IBFOTDgJJ1SHFVCz7vnlHMwU=
+github.com/notional-labs/composable-centauri/v6 v6.2.2/go.mod h1:7ydfj9vxnevl+/8KpnaoHs4tmQF3mBEZ5jI5lfCYYKY=
 github.com/notional-labs/ibc-go/v7 v7.2.1-0.20231010040541-6cf43006971f h1:Uw35VHCdLTsQf8B4UGTjHCR6HqcYFF6dwPW8uJzS0f4=
 github.com/notional-labs/ibc-go/v7 v7.2.1-0.20231010040541-6cf43006971f/go.mod h1:hjcl3RPLSDf0LSXrFyk2iTQCCFs5pfLbJb8h/5gJ2Vg=
 github.com/notional-labs/packet-forward-middleware/v7 v7.0.0-20231012044505-6ccaddcd4038 h1:JFoqbR/ZEtEKlsorh2qrd9DEeSuzxKQk/VjzMNGxdLA=
