@@ -1,8 +1,11 @@
-FROM bitnami/golang:1.19-debian-11 as build
+FROM bitnami/golang:1.21-debian-11 as build
 
 WORKDIR /app
 
 COPY . /app
+
+ENV GOPROXY=proxy.golang.org
+
 
 RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev
 

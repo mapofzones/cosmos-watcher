@@ -15,10 +15,16 @@ import (
 )
 
 func txToMessage(tx types2.Tx, hash string, errCode uint32, txResult *types3.ResponseDeliverTx, signTx sign.Tx) (watcher.Message, error) {
+
 	Tx := watcher.Transaction{
 		Hash:     hash,
 		Accepted: errCode == 0,
-		Sender:   signTx.GetSigners()[0].String(),
+		Sender:   "",
+	}
+
+	signers := signTx.GetSigners()
+	if len(signers) > 0 {
+		Tx.Sender = signers[0].String()
 	}
 
 	for _, msg := range tx.GetMsgs() {
@@ -52,8 +58,10 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 
 	log.Println("height:", b.Height, " txs:", len(b.Txs))
 	block.Txs = make([]watcher.Message, 0, len(b.Txs))
+
 	for i, tx := range b.Txs {
 		decoded, err := decodeTx(cdc, tx)
+
 		if err != nil {
 			return block, err
 		}
@@ -67,6 +75,7 @@ func DecodeBlock(cdc *codec.ProtoCodec, b types.Block) (types.ProcessedBlock, er
 		}
 
 		txMessage, err := txToMessage(stdTx, hex.EncodeToString(tx.Hash()), txErrCode(b, tx.Hash()), b.TxsResults[i], signTx)
+
 		if err != nil {
 			return block, err
 		}

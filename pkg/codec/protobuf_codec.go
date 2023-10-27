@@ -11,11 +11,11 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
-	picassoapp "github.com/notional-labs/composable/v6/app"
+	dydxapp "github.com/dydxprotocol/v4-chain/protocol/app/basic_manager"
 )
 
 const (
-	AccountAddressPrefix = "centauri"
+	AccountAddressPrefix = "dydx"
 )
 
 var (
@@ -43,7 +43,7 @@ func SetConfig() {
 }
 
 func lumRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	picassoapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	dydxapp.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
