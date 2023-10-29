@@ -171,17 +171,15 @@ func parseMsg(msg sdk.Msg, txResult *types6.ExecTxResult, errCode uint32) ([]wat
 
 	// ibc transfer messages
 	case *transfer.MsgTransfer:
-		if msg.SourceChannel != "channel-1" && msg.SourceChannel != "channel-2" {
-			return []watcher.Message{
-				watcher.IBCTransfer{
-					ChannelID: msg.SourceChannel,
-					Sender:    msg.Sender,
-					Recipient: msg.Receiver,
-					Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
-					Source:    true,
-				},
-			}, nil
-		}
+		return []watcher.Message{
+			watcher.IBCTransfer{
+				ChannelID: msg.SourceChannel,
+				Sender:    msg.Sender,
+				Recipient: msg.Receiver,
+				Amount:    sdkCoinsToStruct([]sdk.Coin{msg.Token}),
+				Source:    true,
+			},
+		}, nil
 
 	case *channeltypes.MsgRecvPacket:
 		data := transfer.FungibleTokenPacketData{}
@@ -189,17 +187,15 @@ func parseMsg(msg sdk.Msg, txResult *types6.ExecTxResult, errCode uint32) ([]wat
 		if err != nil {
 			return nil, err
 		}
-		if msg.Packet.DestinationChannel != "channel-1" && msg.Packet.DestinationChannel != "channel-2" {
-			return []watcher.Message{
-				watcher.IBCTransfer{
-					ChannelID: msg.Packet.DestinationChannel,
-					Sender:    data.Sender,
-					Recipient: data.Receiver,
-					Amount:    packetToStruct(data),
-					Source:    false,
-				},
-			}, nil
-		}
+		return []watcher.Message{
+			watcher.IBCTransfer{
+				ChannelID: msg.Packet.DestinationChannel,
+				Sender:    data.Sender,
+				Recipient: data.Receiver,
+				Amount:    packetToStruct(data),
+				Source:    false,
+			},
+		}, nil
 	}
 
 	return []watcher.Message{}, nil
