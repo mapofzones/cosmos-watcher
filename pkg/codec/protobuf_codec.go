@@ -11,6 +11,7 @@ import (
 	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
 
 	celestia "github.com/celestiaorg/celestia-app/app"
+	celestiaBlobTypes "github.com/celestiaorg/celestia-app/x/blob/types"
 )
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
@@ -21,6 +22,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 
 func celestiaRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	celestia.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	celestiaBlobTypes.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
