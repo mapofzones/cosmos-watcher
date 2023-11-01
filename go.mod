@@ -1,8 +1,6 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.21.1
-
-toolchain go1.21.3
+go 1.21.3
 
 replace (
 	github.com/cosmos/cosmos-sdk => github.com/celestiaorg/cosmos-sdk v1.18.3-sdk-v0.46.14

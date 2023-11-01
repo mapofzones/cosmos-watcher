@@ -17,8 +17,14 @@ import (
 var DecodeErr = errors.New("could not decode tx")
 
 func decodeTx(codec *codec.ProtoCodec, tx types.Tx) (sdk.Tx, error) {
+
 	txInterface, err := auth2.DefaultTxDecoder(codec)(tx)
+
 	if err != nil {
+		if blobTx, isBlobTx := types.UnmarshalBlobTx(tx); isBlobTx {
+			return decodeTx(codec, blobTx.GetTx())
+		}
+
 		log.Println(err)
 		return auth.StdTx{}, DecodeErr
 	}
