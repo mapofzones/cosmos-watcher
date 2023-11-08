@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN CGO_ENABLED=0 go build -tags 'secretcli' -o watcher ./cmd/watcher/main.go
+RUN go build -tags 'secretcli' -o watcher ./cmd/watcher/main.go
 
 FROM alpine:latest as production
 
