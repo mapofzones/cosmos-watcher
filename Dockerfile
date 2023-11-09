@@ -1,18 +1,20 @@
-FROM golang:latest as build 
+FROM bitnami/golang:1.20-debian-11 as build 
+
+ENV GOPROXY=https://proxy.golang.org
 
 WORKDIR /app
 
 COPY . /app
 
-RUN CGO_ENABLED=0 go build -o watcher ./cmd/watcher/main.go
+RUN go build -o watcher ./cmd/watcher/main.go
 
-FROM alpine:latest as production
+FROM ubuntu:latest as production
 
-RUN apk add curl jq coreutils
-RUN apk add --no-cache bash
+RUN apt-get update && apt-get install -y curl jq coreutils dos2unix
 WORKDIR /app
 
 COPY --from=build /app/watcher  /app/watcher
-COPY scripts/run.sh /run.sh
+COPY --from=build /app/scripts/run.sh /run.sh
 
-CMD /run.sh
+RUN dos2unix /run.sh
+CMD ["/run.sh"]
