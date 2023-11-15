@@ -1,5 +1,7 @@
 FROM bitnami/golang:1.21-debian-11 as build
 
+ENV GOPROXY=https://proxy.golang.org
+
 WORKDIR /app
 
 COPY . /app
