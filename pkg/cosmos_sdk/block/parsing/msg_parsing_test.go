@@ -3,9 +3,9 @@ package cosmos
 import (
 	"testing"
 
-	connectiontypes "github.com/cosmos/ibc-go/v4/modules/core/03-connection/types"
+	types6 "github.com/cometbft/cometbft/abci/types"
+	connectiontypes "github.com/cosmos/ibc-go/v7/modules/core/03-connection/types"
 	"github.com/stretchr/testify/assert"
-	types6 "github.com/tendermint/tendermint/abci/types"
 )
 
 func TestParseIDsFromResults(t *testing.T) {
