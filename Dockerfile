@@ -1,5 +1,13 @@
 FROM bitnami/golang:1.18-debian-10 as build
 
+ARG GITHUB_USERNAME
+ARG GITHUB_TOKEN
+ARG GITHUB_REPO_PATH
+
+RUN git config --global \
+    url."https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_REPO_PATH}".insteadOf \
+    "https://github.com/${GITHUB_REPO_PATH}"
+    
 WORKDIR /app
 
 COPY . /app
