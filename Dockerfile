@@ -1,5 +1,7 @@
 FROM bitnami/golang:1.18-debian-10 as build
     
+RUN git config --global url."git@github.com:".insteadOf https://github.com/
+
 WORKDIR /app
 
 COPY . /app

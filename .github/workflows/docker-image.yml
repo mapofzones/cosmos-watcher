@@ -13,18 +13,16 @@ jobs:
         go: [ '1.18']
     steps:
     - uses: actions/checkout@v2
-    - name: Setup go
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{ matrix.go }}
-        
+
     - uses: webfactory/ssh-agent@v0.8.0
       with:
         ssh-private-key: ${{ secrets.GO_MODULE_PRIVATE_KEY }}
         
-    - name: Setup access for private go modules
-      run: git config --global url."ssh://git@github.com/".insteadOf https://github.com/
-
+    - name: Setup go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go }}
+              
     - name: run tests
       run: go test -json ./... > test.json
     - name: Annotate tests
