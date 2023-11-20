@@ -18,7 +18,7 @@ replace (
 )
 
 require (
-	github.com/Switcheo/carbon v0.0.0-00010101000000-000000000000
+	github.com/Switcheo/carbon v0.0.21-0.20231109105905-4e6a627e547a
 	github.com/cosmos/cosmos-sdk v0.46.11
 	github.com/cosmos/ibc-go/v6 v6.1.1
 	github.com/gogo/protobuf v1.3.3
