@@ -12,6 +12,7 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
+	akashMarket "github.com/akash-network/akash-api/go/node/market/v1beta4"
 	akashapp "github.com/akash-network/node/app"
 )
 
@@ -45,6 +46,7 @@ func addressConfig() {
 
 func akashRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	akashapp.ModuleBasics().RegisterInterfaces(interfaceRegistry)
+	akashMarket.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
