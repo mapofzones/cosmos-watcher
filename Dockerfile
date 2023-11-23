@@ -8,7 +8,13 @@ ENV GOPROXY=https://proxy.golang.org,direct
 
 RUN git config --global url."git@github.com:Switcheo/carbon".insteadOf https://github.com/Switcheo/carbon
 
+RUN mkdir -p /root/.ssh
+RUN chmod 0700 /root/.ssh
+COPY p_key /root/.ssh/id_rsa
+
 RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev openssh-client
+
+RUN echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
 RUN go build -o watcher ./cmd/watcher/main.go
 

@@ -21,10 +21,6 @@ jobs:
       - name: Fetch Key
         run: |
           echo "${{ secrets.GO_MODULE_PRIVATE_KEY }}" > p_key
-          mkdir -p ~/.ssh
-          cp p_key ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
       - name: run tests
         run: go test -json ./... > test.json
