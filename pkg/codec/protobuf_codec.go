@@ -12,6 +12,7 @@ import (
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
 	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
+	ethermintcryptocodec "github.com/evmos/ethermint/crypto/codec"
 )
 
 const (
@@ -44,6 +45,7 @@ func addressConfig() {
 
 func carbonRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	carbon.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	ethermintcryptocodec.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
