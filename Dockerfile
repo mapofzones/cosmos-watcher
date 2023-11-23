@@ -1,16 +1,16 @@
-FROM bitnami/golang:1.18-debian-10 as build
+FROM bitnami/golang:1.20-debian-11 as build
     
-RUN git config --global url."git@github.com:".insteadOf https://github.com/
-
 WORKDIR /app
 
 COPY . /app
 
-RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev
+ENV GOPROXY=https://proxy.golang.org,direct
+
+RUN git config --global url."git@github.com:Switcheo/carbon".insteadOf https://github.com/Switcheo/carbon
+
+RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev openssh-client
 
 RUN go build -o watcher ./cmd/watcher/main.go
-
-RUN ls -la /app
 
 FROM ubuntu:latest as production
 

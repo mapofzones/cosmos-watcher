@@ -2,58 +2,58 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ carbon ]
+    branches: [carbon]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [ '1.18']
+        go: ['1.20']
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: ${{ secrets.GO_MODULE_PRIVATE_KEY }}
-        
-    - name: Setup go
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{ matrix.go }}
-              
-    - name: run tests
-      run: go test -json ./... > test.json
-    - name: Annotate tests
-      if: always()
-      uses: guyarb/golang-test-annoations@v0.3.0
-      with:
-        test-results: test.json
-        package-name: foobar # optional, if using custom package name, github.com/owner/repo stripped from the pathname by default
-    - name: GitHub Action for DigitalOcean - doctl
-      # You may pin to the exact commit or the version.
-      # uses: digitalocean/action-doctl@7f3a9967e5f7b8f4581cf10e6891535614f36850
-      uses: digitalocean/action-doctl@v2.1.0
-      with:
-        # Version of doctl to install
-#         version: # optional, default is latest
-        # DigitalOcean API Token
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-    # Build docker image and publish
-    - name: DigitalOcean Docker Image Publish
-      # You may pin to the exact commit or the version.
-      # uses: ripplr-io/docr-docker-publish@4b4d57000d6e16fe589b3cea2d491830b9d7da87
-      uses: ripplr-io/docr-docker-publish@v1
-      with:
-        # Image path in the format registry-name/image-name
-        image_path: ${{ secrets.IMAGE_PATH_CARBON }}
-        # Number of characters from the commit SHA
-        sha_size: 8 # optional, default is 8
-    - name: Notify Telegram
-      uses: yanzay/notify-telegram@v0.1.0
-      if: always()
-      with:
-        chat: ${{ secrets.chat }} # user id or channel name secret
-        token: ${{ secrets.token }} # token secret
-        status: ${{ job.status }} # do not modify this line
+      - name: Setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Fetch Key
+        run: |
+          echo "${{ secrets.GO_MODULE_PRIVATE_KEY }}" > p_key
+          mkdir -p ~/.ssh
+          cp p_key ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+
+      - name: run tests
+        run: go test -json ./... > test.json
+
+      - name: Annotate tests
+        if: always()
+        uses: guyarb/golang-test-annoations@v0.3.0
+        with:
+          test-results: test.json
+          package-name: foobar # optional, if using custom package name, github.com/owner/repo stripped from the pathname by default
+
+      - name: GitHub Action for DigitalOcean - doctl
+        uses: digitalocean/action-doctl@v2.1.0
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: DigitalOcean Docker Image Publish
+        uses: ripplr-io/docr-docker-publish@v1
+        with:
+          image_path: ${{ secrets.IMAGE_PATH_CARBON }}
+          sha_size: 8 # optional, default is 8
+
+      - name: Notify Telegram
+        uses: yanzay/notify-telegram@v0.1.0
+        if: always()
+        with:
+          chat: ${{ secrets.chat }}
+          token: ${{ secrets.token }}
+          status: ${{ job.status }}
+
+      - name: Clean Up
+        run: rm p_key
