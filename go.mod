@@ -3,18 +3,18 @@ module github.com/mapofzones/cosmos-watcher
 go 1.19
 
 replace (
-	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.45.15
-	github.com/evmos/ethermint => github.com/evmos/ethermint v0.19.3
+	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.45.16
+	github.com/evmos/ethermint => github.com/althea-net/ethermint v0.19.8
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/tendermint/tendermint => github.com/cometbft/cometbft v0.34.27
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
 
 require (
-	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20230502173705-38360b0ca7b9
-	github.com/cosmos/cosmos-sdk v0.45.15
-	github.com/cosmos/ibc-go/v3 v3.4.0
-	github.com/evmos/ethermint v0.19.3
+	github.com/Gravity-Bridge/Gravity-Bridge/module v1.4.2-0.20231114005316-d8f348d6035d
+	github.com/cosmos/cosmos-sdk v0.45.16
+	github.com/cosmos/ibc-go/v4 v4.3.1
+	github.com/evmos/ethermint v0.19.8
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.1
@@ -34,7 +34,7 @@ require (
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/VictoriaMetrics/fastcache v1.6.0 // indirect
-	github.com/althea-net/bech32-ibc v0.4.2 // indirect
+	github.com/althea-net/bech32-ibc v0.4.5 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bgentry/speakeasy v0.1.1-0.20220910012023-760eaf8b6816 // indirect

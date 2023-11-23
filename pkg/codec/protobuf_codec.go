@@ -10,40 +10,19 @@ import (
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v3/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v3/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
+	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
 	etherapp "github.com/evmos/ethermint/app"
 	ethercodec "github.com/evmos/ethermint/crypto/codec"
 	ethertypes "github.com/evmos/ethermint/types"
 )
 
-const (
-	AccountAddressPrefix = "gravity"
-)
-
-var (
-	AccountPubKeyPrefix    = AccountAddressPrefix + "pub"
-	ValidatorAddressPrefix = AccountAddressPrefix + "valoper"
-	ValidatorPubKeyPrefix  = AccountAddressPrefix + "valoperpub"
-	ConsNodeAddressPrefix  = AccountAddressPrefix + "valcons"
-	ConsNodePubKeyPrefix   = AccountAddressPrefix + "valconspub"
-)
-
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	SetConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
 	gravityRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
-}
-
-func SetConfig() {
-	config := cosmostypes.GetConfig()
-	config.SetBech32PrefixForAccount(AccountAddressPrefix, AccountPubKeyPrefix)
-	config.SetBech32PrefixForValidator(ValidatorAddressPrefix, ValidatorPubKeyPrefix)
-	config.SetBech32PrefixForConsensusNode(ConsNodeAddressPrefix, ConsNodePubKeyPrefix)
-	config.Seal()
 }
 
 func gravityRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {

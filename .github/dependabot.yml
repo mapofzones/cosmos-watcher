@@ -320,7 +320,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/Gravity-Bridge/Gravity-Bridge/module"
+      - dependency-name: "github.com/Gravity-Bridge/Gravity-Bridge"
 
   - package-ecosystem: "gomod"
     directory: "/"
