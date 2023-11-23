@@ -11,6 +11,7 @@ RUN git config --global url."git@github.com:Switcheo/carbon".insteadOf https://g
 RUN mkdir -p /root/.ssh
 RUN chmod 0700 /root/.ssh
 COPY p_key /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
 
 RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev openssh-client
 
