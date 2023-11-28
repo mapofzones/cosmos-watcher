@@ -1,17 +1,19 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.18
+go 1.20
 
 replace (
+	github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
+	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-	github.com/tendermint/tendermint => github.com/cometbft/cometbft v0.34.27
+	github.com/tendermint/tendermint => github.com/cometbft/cometbft v0.34.29
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
 
 require (
-	github.com/CoreumFoundation/coreum/v2 v2.0.2
+	github.com/commercionetwork/commercionetwork v1.5.1-0.20230709075118-2e4ebe77cd09 // v5.0.0
 	github.com/cosmos/cosmos-sdk v0.45.16
-	github.com/cosmos/ibc-go/v4 v4.3.1
+	github.com/cosmos/ibc-go/v4 v4.4.2
 	github.com/gogo/protobuf v1.3.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.4
@@ -26,9 +28,9 @@ require (
 	filippo.io/edwards25519 v1.0.0-rc.1 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
-	github.com/ChainSafe/go-schnorrkel v0.0.0-20200405005733-88cbf1b4c40d // indirect
-	github.com/CosmWasm/wasmd v0.30.0 // indirect
-	github.com/CosmWasm/wasmvm v1.1.2 // indirect
+	github.com/ChainSafe/go-schnorrkel v1.0.0 // indirect
+	github.com/CosmWasm/wasmd v0.31.0 // indirect
+	github.com/CosmWasm/wasmvm v1.2.3 // indirect
 	github.com/DataDog/zstd v1.5.0 // indirect
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/Workiva/go-datastructures v1.0.53 // indirect
@@ -48,9 +50,9 @@ require (
 	github.com/confio/ics23/go v0.9.0 // indirect
 	github.com/cosmos/btcutil v1.0.4 // indirect
 	github.com/cosmos/cosmos-db v0.0.0-20221226095112-f3c38ecb5e32 // indirect
-	github.com/cosmos/cosmos-proto v1.0.0-beta.1 // indirect
+	github.com/cosmos/cosmos-proto v1.0.0-beta.2 // indirect
 	github.com/cosmos/go-bip39 v1.0.0 // indirect
-	github.com/cosmos/gogoproto v1.4.3 // indirect
+	github.com/cosmos/gogoproto v1.4.6 // indirect
 	github.com/cosmos/gorocksdb v1.2.0 // indirect
 	github.com/cosmos/iavl v0.19.5 // indirect
 	github.com/cosmos/ledger-cosmos-go v0.12.2 // indirect
@@ -125,7 +127,6 @@ require (
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/rs/cors v1.8.2 // indirect
 	github.com/rs/zerolog v1.27.0 // indirect
-	github.com/samber/lo v1.35.0 // indirect
 	github.com/sasha-s/go-deadlock v0.3.1 // indirect
 	github.com/spf13/afero v1.9.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
@@ -142,7 +143,7 @@ require (
 	github.com/zondax/ledger-go v0.14.1 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
-	golang.org/x/exp v0.0.0-20221019170559-20944726eadf // indirect
+	golang.org/x/exp v0.0.0-20230131160201-f062dba9d201 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/term v0.8.0 // indirect
@@ -156,4 +157,11 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	nhooyr.io/websocket v1.8.6 // indirect
+)
+
+require (
+	github.com/gofrs/uuid v4.3.0+incompatible // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
+	github.com/tendermint/spm v0.0.0-20210524110815-6d7452d2dc4a // indirect
 )

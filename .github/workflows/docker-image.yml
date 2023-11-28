@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ coreum ]
+    branches: [ commercio ]
 
 jobs:
 
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [ '1.18']
+        go: [ '1.20']
     steps:
     - uses: actions/checkout@v2
     - name: Setup go
@@ -41,7 +41,7 @@ jobs:
       uses: ripplr-io/docr-docker-publish@v1
       with:
         # Image path in the format registry-name/image-name
-        image_path: ${{ secrets.IMAGE_PATH_COREUM }}
+        image_path: ${{ secrets.IMAGE_PATH_COMMERCIO }}
         # Number of characters from the commit SHA
         sha_size: 8 # optional, default is 8
     - name: Notify Telegram
