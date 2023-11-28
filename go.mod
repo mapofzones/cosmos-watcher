@@ -14,7 +14,6 @@ require (
 	github.com/cosmos/cosmos-sdk v0.46.11
 	github.com/cosmos/ibc-go/v6 v6.1.1
 	github.com/evmos/ethermint v0.21.0
-	github.com/gogo/protobuf v1.3.3
 	github.com/realiotech/realio-network v0.8.3
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.4
@@ -75,6 +74,7 @@ require (
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/godbus/dbus v0.0.0-20190726142602-4481cbc300e2 // indirect
 	github.com/gogo/gateway v1.1.0 // indirect
+	github.com/gogo/protobuf v1.3.3 // indirect
 	github.com/golang/glog v1.1.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect

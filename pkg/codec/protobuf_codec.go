@@ -11,6 +11,7 @@ import (
 	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
 
 	ethermintcryptocodec "github.com/evmos/ethermint/crypto/codec"
+	etherminttypes "github.com/evmos/ethermint/types"
 	realio "github.com/realiotech/realio-network/app"
 )
 
@@ -43,6 +44,7 @@ func addressConfig() {
 
 func realioRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	realio.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	etherminttypes.RegisterInterfaces(interfaceRegistry)
 	ethermintcryptocodec.RegisterInterfaces(interfaceRegistry)
 }
 
