@@ -32,7 +32,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "commercio"
+    target-branch: "echelon"
     commit-message:
       prefix: "Update"
       include: "scope"
@@ -40,7 +40,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/ovrclk/commercio"
+      - dependency-name: "github.com/ovrclk/echelon"
 
   - package-ecosystem: "gomod"
     directory: "/"
