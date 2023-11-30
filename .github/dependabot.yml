@@ -32,7 +32,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "onomy"
+    target-branch: "sge"
     commit-message:
       prefix: "Update"
       include: "scope"
@@ -40,7 +40,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/ovrclk/onomy"
+      - dependency-name: "github.com/ovrclk/sge"
 
   - package-ecosystem: "gomod"
     directory: "/"

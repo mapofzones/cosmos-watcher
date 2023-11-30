@@ -2,14 +2,15 @@ package cosmos
 
 import (
 	"errors"
-	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	"log"
+
+	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/tendermint/tendermint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	auth "github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
+	auth "github.com/cosmos/cosmos-sdk/x/auth/migrations/legacytx"
 	auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
 )
 
