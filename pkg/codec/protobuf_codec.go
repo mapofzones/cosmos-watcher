@@ -1,8 +1,6 @@
 package watcher
 
 import (
-	"github.com/gogo/protobuf/proto"
-
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
@@ -12,11 +10,11 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
-	onomy "github.com/onomyprotocol/onomy/app"
+	passage "github.com/envadiv/Passage3D/app"
 )
 
 const (
-	AccountAddressPrefix = "onomy"
+	AccountAddressPrefix = "pasg"
 )
 
 var (
@@ -29,9 +27,8 @@ var (
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	addressConfig()
-	impls := getMessageImplementations()
-	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	onomyRegisterInterfaces(interfaceRegistry)
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil))
+	passageRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -43,8 +40,8 @@ func addressConfig() {
 	config.Seal()
 }
 
-func onomyRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	onomy.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func passageRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	passage.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
@@ -57,18 +54,4 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
-}
-
-func getMessageImplementations() []proto.Message {
-	var impls []proto.Message
-	cosmosMessages := getCosmosMessages()
-	impls = append(impls, cosmosMessages...)
-	return impls
-}
-
-func getCosmosMessages() []proto.Message {
-	cosmosMessages := []proto.Message{
-		//&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
-	}
-	return cosmosMessages
 }
