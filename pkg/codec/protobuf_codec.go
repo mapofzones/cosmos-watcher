@@ -12,11 +12,11 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v4/modules/light-clients/07-tendermint/types"
 
-	onomy "github.com/onomyprotocol/onomy/app"
+	source "github.com/Source-Protocol-Cosmos/source/v3/app"
 )
 
 const (
-	AccountAddressPrefix = "onomy"
+	AccountAddressPrefix = "source"
 )
 
 var (
@@ -31,7 +31,7 @@ func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegi
 	addressConfig()
 	impls := getMessageImplementations()
 	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	onomyRegisterInterfaces(interfaceRegistry)
+	sourceRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -43,8 +43,8 @@ func addressConfig() {
 	config.Seal()
 }
 
-func onomyRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	onomy.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func sourceRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	source.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
