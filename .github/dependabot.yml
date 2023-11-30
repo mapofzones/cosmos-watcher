@@ -32,7 +32,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "passage"
+    target-branch: "provenance"
     commit-message:
       prefix: "Update"
       include: "scope"
@@ -40,7 +40,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/ovrclk/passage"
+      - dependency-name: "github.com/ovrclk/provenance"
 
   - package-ecosystem: "gomod"
     directory: "/"
