@@ -1,22 +1,21 @@
 package watcher
 
 import (
-	"github.com/gogo/protobuf/proto"
-
 	cosmoscodectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cosmoscryptoed "github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	cosmoscryptomultisig "github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	cosmoscryptosecp "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cosmoscryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	cosmostypes "github.com/cosmos/cosmos-sdk/types"
-	ibcexported "github.com/cosmos/ibc-go/v5/modules/core/exported"
-	ibcclients "github.com/cosmos/ibc-go/v5/modules/light-clients/07-tendermint/types"
+	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
+	solomachine "github.com/cosmos/ibc-go/v7/modules/light-clients/06-solomachine"
+	ibcclients "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 
-	sge "github.com/sge-network/sge/app"
+	ununifi "github.com/UnUniFi/chain/app"
 )
 
 const (
-	AccountAddressPrefix = "sge"
+	AccountAddressPrefix = "ununifi"
 )
 
 var (
@@ -29,9 +28,8 @@ var (
 
 func RegisterInterfacesAndImpls(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	addressConfig()
-	impls := getMessageImplementations()
-	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil), impls...)
-	sgeRegisterInterfaces(interfaceRegistry)
+	interfaceRegistry.RegisterImplementations((*cosmostypes.Msg)(nil))
+	ununifiRegisterInterfaces(interfaceRegistry)
 	registerTypes(interfaceRegistry)
 }
 
@@ -43,8 +41,8 @@ func addressConfig() {
 	config.Seal()
 }
 
-func sgeRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
-	sge.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+func ununifiRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
+	ununifi.ModuleBasics.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
@@ -55,20 +53,10 @@ func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // to
 
 	interfaceRegistry.RegisterImplementations((*ibcexported.ClientState)(nil), &ibcclients.ClientState{})
 	interfaceRegistry.RegisterImplementations((*ibcexported.ConsensusState)(nil), &ibcclients.ConsensusState{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Header)(nil), &ibcclients.Header{})
-	interfaceRegistry.RegisterImplementations((*ibcexported.Misbehaviour)(nil), &ibcclients.Misbehaviour{})
-}
-
-func getMessageImplementations() []proto.Message {
-	var impls []proto.Message
-	cosmosMessages := getCosmosMessages()
-	impls = append(impls, cosmosMessages...)
-	return impls
-}
-
-func getCosmosMessages() []proto.Message {
-	cosmosMessages := []proto.Message{
-		//&cosmostypes.ServiceMsg{}, // do i need it? cosmostypes.RegisterInterfaces don't exist ServiceMsg
-	}
-	return cosmosMessages
+	interfaceRegistry.RegisterImplementations(
+		(*ibcexported.ClientMessage)(nil),
+		&ibcclients.Header{},
+		&solomachine.Header{},
+		&solomachine.Misbehaviour{},
+	)
 }

@@ -32,7 +32,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "sge"
+    target-branch: "ununifi"
     commit-message:
       prefix: "Update"
       include: "scope"
@@ -40,7 +40,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/ovrclk/sge"
+      - dependency-name: "github.com/ovrclk/ununifi"
 
   - package-ecosystem: "gomod"
     directory: "/"
