@@ -6,8 +6,8 @@ import (
 
 	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"
 
+	"github.com/cometbft/cometbft/types"
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/tendermint/tendermint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	auth2 "github.com/cosmos/cosmos-sdk/x/auth/tx"
