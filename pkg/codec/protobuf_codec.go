@@ -10,6 +10,7 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
 	ibcclients "github.com/cosmos/ibc-go/v6/modules/light-clients/07-tendermint/types"
 
+	provenancev1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	provenance "github.com/provenance-io/provenance/app"
 )
 
@@ -42,6 +43,7 @@ func addressConfig() {
 
 func provenanceRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	provenance.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	provenancev1beta1.RegisterInterfaces(interfaceRegistry)
 }
 
 func registerTypes(interfaceRegistry cosmoscodectypes.InterfaceRegistry) { // todo: need to nest. Maybe we can remove it. Old code
