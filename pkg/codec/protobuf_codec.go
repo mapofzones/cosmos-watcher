@@ -12,6 +12,7 @@ import (
 
 	echelon "github.com/echelonfoundation/echelon/v3/app"
 	ethermintcrypto "github.com/tharsis/ethermint/crypto/codec"
+	etherminttypes "github.com/tharsis/ethermint/types"
 )
 
 const (
@@ -43,6 +44,7 @@ func addressConfig() {
 
 func echelonRegisterInterfaces(interfaceRegistry cosmoscodectypes.InterfaceRegistry) {
 	echelon.ModuleBasics.RegisterInterfaces(interfaceRegistry)
+	etherminttypes.RegisterInterfaces(interfaceRegistry)
 	ethermintcrypto.RegisterInterfaces(interfaceRegistry)
 }
 
