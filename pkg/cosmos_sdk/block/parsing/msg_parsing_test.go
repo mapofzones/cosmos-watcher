@@ -41,10 +41,16 @@ func TestParseIDsFromResults(t *testing.T) {
 		{
 			"single_result_id",
 			args{
-				&types6.ResponseDeliverTx{Events: []types6.Event{{
-					connectiontypes.EventTypeConnectionOpenInit,
-					[]types6.EventAttribute{{[]byte(connectiontypes.AttributeKeyConnectionID), []byte("myConnectionID"), true}},
-				}}},
+				&types6.ResponseDeliverTx{
+					Events: []types6.Event{{
+						Type: connectiontypes.EventTypeConnectionOpenInit,
+						Attributes: []types6.EventAttribute{{
+							Key:   []byte(connectiontypes.AttributeKeyConnectionID),
+							Value: []byte("myConnectionID"),
+							Index: true,
+						}},
+					}},
+				},
 				[]string{connectiontypes.EventTypeConnectionOpenInit},
 				[]string{connectiontypes.AttributeKeyConnectionID},
 			},
@@ -53,24 +59,40 @@ func TestParseIDsFromResults(t *testing.T) {
 		{
 			"multiple_result_id",
 			args{
-				&types6.ResponseDeliverTx{Events: []types6.Event{
-					{
-						connectiontypes.EventTypeConnectionOpenInit,
-						[]types6.EventAttribute{
-							{[]byte(connectiontypes.AttributeKeyConnectionID), []byte("myConnectionID"), true},
-							{[]byte(connectiontypes.AttributeKeyClientID), []byte("myClientID"), true},
+				&types6.ResponseDeliverTx{
+					Events: []types6.Event{
+						{
+							Type: connectiontypes.EventTypeConnectionOpenInit,
+							Attributes: []types6.EventAttribute{
+								{
+									Key:   []byte(connectiontypes.AttributeKeyConnectionID),
+									Value: []byte("myConnectionID"),
+									Index: true,
+								},
+								{
+									Key:   []byte(connectiontypes.AttributeKeyClientID),
+									Value: []byte("myClientID"),
+									Index: true,
+								},
+							},
+						},
+						{
+							Type: connectiontypes.EventTypeConnectionOpenTry,
+							Attributes: []types6.EventAttribute{
+								{
+									Key:   []byte(connectiontypes.AttributeKeyCounterpartyClientID),
+									Value: []byte("myCounterpartyClientID"),
+									Index: true,
+								},
+								{
+									Key:   []byte(connectiontypes.AttributeKeyCounterpartyConnectionID),
+									Value: []byte("myCounterpartyConnectionID"),
+									Index: true,
+								},
+							},
 						},
 					},
-					{
-						connectiontypes.EventTypeConnectionOpenTry,
-						[]types6.EventAttribute{
-							{[]byte(connectiontypes.AttributeKeyCounterpartyClientID), []byte("myCounterpartyClientID"), true},
-							{[]byte(connectiontypes.AttributeKeyCounterpartyConnectionID), []byte("myCounterpartyConnectionID"), true},
-						},
-					},
-				}},
-				[]string{connectiontypes.EventTypeConnectionOpenInit, connectiontypes.EventTypeConnectionOpenTry},
-				[]string{connectiontypes.AttributeKeyConnectionID, connectiontypes.AttributeKeyCounterpartyConnectionID},
+				}, []string{connectiontypes.EventTypeConnectionOpenInit, connectiontypes.EventTypeConnectionOpenTry}, []string{connectiontypes.AttributeKeyConnectionID, connectiontypes.AttributeKeyCounterpartyConnectionID},
 			},
 			[]string{"myConnectionID", "myCounterpartyConnectionID"},
 		},
