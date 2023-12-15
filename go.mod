@@ -13,7 +13,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.45.11
 	github.com/cosmos/ibc-go/v4 v4.2.1
 	github.com/gogo/protobuf v1.3.3
-	github.com/shentufoundation/shentu/v2 v2.8.0
+	github.com/shentufoundation/shentu/v2 v2.9.0
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.2
 	github.com/tendermint/go-amino v0.16.0
