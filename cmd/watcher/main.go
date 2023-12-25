@@ -28,7 +28,7 @@ func main() {
 	}
 
 	// initiate tendermint client for fetching blocks
-	client, err := http.New(fullNodeJsonRpcAddress)
+	client, err := http.New(fullNodeJsonRpcAddress, "/websocket")
 	if err != nil {
 		log.Fatal(err)
 	}
