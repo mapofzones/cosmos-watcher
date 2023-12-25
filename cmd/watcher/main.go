@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cometbft/cometbft/rpc/client/http"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg"
 	cosmos "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block"
 	"github.com/mapofzones/cosmos-watcher/pkg/rabbitmq"
-	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
 func main() {

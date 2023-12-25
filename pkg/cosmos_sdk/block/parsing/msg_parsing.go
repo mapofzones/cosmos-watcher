@@ -3,9 +3,7 @@ package cosmos
 import (
 	"encoding/json"
 	"errors"
-	types6 "github.com/tendermint/tendermint/abci/types"
-	"math/big"
-
+	types6 "github.com/cometbft/cometbft/abci/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/x/bank/types"
 	transfer "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
@@ -16,6 +14,7 @@ import (
 	types7 "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
 	"log"
+	"math/big"
 )
 
 type attributeFiler struct {
