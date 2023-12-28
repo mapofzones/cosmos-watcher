@@ -1,4 +1,6 @@
-FROM bitnami/golang:1.18-debian-10 as build
+FROM bitnami/golang:1.20-debian-11 as build
+
+ENV GOPROXY=https://goproxy.cn,direct
 
 WORKDIR /app
 

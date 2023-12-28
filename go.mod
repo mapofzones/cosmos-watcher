@@ -1,6 +1,6 @@
 module github.com/mapofzones/cosmos-watcher
 
-go 1.18
+go 1.20
 
 replace (
 	github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
