@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"log"
 
-	types3 "github.com/cometbft/cometbft/abci/types"
 	"github.com/cosmos/cosmos-sdk/codec"
+	types3 "github.com/tendermint/tendermint/abci/types"
 
 	types2 "github.com/cosmos/cosmos-sdk/types"
 	sign "github.com/cosmos/cosmos-sdk/x/auth/signing"

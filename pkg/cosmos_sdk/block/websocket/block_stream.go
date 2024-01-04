@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/cometbft/cometbft/rpc/client/http"
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
+	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
 func init() {

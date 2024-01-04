@@ -3,9 +3,9 @@ package cosmos
 import (
 	"testing"
 
-	types6 "github.com/cometbft/cometbft/abci/types"
-	connectiontypes "github.com/cosmos/ibc-go/v7/modules/core/03-connection/types"
+	connectiontypes "github.com/cosmos/ibc-go/v2/modules/core/03-connection/types"
 	"github.com/stretchr/testify/assert"
+	types6 "github.com/tendermint/tendermint/abci/types"
 )
 
 func TestParseIDsFromResults(t *testing.T) {
@@ -45,8 +45,8 @@ func TestParseIDsFromResults(t *testing.T) {
 					Events: []types6.Event{{
 						Type: connectiontypes.EventTypeConnectionOpenInit,
 						Attributes: []types6.EventAttribute{{
-							Key:   connectiontypes.AttributeKeyConnectionID,
-							Value: "myConnectionID",
+							Key:   []byte(connectiontypes.AttributeKeyConnectionID),
+							Value: []byte("myConnectionID"),
 							Index: true,
 						}},
 					}},
@@ -65,13 +65,13 @@ func TestParseIDsFromResults(t *testing.T) {
 							Type: connectiontypes.EventTypeConnectionOpenInit,
 							Attributes: []types6.EventAttribute{
 								{
-									Key:   connectiontypes.AttributeKeyConnectionID,
-									Value: "myConnectionID",
+									Key:   []byte(connectiontypes.AttributeKeyConnectionID),
+									Value: []byte("myConnectionID"),
 									Index: true,
 								},
 								{
-									Key:   connectiontypes.AttributeKeyClientID,
-									Value: "myClientID",
+									Key:   []byte(connectiontypes.AttributeKeyClientID),
+									Value: []byte("myClientID"),
 									Index: true,
 								},
 							},
@@ -80,13 +80,13 @@ func TestParseIDsFromResults(t *testing.T) {
 							Type: connectiontypes.EventTypeConnectionOpenTry,
 							Attributes: []types6.EventAttribute{
 								{
-									Key:   connectiontypes.AttributeKeyCounterpartyClientID,
-									Value: "myCounterpartyClientID",
+									Key:   []byte(connectiontypes.AttributeKeyCounterpartyClientID),
+									Value: []byte("myCounterpartyClientID"),
 									Index: true,
 								},
 								{
-									Key:   connectiontypes.AttributeKeyCounterpartyConnectionID,
-									Value: "myCounterpartyConnectionID",
+									Key:   []byte(connectiontypes.AttributeKeyCounterpartyConnectionID),
+									Value: []byte("myCounterpartyConnectionID"),
 									Index: true,
 								},
 							},

@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 
-	"github.com/cometbft/cometbft/rpc/client/http"
 	codec "github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	blockcodec "github.com/mapofzones/cosmos-watcher/pkg/codec"
@@ -13,6 +12,7 @@ import (
 	block "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/types"
 	websocket "github.com/mapofzones/cosmos-watcher/pkg/cosmos_sdk/block/websocket"
 	watcher "github.com/mapofzones/cosmos-watcher/pkg/types"
+	"github.com/tendermint/tendermint/rpc/client/http"
 )
 
 // BlockStream returns channel of ordered blocks

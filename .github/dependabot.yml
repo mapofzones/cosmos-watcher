@@ -32,7 +32,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "coreum"
+    target-branch: "cudos"
     commit-message:
       prefix: "Update"
       include: "scope"
@@ -40,7 +40,7 @@ updates:
       - "wolthrax"
       - "Raumo0"
     allow:
-      - dependency-name: "github.com/ovrclk/coreum"
+      - dependency-name: "github.com/ovrclk/cudos"
 
   - package-ecosystem: "gomod"
     directory: "/"
