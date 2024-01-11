@@ -45,8 +45,8 @@ func TestParseIDsFromResults(t *testing.T) {
 					Events: []types6.Event{{
 						Type: connectiontypes.EventTypeConnectionOpenInit,
 						Attributes: []types6.EventAttribute{{
-							Key:   connectiontypes.AttributeKeyConnectionID,
-							Value: "myConnectionID",
+							Key:   []byte(connectiontypes.AttributeKeyConnectionID),
+							Value: []byte("myConnectionID"),
 							Index: true,
 						}},
 					}},
