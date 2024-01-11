@@ -1,18 +1,23 @@
-FROM golang:latest as build 
+FROM bitnami/golang:1.20-debian-11 as build
+
+ENV GOPROXY=https://goproxy.cn,direct
 
 WORKDIR /app
 
 COPY . /app
 
-RUN CGO_ENABLED=0 go build -o watcher ./cmd/watcher/main.go
+RUN apt-get update && apt-get install -y make gcc gawk bison libc-dev
 
-FROM alpine:latest as production
+RUN go build -o watcher ./cmd/watcher/main.go
 
-RUN apk add curl jq coreutils
-RUN apk add --no-cache bash
-WORKDIR /app
+RUN ls -la /app
+
+FROM ubuntu:latest as production
+
+RUN apt-get update && apt-get install -y curl jq coreutils dos2unix
 
 COPY --from=build /app/watcher  /app/watcher
-COPY scripts/run.sh /run.sh
+COPY --from=build /app/scripts/run.sh /run.sh
 
-CMD /run.sh
+RUN dos2unix /run.sh
+CMD ["/run.sh"]
