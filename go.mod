@@ -3,6 +3,7 @@ module github.com/mapofzones/cosmos-watcher
 go 1.20
 
 replace (
+	github.com/CosmWasm/wasmvm => github.com/CosmWasm/wasmvm v1.2.6
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
 	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.7.0
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
@@ -13,8 +14,8 @@ replace (
 require (
 	github.com/cosmos/cosmos-sdk v0.45.16
 	github.com/cosmos/ibc-go/v4 v4.4.2
-	github.com/envadiv/Passage3D v1.1.1-0.20231016163624-5377e66a3d7d // v2.2.0
-	github.com/gogo/protobuf v1.3.3
+	github.com/envadiv/Passage3D v1.1.1-0.20240111043722-0c3181c9df29 // v2.3.0
+	github.com/gogo/protobuf v1.3.3 // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.4
 	github.com/tendermint/go-amino v0.16.0
