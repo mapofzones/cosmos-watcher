@@ -1,5 +1,7 @@
 FROM golang:latest as build 
 
+ENV GOPROXY=https://goproxy.cn,direct
+
 WORKDIR /app
 
 COPY . /app
